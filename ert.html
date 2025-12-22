@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QESG - ERT Reporting Tool</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --text-main: #0f172a;     /* Deep Navy */
+            --text-sub: #475569;      /* Slate Gray */
+            --primary: #2563eb;       /* Brand Blue */
+            --surface: #f8fafc;       /* Light Gray Surface */
+            --border: #e2e8f0;        /* Subtle Border */
+            --green-bg: #ecfdf5;
+            --green-text: #065f46;
+            --green-btn: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        body { background: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { display: block; max-width: 100%; height: auto; }
+        
+        /* Header */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo img { height: 28px; }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .btn-back { font-size: 14px; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 6px; }
+        .btn-back:hover { color: var(--primary); }
+        .btn-demo { background: var(--text-main); color: white; padding: 8px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+        .btn-demo:hover { background: var(--primary); }
+
+        /* [1. Hero Section] */
+        .hero {
+            padding: 180px 40px 100px; background: radial-gradient(circle at 0% 0%, #f0f9ff 0%, #ffffff 50%);
+            display: flex; align-items: center; min-height: 85vh;
+        }
+        .hero-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+        .hero-content { max-width: 600px; }
+        .badge { display: inline-block; background: #eff6ff; color: var(--primary); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; margin-bottom: 24px; }
+        .hero h1 { font-size: 60px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: var(--text-main); letter-spacing: -1.5px; }
+        .hero p { font-size: 19px; color: var(--text-sub); margin-bottom: 40px; line-height: 1.6; word-break: keep-all; }
+        .email-form { display: flex; gap: 10px; max-width: 480px; }
+        .email-input { flex: 1; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s; }
+        .email-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .btn-submit { background: var(--primary); color: white; padding: 0 24px; border-radius: 8px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; white-space: nowrap; transition: 0.3s; }
+        .btn-submit:hover { background: #1e40af; }
+        .hero-visual { position: relative; }
+        .dashboard-img { border-radius: 12px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); background: white; }
+
+        /* [2. Trusted By (Fixed Logo Links)] */
+        .trusted { padding: 60px 0; background: white; border-bottom: 1px solid #f3f4f6; overflow: hidden; }
+        .trusted-label { text-align: center; font-size: 13px; font-weight: 700; color: #9ca3af; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        .marquee-wrapper { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
+        .marquee-track { display: inline-flex; animation: scroll 40s linear infinite; gap: 40px; padding: 10px 0; }
+        
+        .logo-item { 
+            height: 60px; min-width: 140px; padding: 0 20px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border); border-radius: 8px; background: white;
+            filter: grayscale(100%); opacity: 0.7; transition: 0.3s;
+        }
+        .logo-item:hover { filter: grayscale(0%); opacity: 1; border-color: var(--primary); transform: translateY(-2px); }
+        .logo-item img { max-height: 24px; width: auto; }
+        
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* [3. Output Modes] */
+        .output-modes { padding: 120px 40px; background: white; }
+        .sec-header { text-align: center; max-width: 900px; margin: 0 auto 80px; }
+        .sec-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
+        .sec-header p { font-size: 18px; color: var(--text-sub); line-height: 1.6; word-break: keep-all; }
+
+        .dual-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .mode-card { 
+            border: 1px solid var(--border); border-radius: 20px; overflow: hidden; 
+            transition: 0.3s; display: flex; flex-direction: column; background: white;
+        }
+        .mode-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .mode-img { height: 320px; background-color: #f1f5f9; overflow: hidden; position: relative; border-bottom: 1px solid var(--border); }
+        .mode-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .mode-body { padding: 40px; }
+        .mode-tag { display: inline-block; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; }
+        .tag-web { background: #eff6ff; color: var(--primary); }
+        .tag-index { background: #ecfdf5; color: #059669; }
+        .mode-body h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+        .mode-body p { font-size: 15px; color: var(--text-sub); line-height: 1.6; word-break: keep-all; }
+
+        /* [4. Bento Grid Features] */
+        .features-bento { padding: 100px 40px 140px; background: var(--surface); }
+        .bento-container { max-width: 1200px; margin: 0 auto; }
+        .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 280px 280px; gap: 24px; }
+        .bento-card {
+            background: white; border: 1px solid var(--border); border-radius: 16px; padding: 32px;
+            display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .bento-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .span-2 { grid-column: span 2; } 
+        .span-1 { grid-column: span 1; }
+        .bc-icon { width: 48px; height: 48px; background: #f1f5f9; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--text-main); margin-bottom: 20px; }
+        .bento-card h4 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .bento-card p { font-size: 15px; color: var(--text-sub); line-height: 1.5; word-break: keep-all; }
+        .bc-visual { position: absolute; bottom: -20px; right: -20px; width: 120px; height: 120px; opacity: 0.1; font-size: 100px; color: var(--primary); transform: rotate(-15deg); }
+
+        /* [5. Interactive Process] */
+        .process-interactive { padding: 120px 40px; background: white; border-top: 1px solid var(--border); }
+        .pi-container { max-width: 1200px; margin: 0 auto; }
+        .pi-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 60px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .pi-tab { text-align: center; padding: 16px 10px; border-radius: 12px; cursor: pointer; transition: 0.3s; position: relative; color: var(--text-sub); }
+        .pi-tab:hover { background: #f8fafc; color: var(--primary); }
+        .pi-tab.active { background: #eff6ff; color: var(--primary); font-weight: 700; }
+        .pi-tab.active::after { content: ''; position: absolute; bottom: -21px; left: 0; width: 100%; height: 3px; background: var(--primary); }
+        .step-num { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; opacity: 0.7; }
+        .step-name { font-size: 16px; display: block; }
+        .pi-content { display: none; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .pi-content.active { display: grid; opacity: 1; transform: translateY(0); }
+        .pi-text h3 { font-size: 32px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
+        .pi-text p { font-size: 17px; color: var(--text-sub); line-height: 1.7; margin-bottom: 30px; word-break: keep-all; }
+        .pi-list { list-style: none; padding: 0; background: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid var(--border); }
+        .pi-list li { display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; color: var(--text-main); }
+        .pi-list li:last-child { margin-bottom: 0; }
+        .pi-list i { color: var(--primary); margin-top: 4px; }
+        .pi-visual img { border-radius: 16px; box-shadow: 0 20px 50px -10px rgba(0,0,0,0.15); border: 1px solid var(--border); }
+
+        /* [6. CTA & Footer] */
+        .bottom-section { background: var(--surface); padding: 100px 40px 120px; }
+        .bottom-inner { max-width: 1000px; margin: 0 auto; }
+        .cta-compact { background: var(--green-bg); border: 1px solid #bbf7d0; border-radius: 16px; padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 80px; }
+        .cta-text h3 { font-size: 24px; font-weight: 800; color: var(--green-text); margin-bottom: 8px; }
+        .cta-text p { font-size: 15px; color: #374151; margin: 0; }
+        .btn-download { background: var(--green-btn); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); text-decoration: none; white-space: nowrap; }
+        .btn-download:hover { background: #059669; transform: translateY(-2px); }
+        .more-services-title { text-align: center; font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+        .quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .ql-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 30px; transition: 0.3s; display: flex; flex-direction: column; height: 100%; }
+        .ql-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .ql-icon { font-size: 32px; color: var(--text-main); margin-bottom: 20px; }
+        .ql-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+        .ql-card p { font-size: 14px; color: var(--text-sub); margin-bottom: 20px; flex-grow: 1; }
+        .ql-link { font-size: 14px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 4px; }
+
+        footer { padding: 80px 40px; background: white; border-top: 1px solid #eee; text-align: center; }
+        .footer-logo img { height: 24px; opacity: 0.6; margin-bottom: 20px; display: inline-block; }
+        .copyright { font-size: 13px; color: #9ca3af; }
+
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .dual-grid { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .span-2, .span-1 { grid-column: span 1; }
+            .pi-tabs { display: flex; overflow-x: auto; padding-bottom: 10px; border-bottom: none; gap: 10px; }
+            .pi-tab { min-width: 140px; border: 1px solid var(--border); }
+            .pi-tab.active::after { display: none; }
+            .pi-content { grid-template-columns: 1fr; text-align: center; }
+            .pi-list { text-align: left; }
+            .cta-compact { flex-direction: column; text-align: center; gap: 30px; padding: 40px 20px; }
+            .quick-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index2.html"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></a></div>
+        <div class="nav-right">
+            <a href="index2.html" class="btn-back"><i class="ph ph-arrow-left"></i> 메인으로</a>
+            <a href="#" class="btn-demo">데모 신청</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <span class="badge">GRI · SASB · TCFD 공식 인증</span>
+                <h1>Simplify<br>ESG Reporting</h1>
+                <p>복잡한 데이터 수집부터 글로벌 표준에 맞춘 보고서 발간까지.<br>ERT는 공시 업무의 비효율을 제거하고 데이터 신뢰성을 보장합니다.</p>
+                <div class="email-form">
+                    <input type="email" class="email-input" placeholder="이메일 주소를 입력하세요">
+                    <button class="btn-submit">데모 신청하기</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" class="dashboard-img" alt="ERT Dashboard">
+            </div>
+        </div>
+    </section>
+
+    <section class="trusted">
+        <div class="trusted-label">Trusted by Industry Leaders</div>
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <a href="https://sustainability.skecoplant.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+ecoplant" alt="SK ecoplant"></a>
+                <a href="https://sustainability.hldni.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=HL+D%26I" alt="HL D&I"></a>
+                <a href="https://esg.sketernix.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+eternix" alt="SK eternix"></a>
+                <a href="https://report.qesg.co.kr/v/?r=cjqit250121" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=MYSC" alt="MYSC"></a>
+                <a href="https://skinc2024.qesg.co.kr/v/?r=skinc" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+Inc." alt="SK Inc"></a>
+                <a href="https://esg.locknlock.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=LocknLock" alt="LocknLock"></a>
+                <a href="https://esg.skchemicals.com/gri_2023/index.html" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+Chemicals" alt="SK Chemicals"></a>
+                <a href="https://report.qesg.co.kr/v/?r=2023skbs" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+bio" alt="SK bioscience"></a>
+                <a href="https://report.qesg.co.kr/v/?r=fy2023hanul" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=Hanul" alt="Hanul"></a>
+                <a href="https://report.qesg.co.kr/v/?r=isuchem_sus_2023" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=Isu+Chem" alt="Isu Chemical"></a>
+                <a href="https://report.qesg.co.kr/v/?r=woqlp240404" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=Komtec" alt="Komtec"></a>
+                <a href="https://report.qesg.co.kr/v/?r=lxhgz240821" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=ASAN" alt="ASAN"></a>
+                
+                <a href="https://sustainability.skecoplant.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+ecoplant" alt="SK ecoplant"></a>
+                <a href="https://sustainability.hldni.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=HL+D%26I" alt="HL D&I"></a>
+                <a href="https://esg.sketernix.com/" target="_blank" class="logo-item"><img src="https://placehold.co/120x30/fff/333?text=SK+eternix" alt="SK eternix"></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="output-modes">
+        <div class="sec-header">
+            <h2>Two Ways to Publish</h2>
+            <p>
+                ESG Reporting Tool은 웹 보고서와 Index Table의 두 가지 형태로 ESG 정보공시를 지원합니다.<br>
+                두 방식 모두 국제 표준을 따르며, 기업 상황에 적합한 방식을 선택할 수 있습니다.
+            </p>
+        </div>
+        <div class="dual-grid">
+            <div class="mode-card">
+                <div class="mode-img">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200" alt="Web Report UI">
+                </div>
+                <div class="mode-body">
+                    <span class="mode-tag tag-web">Web Report</span>
+                    <h3>웹 보고서 (Interactive)</h3>
+                    <p>기존 책자형 보고서를 대체하는 인터랙티브 웹사이트입니다. 극대화된 정보 접근성으로 이해관계자 소통에 최적화되어 있습니다.</p>
+                </div>
+            </div>
+            <div class="mode-card">
+                <div class="mode-img">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200" alt="Index Table UI">
+                </div>
+                <div class="mode-body">
+                    <span class="mode-tag tag-index">Index Table</span>
+                    <h3>데이터 테이블 (Efficient)</h3>
+                    <p>GRI, SASB 등 핵심 지표 위주의 데이터 테이블입니다. 핵심적이고 압축적인 정보 구성으로 공시 프로세스를 최소화합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-bento">
+        <div class="bento-container">
+            <div class="sec-header">
+                <h2>Why Choose ERT?</h2>
+                <p>QESG ERT가 제공하는 강력한 핵심 가치</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="bento-card span-2">
+                    <div>
+                        <div class="bc-icon"><i class="ph ph-globe"></i></div>
+                        <h4>웹 기반 정보 접근성</h4>
+                        <p>포털 검색만으로 공시 내용에 쉽게 접근할 수 있습니다. 투자자와 평가 기관, 모든 이해관계자가 언제 어디서든 기업의 ESG 데이터를 확인할 수 있도록 합니다.</p>
+                    </div>
+                    <div class="bc-visual"><i class="ph ph-magnifying-glass"></i></div>
+                </div>
+                
+                <div class="bento-card span-1">
+                    <div class="bc-icon"><i class="ph ph-arrows-clockwise"></i></div>
+                    <h4>실시간 업데이트</h4>
+                    <p>발간 후 수정 사항을 즉시 반영하세요. PDF 재제작 없이 유지보수가 용이합니다.</p>
+                </div>
+
+                <div class="bento-card span-1">
+                    <div class="bc-icon"><i class="ph ph-link"></i></div>
+                    <h4>URL 정보 공유</h4>
+                    <p>무거운 파일 대신 전용 링크 하나로 모든 정보를 공유합니다. 보고 주제별 링크 생성도 가능합니다.</p>
+                </div>
+
+                <div class="bento-card span-2">
+                    <div>
+                        <div class="bc-icon"><i class="ph ph-shield-check"></i></div>
+                        <h4>대외 평가 최적화 (Audit Ready)</h4>
+                        <p>MSCI, EcoVadis, 공급망 실사 등 외부의 다양한 ESG 데이터 요구에 대해 정확하고 신속하게 대응할 수 있는 기반을 마련합니다.</p>
+                    </div>
+                    <div class="bc-visual" style="right: -10px; bottom: -30px;"><i class="ph ph-chart-bar"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process-interactive">
+        <div class="pi-container">
+            <div class="sec-header">
+                <h2>How It Works</h2>
+                <p>단계별 가이드로 완벽한 공시를 지원합니다.</p>
+            </div>
+
+            <div class="pi-tabs">
+                <div class="pi-tab active" onclick="openTab(event, 'step1')"><span class="step-num">Step 1</span><span class="step-name">목차 구성</span></div>
+                <div class="pi-tab" onclick="openTab(event, 'step2')"><span class="step-num">Step 2</span><span class="step-name">지표 선정</span></div>
+                <div class="pi-tab" onclick="openTab(event, 'step3')"><span class="step-num">Step 3</span><span class="step-name">콘텐츠 작성</span></div>
+                <div class="pi-tab" onclick="openTab(event, 'step4')"><span class="step-num">Step 4</span><span class="step-name">검토 및 검증</span></div>
+                <div class="pi-tab" onclick="openTab(event, 'step5')"><span class="step-num">Step 5</span><span class="step-name">발간 및 공개</span></div>
+            </div>
+
+            <div id="step1" class="pi-content active">
+                <div class="pi-text">
+                    <h3>최적화된 목차 구성</h3>
+                    <p>산업 특성에 맞는 기본 목차 Set을 자동으로 추천합니다. 대분류, 중분류 구조를 쉽게 설계하여 기획 단계를 단축하세요.</p>
+                    <ul class="pi-list">
+                        <li><i class="ph ph-check-circle"></i> 대분류, 중분류 목차 자동 구성</li>
+                        <li><i class="ph ph-check-circle"></i> 산업별 표준 목차 추천 기능 제공</li>
+                    </ul>
+                </div>
+                <div class="pi-visual"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200" alt="Step 1 UI"></div>
+            </div>
+
+            <div id="step2" class="pi-content">
+                <div class="pi-text">
+                    <h3>국제표준 기반 지표 선정</h3>
+                    <p>GRI, SASB, TCFD 등 글로벌 공시 표준에 기반하여 보고할 지표와 범위를 선택합니다.</p>
+                    <ul class="pi-list">
+                        <li><i class="ph ph-check-circle"></i> GRI Standards (2, 3, 200~400) 지원</li>
+                        <li><i class="ph ph-check-circle"></i> SASB / TCFD 프레임워크 연동</li>
+                    </ul>
+                </div>
+                <div class="pi-visual"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200" alt="Step 2 UI"></div>
+            </div>
+
+            <div id="step3" class="pi-content">
+                <div class="pi-text">
+                    <h3>콘텐츠 작성</h3>
+                    <p>구성된 목차에 맞춰 정책, 성과 데이터, 활동 자료를 입력하여 원고를 작성합니다. AI 도우미가 작성을 지원합니다.</p>
+                    <ul class="pi-list">
+                        <li><i class="ph ph-check-circle"></i> 보고 item별 콘텐츠 작성 가이드</li>
+                        <li><i class="ph ph-check-circle"></i> 데이터 테이블 및 활동 내역 취합</li>
+                    </ul>
+                </div>
+                <div class="pi-visual"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200" alt="Step 3 UI"></div>
+            </div>
+
+            <div id="step4" class="pi-content">
+                <div class="pi-text">
+                    <h3>검토 및 검증</h3>
+                    <p>현업 부서의 교차 검토 또는 제3자 검증을 통해 데이터의 신뢰성을 확보합니다. 검증 의견서는 자동 수록됩니다.</p>
+                    <ul class="pi-list">
+                        <li><i class="ph ph-check-circle"></i> 보고서 초안 검토 및 보완</li>
+                        <li><i class="ph ph-check-circle"></i> 제3자 검증(AA1000AS) 지원</li>
+                    </ul>
+                </div>
+                <div class="pi-visual"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200" alt="Step 4 UI"></div>
+            </div>
+
+            <div id="step5" class="pi-content">
+                <div class="pi-text">
+                    <h3>보고서 발간 및 공개</h3>
+                    <p>작성된 원고의 맞춤법을 최종 교정하고, 클릭 한 번으로 웹사이트와 PDF로 동시 발간하여 대외에 공개합니다.</p>
+                    <ul class="pi-list">
+                        <li><i class="ph ph-check-circle"></i> 국/영문 자동 번역 및 교정</li>
+                        <li><i class="ph ph-check-circle"></i> 홈페이지 연계 및 URL 배포</li>
+                    </ul>
+                </div>
+                <div class="pi-visual"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200" alt="Step 5 UI"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bottom-section">
+        <div class="bottom-inner">
+            <div class="cta-compact">
+                <div class="cta-text">
+                    <h3>지금 바로 시작하세요</h3>
+                    <p>자세한 기능과 도입 효과가 궁금하시다면 서비스 소개서를 확인해보세요.</p>
+                </div>
+                <a href="(QESG) ESG Reporting Tool 서비스 소개서_2025_v4.pdf" class="btn-download" download>
+                    <i class="ph ph-download-simple"></i> 서비스 소개서 다운로드
+                </a>
+            </div>
+
+            <h2 class="more-services-title">Explore Other Services</h2>
+
+            <div class="quick-links">
+                <a href="dms.html" class="ql-card">
+                    <div class="ql-icon"><i class="ph ph-database"></i></div>
+                    <h4>DMS Data Hub</h4>
+                    <p>전사 데이터를 중앙에서 통합 관리하세요.</p>
+                    <div class="ql-link">Explore DMS <i class="ph ph-arrow-right"></i></div>
+                </a>
+                <a href="supply.html" class="ql-card">
+                    <div class="ql-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
+                    <h4>Supply Chain</h4>
+                    <p>공급망 ESG 리스크를 한번에 해결하세요.</p>
+                    <div class="ql-link">Explore Supply Chain <i class="ph ph-arrow-right"></i></div>
+                </a>
+                <a href="carbon.html" class="ql-card">
+                    <div class="ql-icon"><i class="ph ph-cloud"></i></div>
+                    <h4>Carbon Mgmt</h4>
+                    <p>Scope 3를 포함한 정밀한 탄소 관리.</p>
+                    <div class="ql-link">Explore Carbon <i class="ph ph-arrow-right"></i></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></div>
+        <div class="copyright">© 2025 QuantifiedESG. All rights reserved.</div>
+    </footer>
+
+    <script>
+        function openTab(evt, stepName) {
+            var i, content, tabs;
+            content = document.getElementsByClassName("pi-content");
+            for (i = 0; i < content.length; i++) {
+                content[i].classList.remove("active");
+            }
+            tabs = document.getElementsByClassName("pi-tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(stepName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+</body>
+</html>
