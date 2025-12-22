@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>QESG - Dark Mode</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body { background: #020617; color: #f8fafc; font-family: 'Pretendard', sans-serif; margin: 0; }
+        header { padding: 20px 40px; display: flex; justify-content: space-between; border-bottom: 1px solid #1e293b; background: #020617; }
+        .logo img { height: 28px; filter: brightness(0) invert(1); }
+        .hero { text-align: center; padding: 150px 20px; background: radial-gradient(circle, #1e3a8a 0%, #020617 60%); }
+        h1 { font-size: 60px; margin-bottom: 20px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .bento-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 40px; }
+        .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 20px; padding: 40px; transition: 0.3s; }
+        .card:hover { border-color: #38bdf8; background: #1e293b; }
+        .card h3 { font-size: 24px; margin-bottom: 10px; color: white; }
+        .card p { color: #94a3b8; line-height: 1.6; }
+        .badge { background: #1e3a8a; color: #60a5fa; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-bottom: 15px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="https://qesg.co.kr/images/qesg.svg"></div>
+        <div style="color:white; font-weight:700;">문의하기</div>
+    </header>
+    <div class="hero">
+        <h1>Technology-Driven ESG</h1>
+        <p style="color:#94a3b8; font-size:20px;">데이터 기반의 통합 ESG 솔루션</p>
+    </div>
+    <div class="bento-grid">
+        <div class="card">
+            <span class="badge">Reporting</span>
+            <h3>ERT Reporting</h3>
+            <p>글로벌 가이드라인 변화에 대응하는 신속한 공시 솔루션.</p>
+        </div>
+        <div class="card">
+            <span class="badge">Data Engine</span>
+            <h3>DMS Data Hub</h3>
+            <p>One-click 취합 및 자동 정합성 체크로 데이터 신뢰성 확보.</p>
+        </div>
+        <div class="card">
+            <span class="badge">Module</span>
+            <h3>Supply Chain</h3>
+            <p>협력사 리스크 진단 및 데이터 통합 관리.</p>
+        </div>
+        <div class="card">
+            <span class="badge">Module</span>
+            <h3>Carbon Mgmt</h3>
+            <p>배출량 산정 및 넷제로 감축 시뮬레이션.</p>
+        </div>
+    </div>
+</body>
+</html>
