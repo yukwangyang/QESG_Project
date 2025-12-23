@@ -10,17 +10,18 @@
     <style>
         :root {
             --bg-body: #ffffff;
-            --text-main: #0f172a;
-            --text-sub: #475569;
-            --primary: #0284c7;       /* Supply Chain Blue */
+            --text-main: #0f172a;       /* Deep Navy */
+            --text-sub: #475569;        /* Slate Gray */
+            --primary: #0284c7;         /* Supply Chain Blue */
             --primary-dark: #0369a1;
             --primary-light: #e0f2fe;
             --surface: #f8fafc;
             --border: #e2e8f0;
-            --green-bg: #ecfdf5;
+            --green-bg: #ecfdf5;        /* Mint Green */
             --green-text: #065f46;
             --green-btn: #10b981;
-            --highlight-zone: #eff6ff;
+            --highlight-bg: #f0f9ff;
+            --gradient-border: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
@@ -29,7 +30,7 @@
         img { display: block; max-width: 100%; height: auto; }
         ul { list-style: none; padding: 0; margin: 0; }
 
-        /* [Header - Right Aligned] */
+        /* [Header] */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
@@ -37,196 +38,233 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .logo img { height: 28px; }
-        
         .header-right { display: flex; align-items: center; gap: 40px; }
-        
         .gnb { display: flex; gap: 24px; }
         .nav-link { font-size: 15px; font-weight: 600; color: var(--text-sub); position: relative; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
-        /* Active Dot Indicator */
         .nav-link.active::after {
             content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
             width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
         }
-
         .action-group { display: flex; align-items: center; gap: 12px; padding-left: 20px; border-left: 1px solid #e2e8f0; }
         .btn-back { font-size: 14px; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 4px; }
         .btn-back:hover { color: var(--primary); }
-        
         .btn-contact { 
             background: var(--text-main); color: white; padding: 8px 18px; 
             border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: 0.3s;
         }
         .btn-contact:hover { background: var(--primary); }
 
-        /* [1. Hero Section] */
-        .hero {
-            padding: 160px 40px 100px; 
-            background: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #ffffff 50%);
-            display: flex; align-items: center; min-height: 85vh;
-        }
-        .hero-inner {
+        /* [Common Layout] */
+        .sec-split {
             max-width: 1400px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1.1fr; 
-            gap: 80px; align-items: center;
+            display: grid; grid-template-columns: 320px 1fr;
+            gap: 80px; align-items: start;
         }
-        .hero-content { max-width: 600px; }
-        .badge {
-            display: inline-block; background: var(--primary-light); color: var(--primary); 
-            padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; margin-bottom: 24px;
+        .sec-title-area { position: sticky; top: 120px; }
+        .sec-title-area h2 { 
+            font-size: 36px; font-weight: 800; margin-bottom: 20px; 
+            color: var(--text-main); line-height: 1.25; letter-spacing: -0.5px;
         }
-        .hero h1 {
-            font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 24px;
-            color: var(--text-main); letter-spacing: -1px;
+        .sec-title-area p { font-size: 17px; color: var(--text-sub); line-height: 1.6; word-break: keep-all; }
+        .sec-label {
+            font-size: 13px; font-weight: 700; color: var(--primary); 
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block;
         }
-        .hero p {
-            font-size: 19px; color: var(--text-sub); margin-bottom: 40px;
-            line-height: 1.6; word-break: keep-all;
+        .common-sec { padding: 140px 40px; }
+
+        /* [1. Hero Section] */
+        .hero { padding: 160px 40px 140px; background: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #ffffff 60%); display: flex; align-items: center; min-height: 85vh; position: relative; }
+        .hero-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; z-index: 2; position: relative; }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; color: var(--text-main); letter-spacing: -1px; }
+        .hero p { font-size: 19px; color: var(--text-sub); margin-bottom: 40px; line-height: 1.6; word-break: keep-all; }
+        
+        .cta-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+        .btn-primary, .btn-outline {
+            padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 15px; transition: 0.3s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; text-decoration: none;
         }
-        .btn-primary {
-            background: var(--primary); color: white; padding: 14px 32px; border-radius: 8px;
-            font-weight: 700; font-size: 16px; border: none; cursor: pointer;
-        }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.3); }
-        .hero-visual { position: relative; perspective: 1000px; }
-        .sc-dashboard {
-            border-radius: 12px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15);
+        .btn-primary { background: var(--primary); color: white; border: none; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(2, 132, 199, 0.2); }
+        .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+        .hero-visual { position: relative; perspective: 1500px; }
+        .sc-dashboard { 
+            border-radius: 16px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15); 
             border: 1px solid rgba(0,0,0,0.05); background: white;
-            transform: rotateY(-5deg) rotateX(5deg); transition: 0.5s;
+            /* 7. Tilt angle reduced */
+            transform: rotateY(-5deg) rotateX(2deg); 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .hero-visual:hover .sc-dashboard { transform: rotateY(0) rotateX(0); }
+        .sc-dashboard:hover { transform: rotateY(0) rotateX(0) scale(1.02); border-color: var(--primary); }
 
-        /* [2. Why Assessment] */
-        .why-sec { padding: 120px 40px; background: white; }
-        .sec-header { text-align: center; max-width: 900px; margin: 0 auto 80px; }
-        .sec-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); }
-        .sec-header p { font-size: 18px; color: var(--text-sub); }
-        .card-grid {
-            max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+        /* [1-1. Wave Separator] - Section Distinction */
+        .wave-separator {
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
         }
-        .why-card {
-            padding: 40px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border);
-            transition: 0.3s;
+        .wave-separator svg {
+            position: relative; display: block; width: calc(130% + 1.3px); height: 80px; transform: rotateY(180deg);
         }
-        .why-card:hover { transform: translateY(-5px); background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
-        .wc-icon { 
-            width: 50px; height: 50px; background: white; border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); margin-bottom: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .wc-1 .wc-icon { color: #ef4444; background: #fef2f2; }
-        .wc-2 .wc-icon { color: #8b5cf6; background: #f5f3ff; }
-        .wc-3 .wc-icon { color: #3b82f6; background: #eff6ff; }
-        .why-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
-        .why-card p { font-size: 16px; color: var(--text-sub); line-height: 1.6; word-break: keep-all; }
+        .wave-separator .shape-fill { fill: #f1f5f9; }
 
-        /* [3. Assessment Process] */
-        .process-sec { padding: 120px 40px; background: #f8fafc; }
-        .proc-container { max-width: 1300px; margin: 0 auto; }
-        .scope-bracket { position: relative; margin-bottom: 30px; height: 40px; }
-        .sb-line {
-            position: absolute; bottom: 0; left: 20%; right: 20%; height: 10px;
-            border: 2px solid #0f766e; border-bottom: none;
-        }
-        .sb-label {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            background: #0f766e; color: white; padding: 6px 16px; border-radius: 20px;
-            font-size: 13px; font-weight: 700; z-index: 2;
-        }
-        .proc-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; position: relative; }
-        .proc-steps::before {
-            content: ''; position: absolute; top: 30px; left: 10%; right: 10%; 
-            height: 2px; border-top: 2px dashed #cbd5e1; z-index: 0;
-        }
-        .proc-card { 
-            position: relative; z-index: 1; padding: 24px 20px; background: white; border-radius: 16px;
-            border: 1px solid var(--border); transition: 0.3s; min-height: 380px; display: flex; flex-direction: column;
-        }
-        .proc-card.core { border-color: #0f766e; background: #f0fdfa; box-shadow: 0 10px 20px rgba(15, 118, 110, 0.05); }
-        .proc-card.core .pc-icon { background: #ccfbf1; color: #0f766e; border-color: #0f766e; }
-        .pc-head { text-align: center; margin-bottom: 20px; }
-        .pc-icon {
-            width: 60px; height: 60px; border-radius: 50%; background: #f1f5f9; color: var(--text-sub);
-            display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 16px;
-            border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .proc-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
-        .pc-sub { font-size: 12px; color: var(--text-sub); display: block; font-weight: 500; }
-        .pc-list { 
-            list-style: none; padding: 0; text-align: left; margin-top: auto;
-            border-top: 1px solid #f1f5f9; padding-top: 15px;
-        }
-        .pc-list li { 
-            font-size: 13px; color: var(--text-sub); margin-bottom: 8px; padding-left: 14px; position: relative; line-height: 1.4;
-        }
-        .pc-list li::before { content: '•'; position: absolute; left: 0; color: var(--primary); }
-
-        /* [4. Value Chain (Reports & Utilization)] */
-        .value-chain-sec { padding: 120px 40px; background: white; }
-        .vc-row {
-            max-width: 1200px; margin: 0 auto 100px; display: grid; grid-template-columns: 240px 1fr; gap: 60px;
-        }
-        .vc-row:last-child { margin-bottom: 0; }
+        /* [2. Trusted By & Stats] */
+        .trusted-sec { padding: 100px 40px; background: #f1f5f9; /* 배경색 변경으로 구분감 */ }
+        .trusted-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
         
-        .vc-title-col { position: relative; }
-        .vc-title-sticky { position: sticky; top: 120px; }
-        .vc-label { font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
-        .vc-title-col h3 { font-size: 32px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
-        .vc-title-col p { font-size: 16px; color: var(--text-sub); margin-top: 15px; line-height: 1.6; }
+        .stats-area { display: flex; flex-direction: column; gap: 40px; padding-top: 20px; }
+        .stat-item h3 { font-size: 64px; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 12px; letter-spacing: -2px; }
+        .stat-item p { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+        .stat-item span { font-size: 15px; color: var(--text-sub); display: block; opacity: 0.8; }
+        .stat-ref { font-size: 13px; color: #94a3b8; margin-top: 4px; display: block; font-weight: 500; }
+        .stat-divider { width: 100%; height: 1px; background: #cbd5e1; }
 
-        .vc-content-col { display: flex; flex-direction: column; gap: 30px; }
+        .client-area-title { font-size: 14px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 16px; display: block; letter-spacing: 1px; }
+        .client-grid { 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; 
+        }
+        .client-box { 
+            background: white; border-radius: 8px; height: 60px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 14px; font-weight: 600; color: #64748b; 
+            border: 1px solid transparent; transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .client-box:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+        /* [3. Why QESG (Horizontal Layout)] */
+        .features-sec { background: white; padding-top: 140px; }
+        .feature-grid-horiz { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; /* 가로 3열 배치 */
+        }
         
-        .report-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .report-card {
-            background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03); transition: 0.3s;
+        .feat-card { 
+            background: white; padding: 35px; border-radius: 16px; border: 1px solid var(--border);
+            display: flex; flex-direction: column; gap: 16px; transition: 0.3s; position: relative; overflow: hidden;
+            height: 100%;
         }
-        .report-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary); }
-        .rc-img {
-            height: 200px; background: #f1f5f9; position: relative; overflow: hidden; border-bottom: 1px solid var(--border);
-        }
-        .rc-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-        .rc-body { padding: 20px; }
-        .rc-body h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
-        .rc-body p { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
+        .feat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.06); border-color: transparent; }
+        /* Top Border Colors */
+        .feat-card:nth-child(1) { border-top: 4px solid #3b82f6; }
+        .feat-card:nth-child(2) { border-top: 4px solid #10b981; }
+        .feat-card:nth-child(3) { border-top: 4px solid #8b5cf6; }
 
-        .util-card {
-            background: #f8fafc; border-radius: 16px; padding: 30px; border: 1px solid var(--border);
-            display: flex; gap: 24px;
-        }
-        .util-icon {
-            width: 48px; height: 48px; background: white; color: var(--primary); 
-            border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .util-content h4 { font-size: 20px; font-weight: 700; margin-bottom: 15px; }
-        .util-list li { 
-            display: flex; align-items: start; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-sub); 
-        }
-        .util-list i { color: #10b981; margin-top: 3px; }
+        .feat-icon { font-size: 32px; margin-bottom: 5px; }
+        .fc-blue { color: #3b82f6; } .fc-green { color: #10b981; } .fc-purple { color: #8b5cf6; }
 
-        /* [CTA & Quick Links] */
+        .feat-card h3 { font-size: 19px; font-weight: 800; color: var(--text-main); line-height: 1.4; height: 54px; display: flex; align-items: center; }
+        .feat-card p { font-size: 14px; color: var(--text-sub); line-height: 1.6; margin-bottom: 10px; flex-grow: 1; }
+        .feat-list { list-style: none; padding: 0; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .feat-list li { font-size: 13px; color: var(--text-sub); margin-bottom: 6px; padding-left: 12px; position: relative; }
+        .feat-list li::before { content: '•'; position: absolute; left: 0; color: #cbd5e1; }
+
+        /* [4. Process - 4 Steps Vertical Tab] */
+        .process-sec { background: #f8fafc; }
+        .process-container { display: grid; grid-template-columns: 280px 1fr; gap: 60px; min-height: 480px; }
+        
+        .proc-tabs { display: flex; flex-direction: column; gap: 12px; }
+        .proc-tab { 
+            padding: 22px 24px; border-radius: 12px; cursor: pointer; transition: 0.3s; 
+            border: 1px solid transparent; background: white; color: var(--text-sub);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .proc-tab:hover { background: #f1f5f9; color: var(--primary); }
+        .proc-tab.active { 
+            background: var(--primary); border-color: var(--primary); color: white; 
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.2); 
+        }
+        .proc-tab h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .proc-tab span { font-size: 13px; opacity: 0.8; font-weight: 400; }
+        .proc-tab.active span { opacity: 1; }
+
+        .proc-content-area { position: relative; }
+        .proc-pane { 
+            display: none; opacity: 0; transition: all 0.4s ease; 
+            background: white; border-radius: 20px; padding: 40px; border: 1px solid var(--border);
+            height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .proc-pane.active { display: flex; opacity: 1; flex-direction: column; justify-content: space-between; }
+        
+        .proc-detail h3 { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .proc-detail ul { list-style: none; }
+        .proc-detail li { 
+            font-size: 16px; color: var(--text-sub); margin-bottom: 14px; padding-left: 28px; position: relative; line-height: 1.6; 
+        }
+        .proc-detail li i { position: absolute; left: 0; top: 4px; color: var(--primary); font-size: 20px; background: #e0f2fe; border-radius: 50%; padding: 2px; }
+        
+        .proc-img-placeholder {
+            margin-top: auto; height: 220px; background: #f8fafc; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600;
+            border: 2px dashed #e2e8f0; font-size: 14px;
+        }
+
+        /* [5. Output - New Rich Design] */
+        .output-sec { 
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); 
+            padding-bottom: 160px;
+        }
+        
+        .report-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .report-card { 
+            background: transparent; perspective: 1000px; 
+        }
+        .rc-inner {
+            background: white; border-radius: 16px; overflow: hidden; 
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);
+            transition: 0.4s; height: 100%; display: flex; flex-direction: column;
+        }
+        .report-card:hover .rc-inner { transform: translateY(-10px); box-shadow: 0 30px 60px -10px rgba(0,0,0,0.12); border-color: var(--primary-light); }
+        
+        /* A4 비율의 고급스러운 프리뷰 영역 */
+        .rc-preview { 
+            height: 400px; background: #eef2f6; position: relative; overflow: hidden; 
+            border-bottom: 1px solid var(--border); display: flex; justify-content: center; align-items: flex-start;
+            padding-top: 30px;
+        }
+        /* 실제 문서 느낌의 그림자 효과 */
+        .rc-preview img { 
+            width: 85%; height: auto; object-fit: contain; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+            transition: 0.5s; border-radius: 4px; background: white;
+        }
+        .report-card:hover .rc-preview img { transform: scale(1.05) translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        
+        .rc-info { padding: 24px; background: white; flex-grow: 1; text-align: center; }
+        .rc-info h4 { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        .rc-info p { font-size: 14px; color: var(--text-sub); line-height: 1.5; word-break: keep-all; }
+
+        /* [6. Utilization - 2 Column Layout] */
+        .util-sec { background: white; }
+        .util-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .util-card { 
+            background: white; border: 1px solid var(--border); border-radius: 16px; padding: 40px; 
+            display: flex; gap: 24px; transition: 0.3s;
+        }
+        .util-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .util-icon { 
+            width: 60px; height: 60px; background: var(--highlight-bg); color: var(--primary); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; 
+        }
+        .util-content h4 { font-size: 20px; font-weight: 800; margin-bottom: 16px; }
+        .util-list li { display: flex; align-items: start; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-sub); font-weight: 500; }
+        .util-list i { color: #10b981; margin-top: 4px; }
+
+        /* [Footer & CTA] */
         .bottom-section { background: var(--surface); padding: 100px 40px 120px; }
         .bottom-inner { max-width: 1200px; margin: 0 auto; }
-        .cta-compact {
-            background: var(--green-bg); border: 1px solid #bbf7d0; border-radius: 16px; padding: 40px 60px; 
-            display: flex; align-items: center; justify-content: space-between; margin-bottom: 80px;
+        /* 6. Fixed Green Background */
+        .cta-compact { 
+            background-color: #ecfdf5 !important; /* 강제 적용 */
+            border: 1px solid #bbf7d0; border-radius: 16px; padding: 40px 60px; 
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 80px; 
         }
-        .cta-text h3 { font-size: 24px; font-weight: 800; color: var(--green-text); margin-bottom: 8px; }
+        .cta-text h3 { font-size: 24px; font-weight: 800; color: #065f46; margin-bottom: 8px; }
         .cta-text p { font-size: 15px; color: #374151; margin: 0; }
-        .btn-download {
-            background: var(--green-btn); color: white; padding: 12px 28px; border-radius: 8px;
-            font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;
-            transition: 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); text-decoration: none; white-space: nowrap;
-        }
+        .btn-download { background: #10b981; color: white; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); text-decoration: none; }
         .btn-download:hover { background: #059669; transform: translateY(-2px); }
-
+        
         .more-services-title { text-align: center; font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
         .quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .ql-card {
-            background: white; border: 1px solid var(--border); border-radius: 16px; padding: 30px;
-            transition: 0.3s; display: flex; flex-direction: column; height: 100%;
-        }
+        .ql-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 30px; transition: 0.3s; display: flex; flex-direction: column; height: 100%; }
         .ql-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .ql-icon { font-size: 32px; color: var(--text-main); margin-bottom: 20px; }
         .ql-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
@@ -237,70 +275,33 @@
         .footer-logo img { height: 24px; opacity: 0.6; margin-bottom: 20px; display: inline-block; }
         .copyright { font-size: 13px; color: #9ca3af; }
 
-        /* [Contact Modal Styles] */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); z-index: 2000;
-            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
-        }
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.show { display: flex; opacity: 1; }
-        .modal-content {
-            background: #111827; color: white; width: 90%; max-width: 800px;
-            padding: 50px; border-radius: 20px; position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform: translateY(20px); transition: transform 0.3s ease;
-        }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; cursor: pointer; color: #9ca3af; transition: 0.2s; }
-        .close-btn:hover { color: white; }
-        
+        .modal-content { background: #111827; color: white; width: 90%; max-width: 800px; padding: 50px; border-radius: 20px; position: relative; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; cursor: pointer; color: #9ca3af; }
         .modal-header { text-align: center; margin-bottom: 40px; }
-        .modal-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-        .modal-header p { color: #9ca3af; font-size: 16px; }
-        
         .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-group { display: flex; flex-direction: column; gap: 8px; }
         .form-group.full { grid-column: span 2; }
-        .form-group label { font-size: 14px; font-weight: 600; color: #d1d5db; }
-        .form-input, .form-textarea {
-            background: #1f2937; border: 1px solid #374151; color: white;
-            padding: 14px; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s;
-        }
-        .form-input:focus, .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
-        .form-textarea { height: 120px; resize: none; }
-        .btn-send {
-            background: #2563eb; color: white; padding: 16px; border-radius: 8px;
-            font-size: 16px; font-weight: 700; border: none; cursor: pointer; margin-top: 10px;
-            grid-column: span 2; transition: 0.3s;
-        }
-        .btn-send:hover { background: #1d4ed8; }
+        .form-input, .form-textarea { background: #1f2937; border: 1px solid #374151; color: white; padding: 14px; border-radius: 8px; width: 100%; }
+        .btn-send { background: #2563eb; color: white; padding: 16px; border-radius: 8px; font-weight: 700; grid-column: span 2; cursor: pointer; border: none; }
 
+        /* Responsive */
         @media (max-width: 1024px) {
             .hero-inner { grid-template-columns: 1fr; text-align: center; }
-            .card-grid { grid-template-columns: 1fr; }
-            
-            /* Mobile Header */
-            header { padding: 16px 20px; }
-            .header-right { gap: 15px; }
-            .gnb { display: none; }
-            .action-group { padding-left: 0; border-left: none; }
-            .btn-back { font-size: 0; }
-            .btn-back i { font-size: 24px; }
-
-            .proc-steps { grid-template-columns: 1fr; gap: 40px; }
-            .proc-steps::before { display: none; }
-            .sb-line { display: none; } .sb-label { position: static; display: inline-block; margin-bottom: 20px; }
-
-            .vc-row { grid-template-columns: 1fr; gap: 40px; margin-bottom: 60px; }
-            .vc-title-sticky { position: static; text-align: center; margin-bottom: 20px; }
+            .cta-group { justify-content: center; }
+            .sec-split { grid-template-columns: 1fr; gap: 40px; }
+            .sec-title-area { position: static; text-align: center; margin-bottom: 40px; }
+            .trusted-inner { grid-template-columns: 1fr; gap: 40px; }
+            .client-grid { grid-template-columns: repeat(3, 1fr); }
+            .feature-grid-horiz { grid-template-columns: 1fr; }
+            .process-container { grid-template-columns: 1fr; min-height: auto; }
+            .proc-tabs { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .proc-tab { min-width: 140px; }
             .report-grid { grid-template-columns: 1fr; }
-            .util-card { flex-direction: column; text-align: left; }
-            
-            .cta-compact { flex-direction: column; text-align: center; gap: 30px; padding: 40px 20px; }
+            .util-grid { grid-template-columns: 1fr; }
             .quick-links { grid-template-columns: 1fr; }
-
-            .contact-form { grid-template-columns: 1fr; }
-            .form-group.full { grid-column: span 1; }
-            .btn-send { grid-column: span 1; }
         }
     </style>
 </head>
@@ -322,241 +323,267 @@
         </div>
     </header>
 
-    <div id="contactModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeContactModal()">&times;</span>
-            <div class="modal-header">
-                <h2>최적의 공급망 관리, QESG와 함께 시작하세요.</h2>
-                <p>지속가능한 Value Chain 확보를 위한 첫걸음, 전문가와 상담해보세요.</p>
-            </div>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('문의가 접수되었습니다.'); closeContactModal();">
-                <div class="form-group">
-                    <label>성함</label>
-                    <input type="text" class="form-input" placeholder="성함">
-                </div>
-                <div class="form-group">
-                    <label>제목</label>
-                    <input type="text" class="form-input" placeholder="문의 제목을 작성해주세요">
-                </div>
-                <div class="form-group">
-                    <label>소속</label>
-                    <input type="text" class="form-input" placeholder="소속회사/조직명">
-                </div>
-                <div class="form-group full">
-                    <label>문의사항</label>
-                    <textarea class="form-textarea" placeholder="문의하실 내용을 작성해주세요"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>이메일</label>
-                    <input type="email" class="form-input" placeholder="abc@xyz.com">
-                </div>
-                <div class="form-group">
-                    <label>전화번호</label>
-                    <input type="tel" class="form-input" placeholder="000-0000-0000">
-                </div>
-                <button type="submit" class="btn-send">문의사항 보내기</button>
-            </form>
-        </div>
-    </div>
-
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-content">
-                <span class="badge">제3자 공급망 ESG 진단/평가 서비스</span>
-                <h1>Sustainable<br>Supply Chain</h1>
-                <p>
-                    EU CSDDD 대응 및 공급망 리스크 관리를 위한 통합 평가 솔루션.<br>
-                    QESG Assessment는 진단부터 개선, 모니터링까지 원스톱으로 지원합니다.
-                </p>
+                <span class="badge" style="display:inline-block; background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:24px;">QESG Assessment</span>
+                <h1>지속가능한 공급망/투자를<br> 위한 ESG 평가</h1>
+                <p>제3자 협력사 ESG 조사 · 평가를 통해 지속가능성을 향상하세요</p>
                 <div class="cta-group">
-                    <button class="btn-primary" onclick="openContactModal()">평가 문의하기</button>
+                    <a href="https://assessment.qesg.co.kr/main" target="_blank" class="btn-primary">평가 신청하기</a>
+                    <a href="https://assessment.qesg.co.kr/" target="_blank" class="btn-outline">평가 시스템 바로가기</a>
+                    <a href="[QESG] ESG 평가 서비스 소개서(기본_프리미엄포함)_2024_v2.pdf" class="btn-outline" download>
+                        <i class="ph ph-download-simple"></i> 서비스 소개서
+                    </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" class="sc-dashboard" alt="Supply Chain Assessment">
+                <img src="index_files/QESG_ASSESSMENT.png" class="sc-dashboard" alt="Supply Chain Assessment">
             </div>
+        </div>
+        <div class="wave-separator">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
     </section>
 
-    <section class="why-sec">
-        <div class="sec-header">
-            <h2>Why ESG Assessment?</h2>
-            <p>규제 압력과 투자 요구에 대응하기 위해, 공급망 ESG 관리는 필수 생존 전략입니다.</p>
-        </div>
-        <div class="card-grid">
-            <div class="why-card wc-1">
-                <div class="wc-icon"><i class="ph ph-gavel"></i></div>
-                <h3>규제 리스크 대응</h3>
-                <p>EU 공급망 실사법(CSDDD) 등 글로벌 규제가 강화됨에 따라, 미흡 기업의 글로벌 시장 진출 위험이 증가하고 있습니다. 선제적 대비가 필요합니다.</p>
-            </div>
-            <div class="why-card wc-2">
-                <div class="wc-icon"><i class="ph ph-handshake"></i></div>
-                <h3>공급망 요구 충족</h3>
-                <p>글로벌 고객사의 ESG 평가 요구가 급증하고 있습니다. 평가 결과는 입찰 및 거래 관계 유지의 핵심 요소로 작용합니다.</p>
-            </div>
-            <div class="why-card wc-3">
-                <div class="wc-icon"><i class="ph ph-chart-line-up"></i></div>
-                <h3>투자 및 금융 기회</h3>
-                <p>ESG 성과를 통합적으로 반영하는 투자가 확대되고 있습니다. 우수한 평가 등급은 자본 조달에 긍정적 인센티브를 제공합니다.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="process-sec">
-        <div class="sec-header">
-            <h2>Standard Assessment Process</h2>
-            <p>정책 수립부터 모니터링까지, 공급망 리스크 관리를 위한 5단계 표준 프로세스</p>
-        </div>
-        
-        <div class="proc-container">
-            <div class="scope-bracket">
-                <div class="sb-line"></div>
-                <div class="sb-label">QESG Assessment 프로세스 체계</div>
-            </div>
-
-            <div class="proc-steps">
-                <div class="proc-card" style="opacity:0.7;">
-                    <div class="pc-head">
-                        <div class="pc-icon"><i class="ph ph-scroll"></i></div>
-                        <h4>1. 정책 수립</h4>
-                        <span class="pc-sub">Policy</span>
-                    </div>
-                    <ul class="pc-list">
-                        <li>협력사 Code of Conduct 수립</li>
-                        <li>책임 있는 공급망 관리 체계 마련</li>
-                        <li>기업별 자체 수립 단계</li>
-                    </ul>
+    <section class="trusted-sec">
+        <div class="trusted-inner">
+            <div class="stats-area">
+                <div class="stat-item">
+                    <h3 id="count1">0</h3>
+                    <p>국내/해외 누적 평가 실적</p>
+                    <span>국내 최대 규모의 ESG 진단 평가 경험</span>
+                    <span class="stat-ref">* 2024년 기준</span>
                 </div>
-
-                <div class="proc-card core">
-                    <div class="pc-head">
-                        <div class="pc-icon"><i class="ph ph-magnifying-glass"></i></div>
-                        <h4>2. 리스크 식별/평가</h4>
-                        <span class="pc-sub">Risk Identification</span>
-                    </div>
-                    <ul class="pc-list">
-                        <li>사업 환경 상 인권/안전/환경 위험 평가</li>
-                        <li>사업 운영 과정에서의 통제 수준 평가</li>
-                        <li>리스크 노출 수준 X 운영 관리 수준</li>
-                    </ul>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <h3 id="count2">0</h3>
+                    <p>누적 원청사/의뢰기관</p>
+                    <span>전문가 검증 및 벤치마크 기반 결과 도출</span>
+                    <span class="stat-ref">* 2024년 기준</span>
                 </div>
-
-                <div class="proc-card core">
-                    <div class="pc-head">
-                        <div class="pc-icon"><i class="ph ph-chart-pie-slice"></i></div>
-                        <h4>3. 리스크 분석</h4>
-                        <span class="pc-sub">Risk Analysis</span>
-                    </div>
-                    <ul class="pc-list">
-                        <li>유형별 위험 요인과 핵심 개선 필요사항 도출</li>
-                        <li>EU 공급망 실사 지침 대응을 위한 분석</li>
-                        <li>공급망 관리 차원의 위험 요인 도출</li>
-                    </ul>
-                </div>
-
-                <div class="proc-card core">
-                    <div class="pc-head">
-                        <div class="pc-icon"><i class="ph ph-wrench"></i></div>
-                        <h4>4. 후속 이행조치</h4>
-                        <span class="pc-sub">Corrective Action</span>
-                    </div>
-                    <ul class="pc-list">
-                        <li>평가 결과에 따른 이행 액션 수립(플랫폼 기반)</li>
-                        <li>협력사 역량 강화 및 ESG 컨설팅 제공</li>
-                        <li>성과 향상 지원</li>
-                    </ul>
-                </div>
-
-                <div class="proc-card">
-                    <div class="pc-head">
-                        <div class="pc-icon"><i class="ph ph-arrows-clockwise"></i></div>
-                        <h4>5. 모니터링 및 보고</h4>
-                        <span class="pc-sub">Monitoring</span>
-                    </div>
-                    <ul class="pc-list">
-                        <li>정기적 평가 및 개선 이행 모니터링</li>
-                        <li>지속가능보고서, 홈페이지 등 대외 커뮤니케이션</li>
-                        <li>이해관계자 투명성 제고</li>
-                    </ul>
+            </div>
+            <div class="clients-wrapper">
+                <span class="client-area-title">Key Clients</span>
+                <div class="client-grid">
+                    <div class="client-box">신한은행</div><div class="client-box">현대모비스</div><div class="client-box">금호타이어</div><div class="client-box">현대ENG</div>
+                    <div class="client-box">락앤락</div><div class="client-box">현대기아차</div><div class="client-box">동성케미컬</div><div class="client-box">BGF리테일</div>
+                    <div class="client-box">코웨이</div><div class="client-box">LX세미콘</div><div class="client-box">DGB금융</div><div class="client-box">신용보증기금</div>
+                    <div class="client-box">KIAT</div><div class="client-box">만도</div><div class="client-box">현대제철</div><div class="client-box">롯데칠성</div>
+                    <div class="client-box">풀무원</div><div class="client-box">현대자동차</div><div class="client-box">현대건설</div><div class="client-box">GS칼텍스</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="value-chain-sec">
-        <div class="vc-container">
+    <section class="common-sec features-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Why QESG</span>
+                <h2>Why QESG<br>Assessment?</h2>
+                <p>규제 압력과 투자 요구에 대응하기 위해,<br>공급망 ESG 관리는 필수 생존 전략입니다.</p>
+            </div>
             
-            <div class="vc-row">
-                <div class="vc-title-col">
-                    <div class="vc-title-sticky">
-                        <span class="vc-label">Output</span>
-                        <h3>Assessment<br>Reports</h3>
-                        <p>평가 결과를 다각도로 분석한<br>3종의 상세 보고서를 제공합니다.</p>
+            <div class="feature-grid-horiz">
+                <div class="feat-card">
+                    <div class="feat-icon fc-blue"><i class="ph ph-globe-hemisphere-east"></i></div>
+                    <h3>국제 표준 기반<br>산업별 중요성 적용</h3>
+                    <p>IFRS SASB 산업별 중요성 기준 적용 공식 라이선스를 보유하고 있으며, UNGC, GRI 등 글로벌 ESG 표준과 Align된 지표를 제공합니다.</p>
+                    <ul class="feat-list">
+                        <li>43개 산업별 맞춤형 평가지표 제공</li>
+                        <li>글로벌 이니셔티브 준수</li>
+                    </ul>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon fc-green"><i class="ph ph-chart-line-up"></i></div>
+                    <h3>ESG 평가부터<br>후속 모니터링까지</h3>
+                    <p>하나의 플랫폼으로 ESG 평가부터 역량강화까지 원스톱으로 지원하며, 실시간 기업별 결과 분석 및 모니터링이 가능합니다.</p>
+                    <ul class="feat-list">
+                        <li>원스톱 ESG 성과관리 통합 플랫폼</li>
+                        <li>실시간 대시보드 지원</li>
+                    </ul>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon fc-purple"><i class="ph ph-translate"></i></div>
+                    <h3>글로벌 평가 최적화</h3>
+                    <p>해외 협력사 대상 온라인 공급망 평가 수행 경험이 풍부하며, 영/중문 시스템 및 Native 인력을 보유하고 있습니다.</p>
+                    <ul class="feat-list">
+                        <li>영/중문 평가 시스템 보유 및 운영</li>
+                        <li>내부 Native 인력 상시 지원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="common-sec process-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Standard</span>
+                <h2>Assessment<br>Process</h2>
+                <p>정책 수립부터 모니터링까지,<br>공급망 리스크 관리를 위한<br>4단계 표준 프로세스</p>
+            </div>
+
+            <div class="process-container">
+                <div class="proc-tabs">
+                    <div class="proc-tab active" onclick="openProc(event, 'proc1')">
+                        <h4>Step 1. 평가 진행 <i class="ph ph-caret-right"></i></h4>
+                        <span>데이터/증빙 제출 및 검토</span>
+                    </div>
+                    <div class="proc-tab" onclick="openProc(event, 'proc2')">
+                        <h4>Step 2. 결과 리뷰 <i class="ph ph-caret-right"></i></h4>
+                        <span>결과보고서 확인 및 미흡사항 검토</span>
+                    </div>
+                    <div class="proc-tab" onclick="openProc(event, 'proc3')">
+                        <h4>Step 3. 개선과제 수립 <i class="ph ph-caret-right"></i></h4>
+                        <span>핵심 개선사항 파악 및 과제 도출</span>
+                    </div>
+                    <div class="proc-tab" onclick="openProc(event, 'proc4')">
+                        <h4>Step 4. 수준 향상 <i class="ph ph-caret-right"></i></h4>
+                        <span>가이던스 활용 및 성과 관리</span>
                     </div>
                 </div>
-                <div class="vc-content-col">
-                    <div class="report-grid">
-                        <div class="report-card">
-                            <div class="rc-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800" alt="Summary"></div>
-                            <div class="rc-body">
-                                <h4>전체 평가결과 요약</h4>
-                                <p>종합 등급(AAA~C)과 산업 내 상대적 위치, 강점/약점을 파악합니다.</p>
+
+                <div class="proc-content-area">
+                    <div id="proc1" class="proc-pane active">
+                        <div class="proc-detail">
+                            <h3>평가 진행</h3>
+                            <ul>
+                                <li><i class="ph ph-check-circle"></i> QESG Assessment 평가 플랫폼에서 평가 참여</li>
+                                <li><i class="ph ph-check-circle"></i> 산업별 맞춤형 ESG 질문지에 데이터/증빙 제출</li>
+                                <li><i class="ph ph-check-circle"></i> 전문가 검토 및 피드백 진행</li>
+                            </ul>
+                            <div class="proc-img-placeholder">
+                                [평가 진행 화면 이미지]
                             </div>
                         </div>
-                        <div class="report-card">
-                            <div class="rc-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800" alt="Risk"></div>
-                            <div class="rc-body">
-                                <h4>리스크 노출 수준</h4>
-                                <p>환경/사회/지배구조 영역별 잠재적 리스크 수준을 진단합니다.</p>
+                    </div>
+                    <div id="proc2" class="proc-pane">
+                        <div class="proc-detail">
+                            <h3>결과 리뷰</h3>
+                            <ul>
+                                <li><i class="ph ph-check-circle"></i> 평가 결과보고서 (약 25p 내외) 확인</li>
+                                <li><i class="ph ph-check-circle"></i> 공급망 내 협력사 미흡사항 검토</li>
+                                <li><i class="ph ph-check-circle"></i> 벤치마크 대비 수준 확인</li>
+                            </ul>
+                            <div class="proc-img-placeholder">
+                                [결과 보고서 예시 이미지]
                             </div>
                         </div>
-                        <div class="report-card">
-                            <div class="rc-img"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800" alt="Operation"></div>
-                            <div class="rc-body">
-                                <h4>운영 관리 및 통제</h4>
-                                <p>실제 운영 현황과 정책 구비 여부를 평가하여 가이드를 제시합니다.</p>
+                    </div>
+                    <div id="proc3" class="proc-pane">
+                        <div class="proc-detail">
+                            <h3>개선과제 수립</h3>
+                            <ul>
+                                <li><i class="ph ph-check-circle"></i> ESG 성과 개선을 위한 개선 과제 수립</li>
+                                <li><i class="ph ph-check-circle"></i> 단기/중기/장기적 핵심 개선사항 파악</li>
+                                <li><i class="ph ph-check-circle"></i> (6개월~1년 후) 재평가를 통한 성과 개선 파악</li>
+                            </ul>
+                            <div class="proc-img-placeholder">
+                                [개선 과제 대시보드 이미지]
+                            </div>
+                        </div>
+                    </div>
+                    <div id="proc4" class="proc-pane">
+                        <div class="proc-detail">
+                            <h3>협력사 ESG 수준 향상</h3>
+                            <ul>
+                                <li><i class="ph ph-check-circle"></i> ESG 가이던스를 활용하여 개선 과제 이행</li>
+                                <li><i class="ph ph-check-circle"></i> 인권/윤리/환경/안전 정책 수립 가이드북 제공</li>
+                                <li><i class="ph ph-check-circle"></i> 타사 우수사례집 참고 및 템플릿 활용</li>
+                            </ul>
+                            <div class="proc-img-placeholder">
+                                [가이드북 및 템플릿 이미지]
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="vc-row">
-                <div class="vc-title-col">
-                    <div class="vc-title-sticky">
-                        <span class="vc-label">Value</span>
-                        <h3>Strategic<br>Utilization</h3>
-                        <p>평가 결과는 구매사와 협력사 모두에게<br>비즈니스 가치를 제공합니다.</p>
-                    </div>
-                </div>
-                <div class="vc-content-col">
-                    <div class="util-card">
-                        <div class="util-icon"><i class="ph ph-buildings"></i></div>
-                        <div class="util-content">
-                            <h4>원청사 · 구매사 활용</h4>
-                            <ul class="util-list">
-                                <li><i class="ph ph-check-circle"></i> 협력사 등록 및 선정 시 가점 항목 반영</li>
-                                <li><i class="ph ph-check-circle"></i> 고위험군 기업 추가 실사 및 리스크 관리</li>
-                                <li><i class="ph ph-check-circle"></i> Scope 3 (협력사 온실가스) 데이터 확보</li>
-                                <li><i class="ph ph-check-circle"></i> 동반성장 과제 추진 및 공급망 KPI 관리</li>
-                            </ul>
+    <section class="common-sec output-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Output</span>
+                <h2>Assessment<br>Reports</h2>
+                <p>평가 결과를 다각도로 분석한<br>3종의 상세 보고서를 제공합니다.</p>
+            </div>
+            
+            <div class="report-grid">
+                <div class="report-card">
+                    <div class="rc-inner">
+                        <div class="rc-preview">
+                            <img src="index_files/overall_result.png" alt="Summary Report">
+                        </div>
+                        <div class="rc-info">
+                            <h4>전체 평가결과 요약</h4>
+                            <p>종합 등급(AAA~C)과 산업 내 상대적 위치, 강점/약점을 파악합니다.</p>
                         </div>
                     </div>
-                    <div class="util-card">
-                        <div class="util-icon"><i class="ph ph-handshake"></i></div>
-                        <div class="util-content">
-                            <h4>협력사 (피평가사) 활용</h4>
-                            <ul class="util-list">
-                                <li><i class="ph ph-check-circle"></i> 평가 등급을 금융기관 제출 (금리 우대 등)</li>
-                                <li><i class="ph ph-check-circle"></i> 글로벌 고객사의 ESG 정보 요구 대응</li>
-                                <li><i class="ph ph-check-circle"></i> 내부 추진 과제 도출 및 경영 수준 향상</li>
-                                <li><i class="ph ph-check-circle"></i> 평가 결과 자발적 공개로 투명성 제고</li>
-                            </ul>
+                </div>
+                <div class="report-card">
+                    <div class="rc-inner">
+                        <div class="rc-preview">
+                            <img src="index_files/risk_result.png" alt="Risk Report">
+                        </div>
+                        <div class="rc-info">
+                            <h4>리스크 노출 수준</h4>
+                            <p>환경/사회/지배구조 영역별 잠재적 리스크 수준을 진단합니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="rc-inner">
+                        <div class="rc-preview">
+                            <img src="index_files/management_result.png" alt="Management Report">
+                        </div>
+                        <div class="rc-info">
+                            <h4>운영 관리 및 통제</h4>
+                            <p>실제 운영 현황과 정책 구비 여부를 평가하여 가이드를 제시합니다.</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <section class="common-sec util-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Value</span>
+                <h2>Strategic<br>Utilization</h2>
+                <p>평가 결과는 구매사와 협력사 모두에게<br>비즈니스 가치를 제공합니다.</p>
+            </div>
+            
+            <div class="util-grid">
+                <div class="util-card">
+                    <div class="util-icon"><i class="ph ph-buildings"></i></div>
+                    <div class="util-content">
+                        <h4>원청사 · 구매사 활용</h4>
+                        <ul class="util-list">
+                            <li><i class="ph ph-check-circle"></i> 협력사 등록 및 선정 시 가점 항목 반영</li>
+                            <li><i class="ph ph-check-circle"></i> 고위험군 기업 추가 실사 및 리스크 관리</li>
+                            <li><i class="ph ph-check-circle"></i> Scope 3 (협력사 온실가스) 데이터 확보</li>
+                            <li><i class="ph ph-check-circle"></i> 동반성장 과제 추진 및 공급망 KPI 관리</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="util-card">
+                    <div class="util-icon"><i class="ph ph-handshake"></i></div>
+                    <div class="util-content">
+                        <h4>협력사 (피평가사) 활용</h4>
+                        <ul class="util-list">
+                            <li><i class="ph ph-check-circle"></i> 평가 등급을 금융기관 제출 (금리 우대 등)</li>
+                            <li><i class="ph ph-check-circle"></i> 글로벌 고객사의 ESG 정보 요구 대응</li>
+                            <li><i class="ph ph-check-circle"></i> 내부 추진 과제 도출 및 경영 수준 향상</li>
+                            <li><i class="ph ph-check-circle"></i> 평가 결과 자발적 공개로 투명성 제고</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -573,7 +600,6 @@
             </div>
 
             <h2 class="more-services-title">Explore Other Services</h2>
-
             <div class="quick-links">
                 <a href="ert.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-file-text"></i></div>
@@ -602,19 +628,75 @@
         <div class="copyright">© 2025 QuantifiedESG. All rights reserved.</div>
     </footer>
 
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeContactModal()">&times;</span>
+            <div class="modal-header">
+                <h2>최적의 공급망 관리, QESG와 함께 시작하세요.</h2>
+                <p>지속가능한 Value Chain 확보를 위한 첫걸음, 전문가와 상담해보세요.</p>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('문의가 접수되었습니다.'); closeContactModal();">
+                <div class="form-group"><label>성함</label><input type="text" class="form-input" placeholder="성함"></div>
+                <div class="form-group"><label>제목</label><input type="text" class="form-input" placeholder="문의 제목"></div>
+                <div class="form-group"><label>소속</label><input type="text" class="form-input" placeholder="소속회사/조직명"></div>
+                <div class="form-group full"><label>문의사항</label><textarea class="form-textarea" placeholder="문의하실 내용"></textarea></div>
+                <div class="form-group"><label>이메일</label><input type="email" class="form-input" placeholder="abc@xyz.com"></div>
+                <div class="form-group"><label>전화번호</label><input type="tel" class="form-input" placeholder="000-0000-0000"></div>
+                <button type="submit" class="btn-send">문의사항 보내기</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        function openContactModal() {
-            document.getElementById('contactModal').classList.add('show');
-        }
-        function closeContactModal() {
-            document.getElementById('contactModal').classList.remove('show');
-        }
+        // Modal Logic
+        function openContactModal() { document.getElementById('contactModal').classList.add('show'); }
+        function closeContactModal() { document.getElementById('contactModal').classList.remove('show'); }
         window.onclick = function(event) {
-            var modal = document.getElementById('contactModal');
-            if (event.target == modal) {
-                closeContactModal();
-            }
+            if (event.target == document.getElementById('contactModal')) closeContactModal();
         }
+
+        // Process Tabs Logic
+        function openProc(evt, procId) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("proc-pane");
+            for (i = 0; i < x.length; i++) { x[i].classList.remove("active"); }
+            tablinks = document.getElementsByClassName("proc-tab");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            document.getElementById(procId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Number Counting Animation (Slowed Down to 4000ms)
+        function animateValue(obj, start, end, duration, suffix) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const value = Math.floor(easeProgress * (end - start) + start);
+                obj.innerHTML = value.toLocaleString() + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Intersection Observer for Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue(document.getElementById("count1"), 0, 7500, 4000, "+");
+                    animateValue(document.getElementById("count2"), 0, 60, 4000, "개사+");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const statSection = document.querySelector('.stats-area');
+            if(statSection) observer.observe(statSection);
+        });
     </script>
 
 </body>
