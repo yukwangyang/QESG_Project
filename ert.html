@@ -249,23 +249,67 @@
         .step-num { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; opacity: 0.7; }
         .step-name { font-size: 17px; display: block; }
         
-        .pi-display { position: relative; min-height: 400px; } 
-        .pi-content { 
-            display: none; opacity: 0; transition: all 0.4s ease; position: absolute; top: 0; left: 0; width: 100%; 
-            grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start; 
-        }
-        .pi-content.active { display: grid; opacity: 1; position: relative; }
+      .pi-display { 
+    position: relative; 
+    /* 왼쪽 Step 1~5 탭 바의 실제 높이에 맞춰 600px 정도로 넉넉히 잡습니다 */
+    min-height: 550px; 
+    display: flex;
+}
+    .pi-content { 
+    display: none; 
+    opacity: 0; 
+    transition: all 0.4s ease; 
+    position: absolute; 
+    top: 0; left: 0; width: 100%; 
+    height: 100%; 
+    grid-template-columns: 1.2fr 1fr; 
+    gap: 40px; 
+    /* 이미지와 텍스트 박스 자체를 아래쪽(flex-end)으로 배치 */
+    align-items: flex-end; 
+    padding-bottom: 50px; /* 바닥에서 약간 띄움 */
+}
+
+.pi-content.active { 
+    display: grid; 
+    opacity: 1; 
+    position: relative; 
+}
         
-        .pi-text-area { padding-top: 10px; }
-        .pi-text-area p { font-size: 17px; color: var(--text-sub); line-height: 1.8; margin-bottom: 30px; word-break: keep-all; }
+      .pi-text-area { 
+    display: flex;
+    flex-direction: column;
+    /* 내부의 글들을 아래쪽으로 정렬 */
+    justify-content: flex-end; 
+    height: 100%;
+    /* 아래 숫자를 높일수록 글이 더 아래로 내려갑니다 */
+    padding-top: 150px; 
+}
+
+.pi-text-area p { 
+    font-size: 17px; 
+    color: var(--text-sub); 
+    line-height: 1.8; 
+    margin-bottom: 30px; 
+    word-break: keep-all; 
+}
         .pi-list { list-style: none; padding: 0; }
         .pi-list li { display: flex; align-items: start; gap: 12px; margin-bottom: 14px; font-size: 16px; color: var(--text-main); font-weight: 600; }
         .pi-list i { color: var(--primary); margin-top: 4px; font-size: 20px; }
         
-        .pi-visual img { 
-            border-radius: 16px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid var(--border); 
-            width: 100%; max-height: 320px; object-fit: contain; background: #f8fafc; 
-        }
+     /* 이미지도 텍스트와 높이를 맞추기 위해 아래로 정렬 */
+.pi-visual {
+    display: flex;
+    align-items: flex-end; 
+    height: 100%;
+}
+
+.pi-visual img { 
+    width: 100%;
+    max-height: 400px; 
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+}
 
         /* [6. CTA & Footer] */
         /* Removed top padding to minimize gap */
@@ -338,14 +382,7 @@
     padding: 120px 40px;
 }
 
-/* 왼쪽 제목 영역에 배경색 및 스타일 추가 */
-.sec-title-area.colored-title {
-    background: #ffffff; /* 흰색 박스로 강조 */
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #e2e8f0;
-}
+
 
 /* 오른쪽 카드 래퍼 */
 .dual-cards-wrapper {
@@ -479,27 +516,101 @@
     .dual-cards-horizontal {
         flex-direction: column;
     }
+}/* 버튼 그룹 레이아웃 */
+.cta-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+/* 메인 버튼 스타일 */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-primary:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+}
+
+/* 아웃라인 버튼 스타일 (서비스 소개서) */
+.btn-outline {
+    background: white;
+    color: var(--text-main);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-outline:hover {
+    background: #f8fafc;
+    border-color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+/* 이미지 호버 효과: 확대 폭을 기존의 절반(1.025)으로 축소 */
+.dashboard-img.active-hover {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent; /* 기본 상태 테두리 확보 */
+    cursor: pointer;
+}
+
+.dashboard-img.active-hover:hover {
+    /* 기존 1.05에서 1.025로 수정 (약 2.5% 확대) */
+    transform: scale(1.025); 
+    
+    /* 테두리 색상 등장 및 푸른 빛 광택(Glow) 효과 유지 */
+    border-color: var(--primary); 
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3), 
+                0 30px 60px -15px rgba(0,0,0,0.15); 
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .cta-group {
+        flex-direction: column;
+    }
+    .btn-primary, .btn-outline {
+        justify-content: center;
+    }
 }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo"><a href="index.html"><img src="https://report.qesg.co.kr/static_img/logos/QESG_basic.svg" alt="QESG"></a></div>
-        
-        <div class="header-right">
-            <nav class="gnb">
-                <a href="ert.html" class="nav-link active">ERT Reporting</a>
-                <a href="dms.html" class="nav-link">DMS Data Hub</a>
-                <a href="supply.html" class="nav-link">Supply Chain</a>
-                <a href="carbon.html" class="nav-link">Carbon Mgmt</a>
-            </nav>
-            <div class="action-group">
-                <a href="index.html" class="btn-back"><i class="ph ph-arrow-left"></i> 메인으로</a>
-                <button class="btn-contact" onclick="openContactModal()">문의하기</button>
-            </div>
+    <div class="logo">
+        <a href="index.html">
+            <img src="https://qesg.co.kr/images/qesg.svg" alt="QESG">
+        </a>
+    </div>
+    
+    <div class="header-right">
+        <nav class="gnb">
+            <a href="ert.html" class="nav-link active">ERT Reporting</a>
+            <a href="dms.html" class="nav-link">DMS Data Hub</a>
+            <a href="supply.html" class="nav-link">Supply Chain</a>
+            <a href="carbon.html" class="nav-link">Carbon Mgmt</a>
+        </nav>
+        <div class="action-group">
+            <a href="index.html" class="btn-back"><i class="ph ph-arrow-left"></i> 메인으로</a>
+            <button class="btn-contact" onclick="openContactModal()">문의하기</button>
         </div>
-    </header>
+    </div>
+</header>
 
     <div id="contactModal" class="modal-overlay">
         <div class="modal-content">
@@ -538,32 +649,35 @@
         </div>
     </div>
 
-    <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <h1>통합 ESG 정보공시 솔루션</h1>
-                <p>복잡한 데이터 수집부터 글로벌 표준에 맞춘 보고서 발간까지.<br>ERT는 공시 업무의 비효율을 제거하고 데이터 신뢰성을 보장합니다.</p>
-                <div class="email-form">
-                    <input type="email" class="email-input" placeholder="이메일 주소를 입력하세요">
-                    <button class="btn-submit">데모 신청하기</button>
-                </div>
-                
-                <div class="cert-container">
-                    <div class="cert-text">
-                        <i class="ph ph-check-circle"></i>
-                        <span>ESG Reporting Tool은 GRI 공시를 위한 Software Tool로<br>공식 인증을 획득한 플랫폼입니다.</span>
-                    </div>
-                    <div class="cert-logos">
-                        <img src="https://qesg.co.kr/_nuxt/img/Software%20and%20tools%20Partner%202023.74e0b71.png" alt="GRI Partner">
-                        <img src="https://qesg.co.kr/_nuxt/img/sasb-inside-logo.7ad7497.png" alt="SASB Inside">
-                    </div>
-                </div>
+   <section class="hero">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <h1>통합 ESG 정보공시 솔루션</h1>
+            <p>복잡한 데이터 수집부터 글로벌 표준에 맞춘 보고서 발간까지.<br>ERT는 공시 업무의 비효율을 제거하고 데이터 신뢰성을 보장합니다.</p>
+            
+            <div class="cta-group">
+                <a href="https://report.qesg.co.kr/" target="_blank" class="btn-primary">ESG Reporting Tool 바로가기</a>
+                <a href="(QESG) ESG Reporting Tool 서비스 소개서_2025_v4.pdf" class="btn-outline" download>
+                    <i class="ph ph-download-simple"></i> 서비스 소개서
+                </a>
             </div>
-            <div class="hero-visual">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" class="dashboard-img" alt="ERT Dashboard">
+            
+            <div class="cert-container">
+                <div class="cert-text">
+                    <i class="ph ph-check-circle"></i>
+                    <span>ESG Reporting Tool은 GRI 공시를 위한 Software Tool로<br>공식 인증을 획득한 플랫폼입니다.</span>
+                </div>
+                <div class="cert-logos">
+                    <img src="https://qesg.co.kr/_nuxt/img/Software%20and%20tools%20Partner%202023.74e0b71.png" alt="GRI Partner">
+                    <img src="https://qesg.co.kr/_nuxt/img/sasb-inside-logo.7ad7497.png" alt="SASB Inside">
+                </div>
             </div>
         </div>
-    </section>
+        <div class="hero-visual">
+            <img src="index_files/ERT_PAGE.png" class="dashboard-img active-hover" alt="ERT Dashboard">
+        </div>
+    </div>
+</section>
 
     <section class="trusted">
         <div class="trusted-label">Trusted by Industry Leaders</div>
@@ -811,7 +925,7 @@
                             <li><i class="ph ph-check-circle"></i> 산업별 표준 목차 추천 기능 제공</li>
                         </ul>
                     </div>
-                    <div class="pi-visual"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200" alt="Step 1 UI"></div>
+                    <div class="pi-visual"><img src="index_files/INDUSTRY_INDEX.png" alt="Step 1 UI"></div>
                 </div>
 
                 <div id="step2" class="pi-content">
@@ -822,7 +936,7 @@
                             <li><i class="ph ph-check-circle"></i> SASB / TCFD 프레임워크 연동</li>
                         </ul>
                     </div>
-                    <div class="pi-visual"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200" alt="Step 2 UI"></div>
+                    <div class="pi-visual"><img src="index_files/METRIC_RECOMMEND.png" alt="Step 2 UI"></div>
                 </div>
 
                 <div id="step3" class="pi-content">
@@ -833,7 +947,7 @@
                             <li><i class="ph ph-check-circle"></i> 데이터 테이블 및 활동 내역 취합</li>
                         </ul>
                     </div>
-                    <div class="pi-visual"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200" alt="Step 3 UI"></div>
+                    <div class="pi-visual"><img src="index_files/WRITE_REPORT.png" alt="Step 3 UI"></div>
                 </div>
 
                 <div id="step4" class="pi-content">
@@ -855,17 +969,18 @@
                             <li><i class="ph ph-check-circle"></i> 홈페이지 연계 및 URL 배포</li>
                         </ul>
                     </div>
-                    <div class="pi-visual"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200" alt="Step 5 UI"></div>
+                    <div class="pi-visual"><img src="index_files/DISCLOSE.png" alt="Step 5 UI"></div>
                 </div>
             </div>
         </div>
     </section>
-   <section class="features-bento custom-bg">
+    
+  <section class="features-bento custom-bg">
     <div class="sec-split usage-plan">
-        <div class="sec-title-area colored-title">
+        <div class="sec-title-area">
             <span class="sec-label">Our Solutions</span>
             <h2>활용 방안</h2>
-            <p>웹 리포팅으로 ESG 공시 정보 접근성을 높이고,<br>대외 정보 요구에 효율적으로 대응하세요.</p>
+            <p>웹 리포팅으로 ESG 공시 정보 접근성을 높이고, 대외 정보 요구에 효율적으로 대응하세요.</p>
         </div>
 
         <div class="dual-cards-horizontal">
@@ -875,17 +990,16 @@
                 <ul class="card-list">
                     <li>글로벌 보고 표준 기반의 공식 ESG 보고서 발간</li>
                     <li>기업 홈페이지 내 ESG 보고서 연결 가능</li>
-                    <li>기업 ESG 성과에 대한 커뮤니케이션 향상</li>
+                    <li>기업 ESG 성과에 대한 외부 커뮤니케이션 향상</li>
                 </ul>
             </div>
-
             <div class="info-card light-blue">
                 <span class="card-badge blue">기존 PDF 보고서 발간 기업</span>
-                <h3>ESG Reporting Tool을<br>데이터 센터로 활용하세요.</h3>
+                <h3>ESG Reporting Tool을<br>온라인 ESG 데이터 센터로 활용하세요.</h3>
                 <ul class="card-list">
-                    <li>실시간 업데이트 가능한 데이터 센터 활용</li>
-                    <li>웹 기반 접근성 및 검색 편의성 확보</li>
-                    <li>다양한 공시 요건에 대한 효율적 대응</li>
+                    <li>실시간 업데이트 가능한 ESG 데이터 센터로 활용</li>
+                    <li>웹 기반 접근성 확보</li>
+                    <li>다양한 공시 요건에 대해 Cross-Reference 대응</li>
                 </ul>
             </div>
         </div>
