@@ -10,13 +10,17 @@
     <style>
         :root {
             --bg-body: #ffffff;
-            --text-main: #0f172a;
-            --text-sub: #475569;
-            --primary: #059669;       /* Carbon Green */
+            --text-main: #0f172a;       /* Deep Navy */
+            --text-sub: #475569;        /* Slate Gray */
+            --primary: #059669;         /* Carbon Green */
             --primary-dark: #047857;
             --primary-light: #ecfdf5;
             --surface: #f8fafc;
             --border: #e2e8f0;
+            --green-bg: #ecfdf5;
+            --green-text: #065f46;
+            --green-btn: #10b981;
+            --highlight-bg: #f0fdf4;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
@@ -25,7 +29,7 @@
         img { display: block; max-width: 100%; height: auto; }
         ul { list-style: none; padding: 0; margin: 0; }
 
-        /* [Header - Right Aligned] */
+        /* [Header] */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
@@ -33,154 +37,208 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .logo img { height: 28px; }
-        
         .header-right { display: flex; align-items: center; gap: 40px; }
-        
         .gnb { display: flex; gap: 24px; }
         .nav-link { font-size: 15px; font-weight: 600; color: var(--text-sub); position: relative; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
-        /* Active Dot Indicator */
         .nav-link.active::after {
             content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
             width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
         }
-
         .action-group { display: flex; align-items: center; gap: 12px; padding-left: 20px; border-left: 1px solid #e2e8f0; }
         .btn-back { font-size: 14px; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 4px; }
         .btn-back:hover { color: var(--primary); }
-        
         .btn-contact { 
             background: var(--text-main); color: white; padding: 8px 18px; 
             border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: 0.3s;
         }
         .btn-contact:hover { background: var(--primary); }
 
+        /* [Common Layout - Sticky Left Title] */
+        .sec-split {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 320px 1fr;
+            gap: 80px; align-items: start;
+        }
+        .sec-title-area { position: sticky; top: 120px; }
+        .sec-title-area h2 { 
+            font-size: 36px; font-weight: 800; margin-bottom: 20px; 
+            color: var(--text-main); line-height: 1.25; letter-spacing: -0.5px;
+        }
+        .sec-title-area p { font-size: 17px; color: var(--text-sub); line-height: 1.6; word-break: keep-all; }
+        .sec-label {
+            font-size: 13px; font-weight: 700; color: var(--primary); 
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block;
+        }
+        .common-sec { padding: 140px 40px; }
+
         /* [1. Hero Section] */
-        .hero {
-            padding: 180px 40px 100px; 
-            background: radial-gradient(circle at 50% 0%, #ecfdf5 0%, #ffffff 50%);
-            display: flex; align-items: center; min-height: 85vh;
+        .hero { 
+            padding: 180px 40px 140px; 
+            background: radial-gradient(circle at 60% 30%, #ecfdf5 0%, #ffffff 60%); 
+            display: flex; align-items: center; min-height: 85vh; position: relative;
         }
-        .hero-inner {
-            max-width: 1300px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1.2fr; 
-            gap: 80px; align-items: center;
+        .hero-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: center; z-index: 2; position: relative; }
+        .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.15; margin-bottom: 24px; color: var(--text-main); letter-spacing: -1px; }
+        .hero p { font-size: 19px; color: var(--text-sub); margin-bottom: 40px; line-height: 1.6; word-break: keep-all; }
+        
+        .cta-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+        .btn-primary, .btn-outline {
+            padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 16px; transition: 0.3s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-decoration: none;
         }
-        .hero-content { max-width: 600px; }
-        .badge {
-            display: inline-block; background: var(--primary-light); color: var(--primary); 
-            padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; margin-bottom: 24px;
-        }
-        .hero h1 {
-            font-size: 56px; font-weight: 800; line-height: 1.15; margin-bottom: 24px;
-            color: var(--text-main); letter-spacing: -1px;
-        }
-        .hero p {
-            font-size: 19px; color: var(--text-sub); margin-bottom: 40px;
-            line-height: 1.6; word-break: keep-all;
-        }
-        .btn-primary {
-            background: var(--primary); color: white; padding: 14px 32px; border-radius: 8px;
-            font-weight: 700; font-size: 16px; border: none; cursor: pointer;
-        }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(5, 150, 105, 0.3); }
+        .btn-primary { background: var(--primary); color: white; border: none; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
         .hero-visual { position: relative; perspective: 1000px; }
-        .carbon-dashboard {
-            border-radius: 12px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15);
-            border: 1px solid rgba(0,0,0,0.05); background: white;
-            transform: rotateY(-5deg) rotateX(5deg); transition: 0.5s;
+        .platform-login-img {
+            border-radius: 16px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.15); 
+            border: 1px solid rgba(0,0,0,0.05); background: white; width: 100%; height: auto;
+            transform: rotateY(-5deg) rotateX(2deg); transition: 0.5s;
         }
-        .hero-visual:hover .carbon-dashboard { transform: rotateY(0) rotateX(0); }
-        .float-card {
-            position: absolute; background: white; padding: 16px 24px; border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12); display: flex; flex-direction: column;
-            border: 1px solid rgba(0,0,0,0.05); z-index: 2; min-width: 180px;
-        }
-        .fc-1 { top: 20%; left: -40px; animation: float 6s infinite ease-in-out; }
-        .stat-val { font-size: 24px; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 13px; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .hero-visual:hover .platform-login-img { transform: rotateY(0) rotateX(0); }
 
-        /* [2. Dual Value Proposition] */
-        .value-sec { padding: 120px 40px; background: white; }
-        .sec-header { text-align: center; max-width: 800px; margin: 0 auto 80px; }
-        .sec-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
-        .sec-header p { font-size: 18px; color: var(--text-sub); }
-        .dual-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; }
-        .val-card-wide {
-            padding: 50px; border-radius: 24px; transition: 0.3s;
-            display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center; border: 1px solid transparent;
-        }
-        .val-card-wide:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .vc-buyer { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #bfdbfe; }
-        .vc-buyer .val-icon { color: #1e40af; background: #bfdbfe; }
-        .vc-buyer .val-list i { color: #1e40af; }
-        .vc-supplier { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #bbf7d0; }
-        .vc-supplier .val-icon { color: var(--primary-dark); background: #bbf7d0; }
-        .vc-supplier .val-list i { color: var(--primary-dark); }
-        .val-icon { width: 70px; height: 70px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .val-list li { display: flex; align-items: start; gap: 15px; margin-bottom: 18px; font-size: 16px; color: var(--text-main); line-height: 1.5; font-weight: 500; }
-        .val-list i { margin-top: 3px; font-size: 20px; }
-        .val-list strong { display: block; margin-bottom: 4px; font-size: 17px; color: var(--text-main); }
+       /* [2. Process Tab Style Updated - Unified Card] */
+.process-sec { background: #fff; }
 
-        /* [3. Platform Preview] */
-        .platform-sec { padding: 120px 40px; background: var(--surface); }
-        .plat-container { max-width: 1400px; margin: 0 auto; text-align: center; }
-        .plat-visual { margin-top: 60px; position: relative; perspective: 1500px; }
-        .pv-screen { width: 100%; border-radius: 16px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.2); border: 4px solid white; transition: 0.5s; }
-        .hotspot {
-            position: absolute; width: 30px; height: 30px; background: var(--primary);
-            border: 4px solid white; border-radius: 50%; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10; display: flex; align-items: center; justify-content: center; animation: pulse 2s infinite;
-        }
-        .hotspot:hover .hs-tooltip { opacity: 1; visibility: visible; transform: translateY(-10px) translateX(-50%); }
-        .hs-tooltip {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-            background: #0f172a; color: white; padding: 8px 16px; border-radius: 8px;
-            font-size: 13px; font-weight: 700; white-space: nowrap; opacity: 0; visibility: hidden; transition: 0.3s;
-        }
-        .hs-tooltip::after {
-            content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px; border-width: 6px; border-style: solid; border-color: #0f172a transparent transparent transparent;
-        }
-        .hs-1 { top: 30%; left: 20%; } .hs-2 { top: 30%; right: 20%; } .hs-3 { bottom: 20%; left: 50%; } 
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
+.proc-container { display: grid; grid-template-columns: 280px 1fr; gap: 60px; min-height: 600px; }
 
-        /* [4. Report Output] */
-        .report-sec { padding: 120px 40px; background: white; }
-        .report-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: start; }
-        .report-text h3 { font-size: 32px; font-weight: 800; margin-bottom: 20px; }
-        .report-text p { font-size: 17px; color: var(--text-sub); margin-bottom: 40px; line-height: 1.6; }
-        .report-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .rc-item {
-            background: var(--surface); padding: 24px; border-radius: 16px; border: 1px solid var(--border);
-            transition: 0.3s; text-align: center;
-        }
-        .rc-item:hover { background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-color: var(--primary); transform: translateY(-5px); }
-        .rc-icon {
-            width: 48px; height: 48px; background: var(--primary-light); color: var(--primary);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 24px; margin: 0 auto 16px;
-        }
-        .rc-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-        .rc-item p { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
-        .report-visual { position: relative; height: 500px; display: flex; justify-content: center; align-items: center; background: #f1f5f9; border-radius: 24px; }
-        .a4-paper {
-            width: 320px; height: 450px; background: white; 
-            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.2); position: absolute; transition: 0.4s; border: 1px solid #e2e8f0; overflow: hidden; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
-        .a4-1 { transform: translate(-55%, -48%) rotate(-5deg); z-index: 1; opacity: 0.7; }
-        .a4-2 { z-index: 2; }
-        .a4-2:hover { transform: translate(-50%, -55%) rotate(0deg); box-shadow: 0 35px 70px -15px rgba(5, 150, 105, 0.3); }
-        .a4-paper img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.proc-tabs { display: flex; flex-direction: column; gap: 10px; }
+.proc-tab { 
+    padding: 20px 24px; border-radius: 12px; cursor: pointer; transition: 0.3s; 
+    border: 1px solid transparent; background: var(--surface); color: var(--text-sub);
+}
+.proc-tab:hover { background: #f1f5f9; }
+.proc-tab.active { background: var(--highlight-bg); border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1); }
+.proc-tab h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+.proc-tab span { font-size: 13px; opacity: 0.8; }
 
-        /* [5. CTA & Quick Links] */
+.proc-content-area { position: relative; }
+.proc-pane { display: none; opacity: 0; transition: all 0.4s ease; height: 100%; }
+.proc-pane.active { display: block; opacity: 1; }
+
+/* Unified Wrapper Card */
+.unified-card {
+    background: white; border: 1px solid var(--border); border-radius: 20px;
+    /* 수정 1: 패딩을 40px -> 좌우 20px, 상하 30px로 줄여 내부 공간 확보 */
+    padding: 30px 20px; 
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column; gap: 30px;
+}
+
+/* Role Comparison Area (Top) */
+.role-compare-grid {
+    /* 수정 2: 컬럼 사이 간격을 40px -> 20px로 줄임 */
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 20px; align-items: start;
+}
+.role-divider { width: 1px; height: 100%; background: #e2e8f0; }
+
+.role-column h5 {
+    font-size: 18px; font-weight: 800; margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 2px solid transparent;
+    /* 텍스트가 너무 길 경우를 대비해 줄바꿈 방지 (선택 사항) */
+    white-space: nowrap; 
+}
+.role-column.buyer h5 { color: #1e40af; border-bottom-color: #dbeafe; }
+.role-column.supplier h5 { color: #166534; border-bottom-color: #dcfce7; }
+
+.role-column ul { list-style: none; padding: 0; margin: 0; }
+.role-column li { 
+    position: relative; padding-left: 16px; margin-bottom: 10px; 
+    font-size: 15px; color: var(--text-sub); line-height: 1.5; 
+    /* 수정 3: 자간을 살짝 좁혀서 텍스트가 더 많이 들어가도록 조정 */
+    letter-spacing: -0.5px; 
+    word-break: keep-all; /* 단어 단위로 줄바꿈 (가독성 유지) */
+}
+.role-column li::before { 
+    content: '•'; position: absolute; left: 0; top: 0; 
+    color: inherit; font-weight: bold; font-size: 16px;
+}
+.role-column.buyer li::before { color: #1e40af; }
+.role-column.supplier li::before { color: #166534; }
+
+/* Image Area (Bottom) */
+.proc-img-box {
+    width: 100%; height: 350px; 
+    background: #f8fafc; border-radius: 12px; overflow: hidden;
+    border: 1px solid #e2e8f0;
+    display: flex; align-items: center; justify-content: center;
+}
+/* [수정된 코드] - 이미지가 잘리지 않고 박스 안에 쏙 들어오게 변경 */
+.proc-img-box img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; /* cover를 contain으로 변경 */
+    object-position: center; /* 이미지를 중앙에 정렬 (상단을 원하면 top 유지) */
+}
+
+
+        /* [3. Real-time Monitoring] */
+        .monitor-sec { background: var(--surface); }
+        .monitor-dashboard {
+            background: white; border-radius: 20px; padding: 40px; 
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            display: grid; grid-template-columns: 2fr 1fr; gap: 30px;
+        }
+        .md-main-chart {
+            background: #f8fafc; border-radius: 12px; height: 300px; position: relative;
+            display: flex; align-items: flex-end; justify-content: space-around; padding: 20px;
+        }
+        /* CSS Bar Chart */
+        .chart-bar { width: 40px; background: var(--primary); border-radius: 4px 4px 0 0; position: relative; transition: 0.5s; }
+        .chart-bar:hover { opacity: 0.8; transform: scaleY(1.05); transform-origin: bottom; }
+        .chart-bar::after { content: attr(data-val); position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: var(--text-main); }
+        
+        .md-side-panel { display: flex; flex-direction: column; gap: 20px; }
+        .md-stat-box {
+            background: #f1f5f9; padding: 20px; border-radius: 12px;
+        }
+        .md-stat-title { font-size: 13px; color: var(--text-sub); margin-bottom: 8px; display: block; }
+        .md-stat-val { font-size: 24px; font-weight: 800; color: var(--text-main); }
+        .md-stat-val span { font-size: 14px; font-weight: 500; color: #64748b; margin-left: 4px; }
+
+        /* [4. Premium Reports - Interactive] */
+        .report-sec { background: white; padding-bottom: 160px; }
+        
+        .report-grid-layout { display: grid; grid-template-columns: 350px 1fr; gap: 60px; }
+        
+        .report-list { display: flex; flex-direction: column; gap: 16px; }
+        .report-item {
+            padding: 24px; border-radius: 16px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s;
+            background: white;
+        }
+        .report-item:hover { background: #f8fafc; transform: translateX(5px); }
+        .report-item.active { border-color: var(--primary); background: var(--highlight-bg); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1); }
+        
+        .ri-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .ri-icon { font-size: 24px; color: var(--primary); }
+        .ri-title { font-size: 17px; font-weight: 700; color: var(--text-main); }
+        .ri-desc { font-size: 13px; color: var(--text-sub); line-height: 1.4; margin-left: 36px; }
+
+        .report-preview-area {
+            position: relative; height: 500px; background: #e2e8f0; border-radius: 20px;
+            display: flex; justify-content: center; align-items: center; overflow: hidden;
+        }
+        .a4-sheet {
+            width: 340px; height: 480px; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: absolute;
+            display: flex; align-items: center; justify-content: center; color: #ccc; font-weight: 700; font-size: 14px;
+            opacity: 0; transform: translateY(20px) scale(0.95);
+        }
+        .a4-sheet.active { opacity: 1; transform: translateY(0) scale(1); z-index: 2; }
+        .a4-sheet img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+        /* [5. CTA & Footer] */
         .bottom-section { background: var(--surface); padding: 100px 40px 120px; }
         .bottom-inner { max-width: 1200px; margin: 0 auto; }
-        .cta-compact { background: var(--primary-light); border: 1px solid #ccfbf1; border-radius: 16px; padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 80px; }
-        .cta-text h3 { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+        .cta-compact { background: var(--green-bg); border: 1px solid #bbf7d0; border-radius: 16px; padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 80px; }
+        .cta-text h3 { font-size: 24px; font-weight: 800; color: var(--green-text); margin-bottom: 8px; }
         .cta-text p { font-size: 15px; color: #374151; margin: 0; }
-        .btn-download { background: var(--primary); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); text-decoration: none; white-space: nowrap; }
-        .btn-download:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-download { background: var(--green-btn); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); text-decoration: none; white-space: nowrap; }
+        .btn-download:hover { background: #059669; transform: translateY(-2px); }
+
         .more-services-title { text-align: center; font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
         .quick-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .ql-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 30px; transition: 0.3s; display: flex; flex-direction: column; height: 100%; }
@@ -194,66 +252,32 @@
         .footer-logo img { height: 24px; opacity: 0.6; margin-bottom: 20px; display: inline-block; }
         .copyright { font-size: 13px; color: #9ca3af; }
 
-        /* [Contact Modal Styles] */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); z-index: 2000;
-            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
-        }
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.show { display: flex; opacity: 1; }
-        .modal-content {
-            background: #111827; color: white; width: 90%; max-width: 800px;
-            padding: 50px; border-radius: 20px; position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform: translateY(20px); transition: transform 0.3s ease;
-        }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; cursor: pointer; color: #9ca3af; transition: 0.2s; }
-        .close-btn:hover { color: white; }
-        
+        .modal-content { background: #111827; color: white; width: 90%; max-width: 800px; padding: 50px; border-radius: 20px; position: relative; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; cursor: pointer; color: #9ca3af; }
         .modal-header { text-align: center; margin-bottom: 40px; }
-        .modal-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-        .modal-header p { color: #9ca3af; font-size: 16px; }
-        
         .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-group { display: flex; flex-direction: column; gap: 8px; }
         .form-group.full { grid-column: span 2; }
-        .form-group label { font-size: 14px; font-weight: 600; color: #d1d5db; }
-        .form-input, .form-textarea {
-            background: #1f2937; border: 1px solid #374151; color: white;
-            padding: 14px; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s;
-        }
-        .form-input:focus, .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
-        .form-textarea { height: 120px; resize: none; }
-        .btn-send {
-            background: #2563eb; color: white; padding: 16px; border-radius: 8px;
-            font-size: 16px; font-weight: 700; border: none; cursor: pointer; margin-top: 10px;
-            grid-column: span 2; transition: 0.3s;
-        }
-        .btn-send:hover { background: #1d4ed8; }
+        .form-input, .form-textarea { background: #1f2937; border: 1px solid #374151; color: white; padding: 14px; border-radius: 8px; width: 100%; }
+        .btn-send { background: #2563eb; color: white; padding: 16px; border-radius: 8px; font-weight: 700; grid-column: span 2; cursor: pointer; border: none; }
 
+        /* Responsive */
         @media (max-width: 1024px) {
             .hero-inner { grid-template-columns: 1fr; text-align: center; }
-            
-            /* Mobile Header */
-            header { padding: 16px 20px; }
-            .header-right { gap: 15px; }
-            .gnb { display: none; } /* Hide menu on mobile */
-            .action-group { padding-left: 0; border-left: none; }
-            .btn-back { font-size: 0; } /* Hide text */
-            .btn-back i { font-size: 24px; } /* Only show icon */
-
-            .val-card-wide { grid-template-columns: 1fr; text-align: center; gap: 20px; }
-            .val-icon { margin: 0 auto; }
-            .report-container { grid-template-columns: 1fr; gap: 60px; }
-            .report-cards-grid { grid-template-columns: 1fr; }
-            .report-visual { height: 400px; }
-            .a4-paper { width: 260px; height: 370px; }
+            .sec-split { grid-template-columns: 1fr; gap: 40px; }
+            .sec-title-area { position: static; text-align: center; margin-bottom: 40px; }
+            .proc-container { grid-template-columns: 1fr; min-height: auto; }
+            .proc-tabs { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .proc-tab { min-width: 140px; }
+            .role-grid { grid-template-columns: 1fr; }
+            .monitor-dashboard { grid-template-columns: 1fr; }
+            .report-grid-layout { grid-template-columns: 1fr; gap: 40px; }
+            .report-preview-area { height: 400px; }
             .cta-compact { flex-direction: column; text-align: center; gap: 30px; padding: 40px 20px; }
             .quick-links { grid-template-columns: 1fr; }
-            
-            .contact-form { grid-template-columns: 1fr; }
-            .form-group.full { grid-column: span 1; }
-            .btn-send { grid-column: span 1; }
         }
     </style>
 </head>
@@ -261,7 +285,6 @@
 
     <header>
         <div class="logo"><a href="index.html"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></a></div>
-        
         <div class="header-right">
             <nav class="gnb">
                 <a href="ert.html" class="nav-link">ERT Reporting</a>
@@ -276,167 +299,209 @@
         </div>
     </header>
 
-    <div id="contactModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeContactModal()">&times;</span>
-            <div class="modal-header">
-                <h2>최적의 탄소 관리, QESG와 함께 시작하세요.</h2>
-                <p>Net-Zero 달성을 위한 첫걸음, 전문가와 상담해보세요.</p>
-            </div>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('문의가 접수되었습니다.'); closeContactModal();">
-                <div class="form-group">
-                    <label>성함</label>
-                    <input type="text" class="form-input" placeholder="성함">
-                </div>
-                <div class="form-group">
-                    <label>제목</label>
-                    <input type="text" class="form-input" placeholder="문의 제목을 작성해주세요">
-                </div>
-                <div class="form-group">
-                    <label>소속</label>
-                    <input type="text" class="form-input" placeholder="소속회사/조직명">
-                </div>
-                <div class="form-group full">
-                    <label>문의사항</label>
-                    <textarea class="form-textarea" placeholder="문의하실 내용을 작성해주세요"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>이메일</label>
-                    <input type="email" class="form-input" placeholder="abc@xyz.com">
-                </div>
-                <div class="form-group">
-                    <label>전화번호</label>
-                    <input type="tel" class="form-input" placeholder="000-0000-0000">
-                </div>
-                <button type="submit" class="btn-send">문의사항 보내기</button>
-            </form>
-        </div>
-    </div>
-
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-content">
-                <span class="badge">Net-Zero Strategy Platform</span>
-                <h1>Carbon Management<br>Beyond Calculation</h1>
+                <span class="badge" style="display:inline-block; background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:24px;">Net-Zero Strategy Platform</span>
+                <h1>Carbon Platform</h1>
                 <p>
-                    Scope 3를 포함한 전 공급망의 탄소 배출량을 정밀하게 산정하고,<br>
-                    실질적인 감축 시나리오를 시뮬레이션하세요.
+                    시스템을 통해 협력사 데이터를 한 곳에서 통합 수집·관리하고,<br>
+                    배출량 산정부터 피드백 제공, 보고서 다운로드까지 전 과정을<br>
+                    실시간으로 확인·운영할 수 있습니다.
                 </p>
                 <div class="cta-group">
-                    <button class="btn-primary" onclick="openContactModal()">솔루션 문의하기</button>
+                    <a href="https://carbon.qesg.co.kr" target="_blank" class="btn-primary">Carbon 바로가기</a>
+                    <a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-outline" download>
+                        <i class="ph ph-download-simple"></i> 서비스 소개서
+                    </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <img src="image_097645.png" class="carbon-dashboard" alt="Carbon Dashboard">
-                <div class="float-card fc-1">
-                    <span class="stat-val">Scope 1, 2, 3</span>
-                    <span class="stat-label">Full Coverage</span>
+                <img src="index_files/carbon_login.png" class="platform-login-img" alt="Carbon Platform Login Screen">
                 </div>
-            </div>
         </div>
     </section>
 
-    <section class="value-sec">
-        <div class="sec-header">
-            <h2>Value for Everyone</h2>
-            <p>탄소 관리는 원청사와 협력사 모두에게 비즈니스 기회입니다.</p>
-        </div>
-        
-        <div class="dual-container">
-            <div class="val-card-wide vc-buyer">
-                <div class="val-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
-                <div class="val-info">
-                    <h3>원청사 (구매사) 측면</h3>
-                    <ul class="val-list">
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>글로벌 통합 관리:</strong> 해외 법인 및 공급망 전체의 Scope 3 배출량 통합 모니터링</div>
-                        </li>
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>공급망 리스크 대응:</strong> CBAM, CSDDD 등 글로벌 규제 대응을 위한 데이터 확보</div>
-                        </li>
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>감축 목표 달성:</strong> SBTi 기준의 감축 시나리오 수립 및 이행 현황 관리</div>
-                        </li>
-                    </ul>
-                </div>
+    <section class="common-sec process-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Process</span>
+                <h2>Value for<br>Everyone</h2>
+                <p>탄소 관리는 원청사와 협력사 모두에게<br>비즈니스 기회입니다.</p>
             </div>
 
-            <div class="val-card-wide vc-supplier">
-                <div class="val-icon"><i class="ph ph-hand-coins"></i></div>
-                <div class="val-info">
-                    <h3>협력사 (공급사) 측면</h3>
-                    <ul class="val-list">
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>고객 요구 대응:</strong> 글로벌 원청사의 탄소 데이터 요구에 간편하게 대응</div>
-                        </li>
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>친환경 인증 획득:</strong> 산정 결과를 활용하여 저탄소 제품 인증 등 획득 지원</div>
-                        </li>
-                        <li>
-                            <i class="ph ph-check-circle"></i>
-                            <div><strong>금융/세제 혜택:</strong> 우수 관리 기업 대상 금리 우대 및 정부 지원 사업 연계</div>
-                        </li>
-                    </ul>
+            <div class="proc-container">
+                <div class="proc-tabs">
+                    <div class="proc-tab active" onclick="openProc(event, 'step1')">
+                        <h4>1. 데이터 취합 및 제출 <i class="ph ph-caret-right"></i></h4>
+                        <span>데이터 업로드 및 현황 확인</span>
+                    </div>
+                    <div class="proc-tab" onclick="openProc(event, 'step2')">
+                        <h4>2. 진행 단계 <i class="ph ph-caret-right"></i></h4>
+                        <span>진행현황 F/U 및 피드백</span>
+                    </div>
+                    <div class="proc-tab" onclick="openProc(event, 'step3')">
+                        <h4>3. 결과 확인 단계 <i class="ph ph-caret-right"></i></h4>
+                        <span>배출량 조회 및 보고서 다운로드</span>
+                    </div>
                 </div>
-            </div>
+
+            <div class="proc-content-area">
+                    <div id="step1" class="proc-pane active">
+                        <div class="unified-card">
+                            <div class="role-compare-grid">
+                                <div class="role-column buyer">
+                                    <h5>원청사</h5>
+                                    <ul>
+                                        <li>총 배출량 및 권역별 배출량 현황 확인 가능</li>
+                                        <li>협력사별 제출 현황 실시간 모니터링</li>
+                                    </ul>
+                                </div>
+                                <div class="role-divider"></div>
+                                <div class="role-column supplier">
+                                    <h5>협력사</h5>
+                                    <ul>
+                                        <li>산정 템플릿 다운로드 및 작성</li>
+                                        <li>증빙자료 업로드 및 데이터 제출</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="proc-img-box">
+                                <img src="index_files/data_collection.png" alt="데이터 제출 화면">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step2" class="proc-pane">
+                        <div class="unified-card">
+                            <div class="role-compare-grid">
+                                <div class="role-column buyer">
+                                    <h5>원청사</h5>
+                                    <ul>
+                                        <li>프로젝트 진행현황 Follow-up</li>
+                                        <li>기업별 데이터 검토 및 피드백 제공</li>
+                                    </ul>
+                                </div>
+                                <div class="role-divider"></div>
+                                <div class="role-column supplier">
+                                    <h5>협력사</h5>
+                                    <ul>
+                                        <li>제출 데이터 검토 결과 확인</li>
+                                        <li>회차별로 제공된 피드백에 따른 수정/보완</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="proc-img-box">
+                                <img src="index_files/carbon_dashboard.png" alt="진행 현황 화면">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step3" class="proc-pane">
+                        <div class="unified-card">
+                            <div class="role-compare-grid">
+                                <div class="role-column buyer">
+                                    <h5>원청사</h5>
+                                    <ul>
+                                        <li>기업별·제품별 상세 배출량 조회/다운로드</li>
+                                        <li>매출액·배출량 기준 기업 및 권역별 검색</li>
+                                    </ul>
+                                </div>
+                                <div class="role-divider"></div>
+                                <div class="role-column supplier">
+                                    <h5>협력사</h5>
+                                    <ul>
+                                        <li>기업정보 및 온실가스 배출량 정보 확인</li>
+                                        <li>3개년 배출량 추이 및 사업장/제품별 조회</li>
+                                        <li>보고서 다운로드 및 감축 전략 수립 활용</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="proc-img-box">
+                                <img src="index_files/carbon_result.png" alt="결과 보고서 화면">
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </section>
 
-    <section class="platform-sec">
-        <div class="plat-container">
-            <div class="sec-header">
-                <h2>Real-time Carbon Monitoring</h2>
-                <p>협력사별 배출량 산정 결과를 실시간 대시보드로 확인하고 관리합니다.</p>
+    <section class="common-sec monitor-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Monitoring</span>
+                <h2>Real-time<br>Dashboard</h2>
+                <p>협력사별 배출량 산정 결과를<br>실시간 대시보드로 확인하고 관리합니다.</p>
             </div>
             
-            <div class="plat-visual">
-                <img src="image_097645.png" class="pv-screen" alt="Carbon Monitoring UI">
-                <div class="hotspot hs-1"><div class="hs-tooltip">배출량 현황 (Scope 1&2)</div></div>
-                <div class="hotspot hs-2"><div class="hs-tooltip">3개년 배출량 추이</div></div>
-                <div class="hotspot hs-3"><div class="hs-tooltip">제품별 온실가스 배출량</div></div>
+            <div class="monitor-dashboard">
+                <div class="md-main-chart">
+                    <div class="chart-bar" style="height: 40%;" data-val="Scope 1"></div>
+                    <div class="chart-bar" style="height: 65%;" data-val="Scope 2"></div>
+                    <div class="chart-bar" style="height: 90%;" data-val="Scope 3"></div>
+                    <div class="chart-bar" style="height: 55%;" data-val="Total"></div>
+                </div>
+                <div class="md-side-panel">
+                    <div class="md-stat-box">
+                        <span class="md-stat-title">Total Emissions</span>
+                        <div class="md-stat-val">12,450 <span>tCO2eq</span></div>
+                    </div>
+                    <div class="md-stat-box">
+                        <span class="md-stat-title">Suppliers</span>
+                        <div class="md-stat-val">142 <span>Companies</span></div>
+                    </div>
+                    <div class="md-stat-box">
+                        <span class="md-stat-title">Progress</span>
+                        <div class="md-stat-val" style="color:var(--primary);">87% <span>Completed</span></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="report-sec">
-        <div class="report-container">
-            <div class="report-text">
-                <span class="badge">Final Deliverable</span>
-                <h3>Premium Carbon Reports</h3>
-                <p>
-                    국제 표준(GHG Protocol)에 기반한 신뢰성 있는 산정 결과 보고서와<br>
-                    분석 데이터를 다양한 형태로 제공합니다.
-                </p>
-                <div class="report-cards-grid">
-                    <div class="rc-item">
-                        <div class="rc-icon"><i class="ph ph-file-pdf"></i></div>
-                        <h4>산정 결과 요약 보고서</h4>
-                        <p>전사 및 사업장별 배출량 현황을 요약한 PDF 보고서</p>
-                    </div>
-                    <div class="rc-item">
-                        <div class="rc-icon"><i class="ph ph-microsoft-excel-logo"></i></div>
-                        <h4>상세 데이터 엑셀 파일</h4>
-                        <p>원 데이터 및 배출 계수가 포함된 분석용 엑셀 파일</p>
-                    </div>
-                    <div class="rc-item">
-                        <div class="rc-icon"><i class="ph ph-certificate"></i></div>
-                        <h4>제3자 검증 보고서 (선택)</h4>
-                        <p>전문 검증 기관의 제3자 검증 의견서 (옵션 서비스)</p>
-                    </div>
-                </div>
+    <section class="common-sec report-sec">
+        <div class="sec-split">
+            <div class="sec-title-area">
+                <span class="sec-label">Output</span>
+                <h2>Premium<br>Reports</h2>
+                <p>국제 표준(GHG Protocol)에 기반한<br>신뢰성 있는 산정 결과 보고서입니다.</p>
             </div>
 
-            <div class="report-visual">
-                <div class="a4-paper a4-1">
-                     <img src="image_098188.png" alt="Report Sample Back" style="opacity:0.5; filter:blur(2px);">
+            <div class="report-grid-layout">
+                <div class="report-list">
+                    <div class="report-item active" onclick="showReport(event, 'rep1')">
+                        <div class="ri-head">
+                            <i class="ph ph-file-pdf ri-icon"></i>
+                            <span class="ri-title">산정 결과 요약 보고서</span>
+                        </div>
+                        <p class="ri-desc">전사 및 사업장별 배출량 현황을 요약한 PDF 보고서</p>
+                    </div>
+                    <div class="report-item" onclick="showReport(event, 'rep2')">
+                        <div class="ri-head">
+                            <i class="ph ph-microsoft-excel-logo ri-icon"></i>
+                            <span class="ri-title">상세 데이터 엑셀 파일</span>
+                        </div>
+                        <p class="ri-desc">원 데이터 및 배출 계수가 포함된 분석용 엑셀 파일</p>
+                    </div>
+                    <div class="report-item" onclick="showReport(event, 'rep3')">
+                        <div class="ri-head">
+                            <i class="ph ph-certificate ri-icon"></i>
+                            <span class="ri-title">제3자 검증 보고서 (선택)</span>
+                        </div>
+                        <p class="ri-desc">전문 검증 기관의 제3자 검증 의견서 (옵션 서비스)</p>
+                    </div>
                 </div>
-                <div class="a4-paper a4-2">
-                    <img src="image_098188.png" alt="Report Sample Front">
+
+                <div class="report-preview-area">
+                    <div id="rep1" class="a4-sheet active">
+                        <img src="index_files/carbon_summary.png" alt="Summary Report">
+                    </div>
+                    <div id="rep2" class="a4-sheet">
+                        <img src="index_files/carbon_report_excel.png" alt="Excel Data">
+                    </div>
+                    <div id="rep3" class="a4-sheet">
+                        <img src="index_files/carbon_report_verify.png" alt="Verification Report">
+                    </div>
                 </div>
             </div>
         </div>
@@ -449,13 +514,12 @@
                     <h3>탄소 관리를 시작하세요</h3>
                     <p>더 자세한 기능과 도입 효과가 궁금하시다면 서비스 소개서를 확인해보세요.</p>
                 </div>
-                <a href="#" class="btn-download" onclick="alert('PDF 파일이 준비되지 않았습니다.')">
+                <a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-download" download>
                     <i class="ph ph-download-simple"></i> 서비스 소개서 다운로드
                 </a>
             </div>
 
             <h2 class="more-services-title">Explore Other Services</h2>
-
             <div class="quick-links">
                 <a href="ert.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-file-text"></i></div>
@@ -484,18 +548,53 @@
         <div class="copyright">© 2025 QuantifiedESG. All rights reserved.</div>
     </footer>
 
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeContactModal()">&times;</span>
+            <div class="modal-header">
+                <h2>최적의 탄소 관리, QESG와 함께 시작하세요.</h2>
+                <p>Net-Zero 달성을 위한 첫걸음, 전문가와 상담해보세요.</p>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('문의가 접수되었습니다.'); closeContactModal();">
+                <div class="form-group"><label>성함</label><input type="text" class="form-input" placeholder="성함"></div>
+                <div class="form-group"><label>제목</label><input type="text" class="form-input" placeholder="문의 제목"></div>
+                <div class="form-group"><label>소속</label><input type="text" class="form-input" placeholder="소속회사/조직명"></div>
+                <div class="form-group full"><label>문의사항</label><textarea class="form-textarea" placeholder="문의하실 내용"></textarea></div>
+                <div class="form-group"><label>이메일</label><input type="email" class="form-input" placeholder="abc@xyz.com"></div>
+                <div class="form-group"><label>전화번호</label><input type="tel" class="form-input" placeholder="000-0000-0000"></div>
+                <button type="submit" class="btn-send">문의사항 보내기</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        function openContactModal() {
-            document.getElementById('contactModal').classList.add('show');
-        }
-        function closeContactModal() {
-            document.getElementById('contactModal').classList.remove('show');
-        }
+        // Modal
+        function openContactModal() { document.getElementById('contactModal').classList.add('show'); }
+        function closeContactModal() { document.getElementById('contactModal').classList.remove('show'); }
         window.onclick = function(event) {
-            var modal = document.getElementById('contactModal');
-            if (event.target == modal) {
-                closeContactModal();
-            }
+            if (event.target == document.getElementById('contactModal')) closeContactModal();
+        }
+
+        // Process Tabs
+        function openProc(evt, stepId) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("proc-pane");
+            for (i = 0; i < x.length; i++) { x[i].classList.remove("active"); }
+            tablinks = document.getElementsByClassName("proc-tab");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            document.getElementById(stepId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Report Preview
+        function showReport(evt, repId) {
+            var i, x, links;
+            x = document.getElementsByClassName("a4-sheet");
+            for (i = 0; i < x.length; i++) { x[i].classList.remove("active"); }
+            links = document.getElementsByClassName("report-item");
+            for (i = 0; i < links.length; i++) { links[i].classList.remove("active"); }
+            document.getElementById(repId).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
     </script>
 
