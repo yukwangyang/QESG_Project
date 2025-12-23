@@ -3,224 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QESG - Infographic Variations</title>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+    <title>LocknLock ESG Report Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 기존 CSS 유지 --- */
-        :root {
-            --bg-body: #ffffff;
-            --novo-navy: #001952;
-            --novo-blue: #f0f7ff;
-            --text-body: #475569;
-            --gradient-esg: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+        body {
+            font-family: 'Malgun Gothic', 'Nanum Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
-        body { background: var(--bg-body); color: var(--novo-navy); line-height: 1.6; overflow-x: hidden; }
-        /* 헤더/텍스트 스타일 생략 (기존과 동일) */
-        .text-highlight { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 
-        /* --- 인포그래픽 데모를 위한 추가 스타일 --- */
-        .demo-container { padding: 100px 20px; background: #f8fafc; }
-        .demo-heading { text-align: center; font-size: 24px; margin-bottom: 20px; padding-top: 60px; border-top: 1px dashed #ddd; }
-        .demo-box { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; }
-        .hero-mock { padding: 60px 20px 0; text-align: center; }
-        .hero-mock h1 { font-size: 48px; margin-bottom: 20px; }
-        .hero-mock p { font-size: 18px; color: var(--text-body); margin-bottom: 40px; }
-
-        /* --- 공통 인포그래픽 스타일 (기존 코드 베이스) --- */
-        .infographic-container {
-            width: 100%; height: 350px; position: relative;
-            display: flex; justify-content: center; align-items: flex-end;
-            overflow: hidden; /* 중요: 내부 요소가 밖으로 나가지 않게 */
+        header {
+            background-color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
         }
-        .line-svg { width: 100%; height: 100%; max-width: 1400px; position: absolute; top:0; left:0; }
-        
-        .tech-icon {
-            position: absolute; background: white; border-radius: 50%;
-            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee;
-            font-size: 28px; color: var(--novo-navy); z-index: 2;
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #004a99;
         }
-        /* 아이콘 위치는 옵션별로 조금씩 다를 수 있음 */
-        .ti-1 { top: 30%; left: 20%; color: #10b981; }
-        .ti-2 { top: 20%; left: 50%; transform: translateX(-50%); color: #3b82f6; }
-        .ti-3 { top: 40%; left: 80%; color: #8b5cf6; }
 
-        /* --- [Option 1] 기존 스타일 (Baseline) --- */
-        .opt1 .float-anim { animation: floatIcon 6s infinite ease-in-out; }
-        .opt1 .ti-2 { animation-delay: 2s; } .opt1 .ti-3 { animation-delay: 4s; }
-        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .data-packet { fill: #3b82f6; filter: drop-shadow(0 0 5px #3b82f6); }
-
-        /* --- [Option 2] Network Mesh (연결성 강조) --- */
-        .opt2 .mesh-line { stroke-dasharray: 5 5; opacity: 0.3; animation: dashFlow 20s linear infinite; }
-        @keyframes dashFlow { to { stroke-dashoffset: -1000; } }
-        .opt2 .tech-icon { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
-        .opt2 .ti-2 { top: 25%; } /* 위치 미세 조정 */
-        
-        /* --- [Option 3] Increasing Flow (성장/확장 강조) --- */
-        .opt3 .flow-path { stroke-width: 3px; }
-        .opt3 .big-packet { r: 8px; filter: blur(2px); opacity: 0.6; }
-        .opt3 .ti-1 { top: 50%; } .opt3 .ti-2 { top: 35%; } .opt3 .ti-3 { top: 20%; }
-
-        /* --- [Option 4] Multi-Layered Waves (깊이감/포괄성 강조) --- */
-        .opt4 .wave-layer { opacity: 0.4; animation: waveShift 10s infinite linear; }
-        .opt4 .wave-layer:nth-child(2) { opacity: 0.2; animation-duration: 15s; animation-direction: reverse; }
-        @keyframes waveShift { from { transform: translateX(0); } to { transform: translateX(-200px); } }
-
-        /* --- [Option 5] Central Pulse (실시간/중심성 강조) --- */
-        .opt5 .pulse-circle {
-            fill: transparent; stroke: url(#techGradient); stroke-width: 2;
-            transform-origin: center; animation: pulseOut 4s infinite ease-out; opacity: 0;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .opt5 .pc-2 { animation-delay: 1.5s; } .opt5 .pc-3 { animation-delay: 3s; }
-        @keyframes pulseOut {
-            0% { transform: scale(0.1); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 0; stroke-width: 0; }
+
+        .report-title {
+            font-size: 16px;
+            margin-right: 20px;
         }
-        .opt5 .ti-2 { top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; width: 80px; height: 80px; font-size: 36px; }
+
+        .btn-group {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .btn-group button {
+            background-color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-group button.active {
+            background-color: #666;
+            color: #fff;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .report-overview {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .overview-table th, .overview-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .overview-table th {
+            background-color: #f8f9fa;
+            width: 20%;
+            color: #555;
+        }
+
+        .content-section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3 {
+            color: #004a99;
+        }
+
+        h1 { margin-top: 0; }
+        h2 { margin-bottom: 10px; }
+        h3 { margin-top: 30px; margin-bottom: 15px; }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #004a99;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #004a99;
+        }
+
+        .content-header .col-1 { flex: 0 0 25%; }
+        .content-header .col-2 { flex: 1; }
+        .content-header .actions {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+        .content-header .actions span { cursor: pointer; }
+        .content-header .actions i { margin-right: 5px; }
+
+        .content-item {
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-code {
+            flex: 0 0 25%;
+            padding-right: 20px;
+        }
+
+        .item-code strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .item-description {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .grey-bar {
+            height: 15px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #666;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
 
-<div class="demo-container">
-    <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">인포그래픽 애니메이션 후보군 (5종)</p>
-
-    <h2 class="demo-heading">Option 1: Baseline (기존 스타일) - 부드러운 연결</h2>
-    <div class="demo-box opt1">
-        <div class="hero-mock">
-            <h1>QuantifiedESG</h1>
-            <p><span class="text-highlight">맞춤형 ESG 서비스 솔루션</span>을 제공하여 지속 가능한 가치를 창출합니다.</p>
+<header>
+    <div class="logo">LocknLock</div>
+    <div class="header-right">
+        <span class="report-title">2025 락앤락 ESG Report</span>
+        <div class="btn-group">
+            <button class="active">GRI</button>
+            <button>SASB</button>
+            <button>TCFD</button>
         </div>
-        <div class="infographic-container">
-            <div class="tech-icon ti-1 float-anim"><i class="ph ph-plant"></i></div>
-            <div class="tech-icon ti-2 float-anim"><i class="ph ph-database"></i></div>
-            <div class="tech-icon ti-3 float-anim"><i class="ph ph-globe-hemisphere-west"></i></div>
-            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="techGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#10b981" /> <stop offset="50%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#8b5cf6" />
-                    </linearGradient>
-                </defs>
-                <path id="path1" d="M0,200 Q400,350 700,150 T1400,200" fill="none" stroke="url(#techGradient1)" stroke-width="2" />
-                <circle class="data-packet" r="6">
-                    <animateMotion dur="5s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
-                </circle>
-                <circle class="data-packet" r="6" fill="#10b981">
-                    <animateMotion dur="5s" begin="1.5s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
-                </circle>
-                <circle class="data-packet" r="6" fill="#8b5cf6">
-                    <animateMotion dur="5s" begin="3s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
-                </circle>
-            </svg>
-        </div>
+        <button class="icon-btn"><i class="fas fa-print"></i></button>
+        <button class="icon-btn"><i class="fas fa-font"></i></button>
     </div>
+</header>
 
-    <h2 class="demo-heading">Option 2: Network Mesh - 데이터의 유기적 연결 강조</h2>
-    <div class="demo-box opt2">
-        <div class="hero-mock">
-            <h1>QuantifiedESG</h1>
-            <p><span class="text-highlight">통합된 데이터 네트워크</span>로 리스크를 관리합니다.</p>
-        </div>
-        <div class="infographic-container">
-            <div class="tech-icon ti-1"><i class="ph ph-plant"></i></div>
-            <div class="tech-icon ti-2"><i class="ph ph-database"></i></div>
-            <div class="tech-icon ti-3"><i class="ph ph-globe-hemisphere-west"></i></div>
-            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="techGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#10b981" />
-                    </linearGradient>
-                </defs>
-                <path class="mesh-line" d="M280,105 L700,87 L1120,140 M280,105 L1120,140 M700,87 L700,350" fill="none" stroke="url(#techGradient2)" stroke-width="1.5" />
-                
-                <circle r="4" fill="#3b82f6"><animateMotion dur="3s" repeatCount="indefinite" path="M280,105 L700,87 L1120,140"/></circle>
-                <circle r="4" fill="#10b981"><animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M1120,140 L700,87 L280,105"/></circle>
-                <circle r="4" fill="#8b5cf6"><animateMotion dur="2.5s" repeatCount="indefinite" path="M700,350 L700,87"/></circle>
-            </svg>
-        </div>
-    </div>
+<main>
+    <section class="report-overview">
+        <h2>보고에 대한 성명</h2>
+        <table class="overview-table">
+            <tr>
+                <th>GRI 기준</th>
+                <td>GRI 1: Foundation 2021</td>
+            </tr>
+            <tr>
+                <th>GRI 산업 표준 적용</th>
+                <td>현재 적용 가능한 산업 표준 없음</td>
+            </tr>
+        </table>
+    </section>
 
-    <h2 class="demo-heading">Option 3: Increasing Flow - 성장과 확장, 미래지향적 상승 곡선</h2>
-    <div class="demo-box opt3">
-        <div class="hero-mock">
-            <h1>QuantifiedESG</h1>
-            <p>지속 가능한 성장을 위한 <span class="text-highlight">미래 지향적 솔루션</span>입니다.</p>
-        </div>
-        <div class="infographic-container">
-            <div class="tech-icon ti-1"><i class="ph ph-plant"></i></div>
-            <div class="tech-icon ti-2"><i class="ph ph-chart-line-up"></i></div>
-            <div class="tech-icon ti-3"><i class="ph ph-globe-hemisphere-west"></i></div>
-            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="techGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/> <stop offset="100%" stop-color="#3b82f6" />
-                    </linearGradient>
-                </defs>
-                <path id="upwardPath" class="flow-path" d="M0,300 C300,300 500,150 700,120 S1100,150 1400,50" fill="none" stroke="url(#techGradient3)" />
-                <path d="M0,300 C300,300 500,150 700,120 S1100,150 1400,50 L1400,350 L0,350 Z" fill="url(#techGradient3)" opacity="0.1" />
-                
-                <circle class="data-packet big-packet" r="8" fill="#10b981">
-                    <animateMotion dur="6s" repeatCount="indefinite"><mpath href="#upwardPath"/></animateMotion>
-                </circle>
-                 <circle class="data-packet" r="5" fill="#3b82f6">
-                    <animateMotion dur="4s" begin="2s" repeatCount="indefinite"><mpath href="#upwardPath"/></animateMotion>
-                </circle>
-            </svg>
-        </div>
-    </div>
+    <section class="content-section">
+        <p style="color: #666; margin-bottom: 5px;">Universal Standards</p>
+        <h1>GRI 2. 일반공개</h1>
 
-    <h2 class="demo-heading">Option 4: Multi-Layered Depth - 데이터의 깊이와 포괄성</h2>
-    <div class="demo-box opt4">
-        <div class="hero-mock">
-            <h1>QuantifiedESG</h1>
-            <p>Scope 1, 2, 3를 포괄하는 <span class="text-highlight">깊이 있는 데이터 분석</span>을 제공합니다.</p>
-        </div>
-        <div class="infographic-container">
-            <div class="tech-icon ti-1" style="top:25%;"><i class="ph ph-stack"></i></div>
-            <div class="tech-icon ti-2" style="top:40%;"><i class="ph ph-database"></i></div>
-            <div class="tech-icon ti-3" style="top:55%;"><i class="ph ph-cloud"></i></div>
-            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="techGradient4" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#8b5cf6" />
-                    </linearGradient>
-                </defs>
-                <path class="wave-layer" d="M-200,150 C150,250 350,50 700,150 S1250,250 1600,150" fill="none" stroke="#3b82f6" stroke-width="1.5" />
-                <path class="wave-layer" d="M-200,200 C150,100 350,300 700,200 S1250,100 1600,200" fill="none" stroke="#10b981" stroke-width="1.5" />
-                <path class="wave-layer" d="M-200,250 C150,350 350,150 700,250 S1250,350 1600,250" fill="none" stroke="#8b5cf6" stroke-width="1.5" style="animation-duration: 12s;"/>
-            </svg>
-        </div>
-    </div>
+        <h3>1. 조직 및 보고 관행 <span style="font-size: 14px; color: #888; font-weight: normal;">2021</span></h3>
 
-    <h2 class="demo-heading">Option 5: Central Pulse - 실시간 모니터링과 중앙 집중화</h2>
-    <div class="demo-box opt5">
-        <div class="hero-mock">
-            <h1>QuantifiedESG</h1>
-            <p><span class="text-highlight">실시간 데이터 허브</span>를 통해 즉각적인 인사이트를 확보하세요.</p>
+        <div class="content-header">
+            <div class="col-1">보고 지표</div>
+            <div class="col-2">보고 내용</div>
+            <div class="actions">
+                <span><i class="fas fa-table"></i> 데이터 테이블</span>
+                <span><i class="far fa-file-alt"></i> 문서</span>
+                <span><i class="fas fa-link"></i> 외부 링크</span>
+                <span><i class="far fa-lightbulb"></i> 비즈니스 사례</span>
+            </div>
         </div>
-        <div class="infographic-container">
-            <div class="tech-icon ti-2"><i class="ph ph-broadcast"></i></div>
-            <div class="tech-icon ti-1" style="top:50%; left:25%; transform:translateY(-50%);"><i class="ph ph-plant"></i></div>
-            <div class="tech-icon ti-3" style="top:50%; left:75%; transform:translateY(-50%);"><i class="ph ph-globe"></i></div>
 
-            <svg class="line-svg" viewBox="0 0 1400 350">
-                <defs>
-                    <linearGradient id="techGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#10b981" /> <stop offset="100%" stop-color="#3b82f6" />
-                    </linearGradient>
-                </defs>
-                <circle class="pulse-circle pc-1" cx="700" cy="175" r="50" />
-                <circle class="pulse-circle pc-2" cx="700" cy="175" r="50" />
-                <circle class="pulse-circle pc-3" cx="700" cy="175" r="50" />
-                
-                <path d="M350,175 L700,175 L1050,175" stroke="url(#techGradient5)" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
-            </svg>
+        <div class="content-item">
+            <div class="item-code">
+                <strong>2-1</strong>
+                조직 세부사항
+            </div>
+            <div class="item-description">
+                락앤락은 소비자 니즈와 시대 트렌드를 반영한 제품을 꾸준히 선보이며 주방생활의 혁신을 주도해 왔고, 베버리지웨어, 쿡웨어, 소형가전 등으로 사업 영역을 확장하며 현재 120개 국가에 수출하는 글로벌 생활용품기업으로 성장했습니다. 당사는 글로벌 라이프스타일 선도 기업으로 도약하기 위해 한국을 비롯한 주요 진출 시장인 중국, 베트남, 태국, 인도네시아 등 동남아시아 클러스터 공략에 주력하고 있으며, 미국과 유럽 등 선진 시장을 포함한 전 세계에 락앤락 브랜드를 확산해 나가고 있습니다.
+                <div class="grey-bar" style="width: 80%;"></div>
+                <div class="grey-bar" style="width: 60%;"></div>
+            </div>
         </div>
-    </div>
 
+        <div class="content-item">
+            <div class="item-code">
+                <strong>2-2</strong>
+                조직의 지속가능성 보고에 포함된 주체
+            </div>
+            <div class="item-description">
+                본 보고서는 2024년 주식회사 락앤락이 운영한 국내 사업장(서울 본사), 베트남 판매법인 및 생산사업장, 중국 판매법인의 정보를 보고합니다. 이는 락앤락 연결기준 매출액의 약 86%에 해당하며, 보고서 내 '전사'로 표기된 정보는 해당 범위를 의미합니다.
+                <br><br>
+                일부 환경 및 사회 보고 지표의 경우, 생산사업장을 중심으로 성과 정보를 관리하고 있으며, 이에 따라 보고 범위가 상이하거나...
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
 </div>
 
 </body>
