@@ -93,15 +93,14 @@
         .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
         .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-        /* [3. ISO Box in Hero - ERT Style] */
+        /* [3. ISO Box in Hero] */
         .hero-cert-box {
-            background: #f1f5f9; /* 진한 회색 배경 */
-            border: 1px solid #e2e8f0; border-radius: 12px;
+            background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 12px;
             padding: 20px 24px; display: flex; align-items: center; gap: 20px;
             max-width: 580px;
         }
         .hc-icon-box {
-            width: 50px; height: 50px; background: white; /* 흰색 배경 강조 */
+            width: 50px; height: 50px; background: white; 
             color: var(--primary);
             border: 1px solid var(--border); border-radius: 10px; 
             display: flex; align-items: center; justify-content: center; font-size: 24px;
@@ -173,14 +172,16 @@
         .feat-list li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: var(--primary); border-radius: 50%; }
 
         /* [4. Merged Section: Architecture & Workflow] */
-        .merged-sec { background: #f8fafc; position: relative; overflow: hidden; }
+        /* overflow: hidden 제거 -> Sticky 작동 */
+        .merged-sec { background: #f8fafc; position: relative; }
+        
         .merged-container { display: flex; flex-direction: column; align-items: center; position: relative; }
         
         /* Architecture Nodes */
         .arch-top { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 900px; margin-bottom: 0; position: relative; z-index: 2; }
         .arch-line.right-only { position: absolute; left: 50%; right: 100px; height: 2px; background: repeating-linear-gradient(90deg, #cbd5e1 0, #cbd5e1 5px, transparent 5px, transparent 10px); z-index: 0; }
         
-        /* Multi-Node Input (문어발 연결 - 점선 수정) */
+        /* Multi-Node Input (문어발 연결 - 점선) */
         .input-stack-container { position: relative; z-index: 2; display: flex; align-items: center; margin-right: -20px; }
         .input-stack { display: flex; flex-direction: column; gap: 12px; position: relative; }
         .input-mini-node {
@@ -191,24 +192,20 @@
             display: flex; align-items: center; justify-content: center; gap: 8px;
             position: relative;
         }
-        /* 1. 개별 박스에서 나오는 가로선 (점선) */
+        /* 개별 박스 가로 점선 */
         .input-mini-node::after {
             content: ''; position: absolute; right: -30px; top: 50%; width: 30px; height: 0; border-top: 2px dashed #cbd5e1; z-index: 0;
         }
-        /* 2. 4개 박스를 하나로 묶는 세로선 (점선) */
+        /* 세로 묶음 점선 */
         .input-stack::after {
             content: ''; position: absolute; right: -30px; top: 22px; bottom: 22px; width: 0; border-right: 2px dashed #cbd5e1; z-index: 0;
         }
-        /* 3. 묶인 선에서 중앙 ERT-DMS로 가는 메인 연결선 (점선 & 길이 연장) */
+        /* 허브로 가는 메인 점선 (연장) */
         .input-stack-container::after {
             content: ''; position: absolute; 
-            right: -197px; /* 길이를 늘려서 원 내부 깊숙이 들어가게 설정 */
-            top: 50%; 
-            width: 170px; /* 기존보다 훨씬 길게 설정 */
-            height: 0; 
-            border-top: 2px dashed #cbd5e1; 
-            transform: translateY(-1px); 
-            z-index: 0; /* 원(z-index: 10)보다 뒤에 위치 */
+            right: -197px; /* 원 안으로 들어감 */
+            top: 50%; width: 170px; height: 0; 
+            border-top: 2px dashed #cbd5e1; transform: translateY(-1px); z-index: 0;
         }
         .input-mini-node i { color: #94a3b8; }
         
@@ -239,23 +236,16 @@
         .rnr-legend { display: flex; flex-direction: column; gap: 6px; }
         .rnr-legend span { font-size: 13px; display: flex; align-items: center; gap: 6px; color: var(--text-main); }
 
-        /* Process Connector (Large Bracket) - 중앙 정렬 확인 */
+        /* Process Connector (Large Bracket) - Centered */
         .flow-bracket-container { position: relative; width: 100%; padding-top: 40px; margin-bottom: 20px; }
         .flow-bracket-container::before { 
-            content: ''; position: absolute; top: 0; 
-            left: 48%; /* 중앙 정렬 */
-            width: 2px; height: 30px; 
-            background: var(--primary); 
-            transform: translateX(-50%); /* 중앙 정렬 보정 */
-            z-index: 0;
+            content: ''; position: absolute; top: 0; left: 48%; width: 2px; height: 30px; 
+            background: var(--primary); transform: translateX(-50%); z-index: 0;
         }
         .flow-bracket-container::after {
-            content: ''; position: absolute; top: 30px; 
-            left: 10%; right: 10%; /* 좌우 여백 동일하게 주어 중앙 정렬 */
-            height: 15px; 
+            content: ''; position: absolute; top: 30px; left: 10%; right: 10%; height: 15px; 
             border: 2px solid var(--primary); border-bottom: none; z-index: 0; border-radius: 8px 8px 0 0;
         }
-        /* 개별 세로선 삭제됨 (.flow-drop-lines display:none) */
         .flow-drop-lines { display: none; }
 
         /* 5-Step Process */
@@ -335,7 +325,6 @@
             .input-stack { flex-direction: row; flex-wrap: wrap; justify-content: center; }
             .feat-highlight-list { align-items: center; }
             .flow-bracket-container { display: none; }
-            .flow-drop-lines { display: none; }
             .flow-container { grid-template-columns: 1fr; gap: 30px; }
             .fs-card { height: auto; }
             .quick-links { grid-template-columns: 1fr; }
@@ -370,7 +359,7 @@
                     ERT-DMS는 데이터 수집부터 검증까지, 무결한 데이터 파이프라인을 구축합니다.
                 </p>
                 <div class="cta-group">
-                    <a href="https://report-test.qesg.co.kr/dms/auth/login" target="_blank" class="btn-primary">DMS 바로가기</a>
+                    <a href="https://dms.qesg.co.kr/" target="_blank" class="btn-primary">DMS 바로가기</a>
                     <a href="(QESG) ERT Data Management 서비스 소개서_2025_v3.2.pdf" class="btn-outline" download>
                         <i class="ph ph-download-simple"></i> DMS 서비스 소개서
                     </a>
@@ -380,7 +369,7 @@
                     <div class="hc-icon-box"><i class="ph ph-shield-check"></i></div>
                     <div class="hc-content">
                         <h4>ISO/IEC 27001:2022 인증 획득</h4>
-                        <p>서버와 데이터베이스의 일일 백업을 기반으로 장애 및 데이터 손실에 대비한 복구 체계 확보</p>
+                        <p>서버와 데이터베이스의 일일 백업을 기반으로장애 및 데이터 손실에 대비한 복구 체계 확보</p>
                     </div>
                     <div class="hc-features">
                         <div class="hc-feat"><i class="ph ph-check-circle"></i> DB 암호화</div>
@@ -389,7 +378,7 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <img src="index_files/DMS_LOGIN.png" class="dashboard-img" alt="DMS Dashboard">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop" class="dashboard-img" alt="DMS Dashboard">
             </div>
         </div>
         <div class="section-separator"></div>
@@ -497,8 +486,6 @@
                     <div class="fhl-item"><i class="ph ph-users-three"></i> 다수 사용자 협업</div>
                     <div class="fhl-item"><i class="ph ph-chats-circle"></i> 커뮤니케이션 일원화</div>
                 </div>
-
-               
             </div>
             
             <div class="merged-container">
