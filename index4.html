@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QESG - Infographic Variations</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* --- 기존 CSS 유지 --- */
+        :root {
+            --bg-body: #ffffff;
+            --novo-navy: #001952;
+            --novo-blue: #f0f7ff;
+            --text-body: #475569;
+            --gradient-esg: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        body { background: var(--bg-body); color: var(--novo-navy); line-height: 1.6; overflow-x: hidden; }
+        /* 헤더/텍스트 스타일 생략 (기존과 동일) */
+        .text-highlight { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+
+        /* --- 인포그래픽 데모를 위한 추가 스타일 --- */
+        .demo-container { padding: 100px 20px; background: #f8fafc; }
+        .demo-heading { text-align: center; font-size: 24px; margin-bottom: 20px; padding-top: 60px; border-top: 1px dashed #ddd; }
+        .demo-box { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 60px; }
+        .hero-mock { padding: 60px 20px 0; text-align: center; }
+        .hero-mock h1 { font-size: 48px; margin-bottom: 20px; }
+        .hero-mock p { font-size: 18px; color: var(--text-body); margin-bottom: 40px; }
+
+        /* --- 공통 인포그래픽 스타일 (기존 코드 베이스) --- */
+        .infographic-container {
+            width: 100%; height: 350px; position: relative;
+            display: flex; justify-content: center; align-items: flex-end;
+            overflow: hidden; /* 중요: 내부 요소가 밖으로 나가지 않게 */
+        }
+        .line-svg { width: 100%; height: 100%; max-width: 1400px; position: absolute; top:0; left:0; }
+        
+        .tech-icon {
+            position: absolute; background: white; border-radius: 50%;
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee;
+            font-size: 28px; color: var(--novo-navy); z-index: 2;
+        }
+        /* 아이콘 위치는 옵션별로 조금씩 다를 수 있음 */
+        .ti-1 { top: 30%; left: 20%; color: #10b981; }
+        .ti-2 { top: 20%; left: 50%; transform: translateX(-50%); color: #3b82f6; }
+        .ti-3 { top: 40%; left: 80%; color: #8b5cf6; }
+
+        /* --- [Option 1] 기존 스타일 (Baseline) --- */
+        .opt1 .float-anim { animation: floatIcon 6s infinite ease-in-out; }
+        .opt1 .ti-2 { animation-delay: 2s; } .opt1 .ti-3 { animation-delay: 4s; }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .data-packet { fill: #3b82f6; filter: drop-shadow(0 0 5px #3b82f6); }
+
+        /* --- [Option 2] Network Mesh (연결성 강조) --- */
+        .opt2 .mesh-line { stroke-dasharray: 5 5; opacity: 0.3; animation: dashFlow 20s linear infinite; }
+        @keyframes dashFlow { to { stroke-dashoffset: -1000; } }
+        .opt2 .tech-icon { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .opt2 .ti-2 { top: 25%; } /* 위치 미세 조정 */
+        
+        /* --- [Option 3] Increasing Flow (성장/확장 강조) --- */
+        .opt3 .flow-path { stroke-width: 3px; }
+        .opt3 .big-packet { r: 8px; filter: blur(2px); opacity: 0.6; }
+        .opt3 .ti-1 { top: 50%; } .opt3 .ti-2 { top: 35%; } .opt3 .ti-3 { top: 20%; }
+
+        /* --- [Option 4] Multi-Layered Waves (깊이감/포괄성 강조) --- */
+        .opt4 .wave-layer { opacity: 0.4; animation: waveShift 10s infinite linear; }
+        .opt4 .wave-layer:nth-child(2) { opacity: 0.2; animation-duration: 15s; animation-direction: reverse; }
+        @keyframes waveShift { from { transform: translateX(0); } to { transform: translateX(-200px); } }
+
+        /* --- [Option 5] Central Pulse (실시간/중심성 강조) --- */
+        .opt5 .pulse-circle {
+            fill: transparent; stroke: url(#techGradient); stroke-width: 2;
+            transform-origin: center; animation: pulseOut 4s infinite ease-out; opacity: 0;
+        }
+        .opt5 .pc-2 { animation-delay: 1.5s; } .opt5 .pc-3 { animation-delay: 3s; }
+        @keyframes pulseOut {
+            0% { transform: scale(0.1); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; stroke-width: 0; }
+        }
+        .opt5 .ti-2 { top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; width: 80px; height: 80px; font-size: 36px; }
+    </style>
+</head>
+<body>
+
+<div class="demo-container">
+    <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">인포그래픽 애니메이션 후보군 (5종)</p>
+
+    <h2 class="demo-heading">Option 1: Baseline (기존 스타일) - 부드러운 연결</h2>
+    <div class="demo-box opt1">
+        <div class="hero-mock">
+            <h1>QuantifiedESG</h1>
+            <p><span class="text-highlight">맞춤형 ESG 서비스 솔루션</span>을 제공하여 지속 가능한 가치를 창출합니다.</p>
+        </div>
+        <div class="infographic-container">
+            <div class="tech-icon ti-1 float-anim"><i class="ph ph-plant"></i></div>
+            <div class="tech-icon ti-2 float-anim"><i class="ph ph-database"></i></div>
+            <div class="tech-icon ti-3 float-anim"><i class="ph ph-globe-hemisphere-west"></i></div>
+            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="techGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#10b981" /> <stop offset="50%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path id="path1" d="M0,200 Q400,350 700,150 T1400,200" fill="none" stroke="url(#techGradient1)" stroke-width="2" />
+                <circle class="data-packet" r="6">
+                    <animateMotion dur="5s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
+                </circle>
+                <circle class="data-packet" r="6" fill="#10b981">
+                    <animateMotion dur="5s" begin="1.5s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
+                </circle>
+                <circle class="data-packet" r="6" fill="#8b5cf6">
+                    <animateMotion dur="5s" begin="3s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
+                </circle>
+            </svg>
+        </div>
+    </div>
+
+    <h2 class="demo-heading">Option 2: Network Mesh - 데이터의 유기적 연결 강조</h2>
+    <div class="demo-box opt2">
+        <div class="hero-mock">
+            <h1>QuantifiedESG</h1>
+            <p><span class="text-highlight">통합된 데이터 네트워크</span>로 리스크를 관리합니다.</p>
+        </div>
+        <div class="infographic-container">
+            <div class="tech-icon ti-1"><i class="ph ph-plant"></i></div>
+            <div class="tech-icon ti-2"><i class="ph ph-database"></i></div>
+            <div class="tech-icon ti-3"><i class="ph ph-globe-hemisphere-west"></i></div>
+            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="techGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#10b981" />
+                    </linearGradient>
+                </defs>
+                <path class="mesh-line" d="M280,105 L700,87 L1120,140 M280,105 L1120,140 M700,87 L700,350" fill="none" stroke="url(#techGradient2)" stroke-width="1.5" />
+                
+                <circle r="4" fill="#3b82f6"><animateMotion dur="3s" repeatCount="indefinite" path="M280,105 L700,87 L1120,140"/></circle>
+                <circle r="4" fill="#10b981"><animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M1120,140 L700,87 L280,105"/></circle>
+                <circle r="4" fill="#8b5cf6"><animateMotion dur="2.5s" repeatCount="indefinite" path="M700,350 L700,87"/></circle>
+            </svg>
+        </div>
+    </div>
+
+    <h2 class="demo-heading">Option 3: Increasing Flow - 성장과 확장, 미래지향적 상승 곡선</h2>
+    <div class="demo-box opt3">
+        <div class="hero-mock">
+            <h1>QuantifiedESG</h1>
+            <p>지속 가능한 성장을 위한 <span class="text-highlight">미래 지향적 솔루션</span>입니다.</p>
+        </div>
+        <div class="infographic-container">
+            <div class="tech-icon ti-1"><i class="ph ph-plant"></i></div>
+            <div class="tech-icon ti-2"><i class="ph ph-chart-line-up"></i></div>
+            <div class="tech-icon ti-3"><i class="ph ph-globe-hemisphere-west"></i></div>
+            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="techGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/> <stop offset="100%" stop-color="#3b82f6" />
+                    </linearGradient>
+                </defs>
+                <path id="upwardPath" class="flow-path" d="M0,300 C300,300 500,150 700,120 S1100,150 1400,50" fill="none" stroke="url(#techGradient3)" />
+                <path d="M0,300 C300,300 500,150 700,120 S1100,150 1400,50 L1400,350 L0,350 Z" fill="url(#techGradient3)" opacity="0.1" />
+                
+                <circle class="data-packet big-packet" r="8" fill="#10b981">
+                    <animateMotion dur="6s" repeatCount="indefinite"><mpath href="#upwardPath"/></animateMotion>
+                </circle>
+                 <circle class="data-packet" r="5" fill="#3b82f6">
+                    <animateMotion dur="4s" begin="2s" repeatCount="indefinite"><mpath href="#upwardPath"/></animateMotion>
+                </circle>
+            </svg>
+        </div>
+    </div>
+
+    <h2 class="demo-heading">Option 4: Multi-Layered Depth - 데이터의 깊이와 포괄성</h2>
+    <div class="demo-box opt4">
+        <div class="hero-mock">
+            <h1>QuantifiedESG</h1>
+            <p>Scope 1, 2, 3를 포괄하는 <span class="text-highlight">깊이 있는 데이터 분석</span>을 제공합니다.</p>
+        </div>
+        <div class="infographic-container">
+            <div class="tech-icon ti-1" style="top:25%;"><i class="ph ph-stack"></i></div>
+            <div class="tech-icon ti-2" style="top:40%;"><i class="ph ph-database"></i></div>
+            <div class="tech-icon ti-3" style="top:55%;"><i class="ph ph-cloud"></i></div>
+            <svg class="line-svg" viewBox="0 0 1400 350" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="techGradient4" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path class="wave-layer" d="M-200,150 C150,250 350,50 700,150 S1250,250 1600,150" fill="none" stroke="#3b82f6" stroke-width="1.5" />
+                <path class="wave-layer" d="M-200,200 C150,100 350,300 700,200 S1250,100 1600,200" fill="none" stroke="#10b981" stroke-width="1.5" />
+                <path class="wave-layer" d="M-200,250 C150,350 350,150 700,250 S1250,350 1600,250" fill="none" stroke="#8b5cf6" stroke-width="1.5" style="animation-duration: 12s;"/>
+            </svg>
+        </div>
+    </div>
+
+    <h2 class="demo-heading">Option 5: Central Pulse - 실시간 모니터링과 중앙 집중화</h2>
+    <div class="demo-box opt5">
+        <div class="hero-mock">
+            <h1>QuantifiedESG</h1>
+            <p><span class="text-highlight">실시간 데이터 허브</span>를 통해 즉각적인 인사이트를 확보하세요.</p>
+        </div>
+        <div class="infographic-container">
+            <div class="tech-icon ti-2"><i class="ph ph-broadcast"></i></div>
+            <div class="tech-icon ti-1" style="top:50%; left:25%; transform:translateY(-50%);"><i class="ph ph-plant"></i></div>
+            <div class="tech-icon ti-3" style="top:50%; left:75%; transform:translateY(-50%);"><i class="ph ph-globe"></i></div>
+
+            <svg class="line-svg" viewBox="0 0 1400 350">
+                <defs>
+                    <linearGradient id="techGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#10b981" /> <stop offset="100%" stop-color="#3b82f6" />
+                    </linearGradient>
+                </defs>
+                <circle class="pulse-circle pc-1" cx="700" cy="175" r="50" />
+                <circle class="pulse-circle pc-2" cx="700" cy="175" r="50" />
+                <circle class="pulse-circle pc-3" cx="700" cy="175" r="50" />
+                
+                <path d="M350,175 L700,175 L1050,175" stroke="url(#techGradient5)" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+            </svg>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

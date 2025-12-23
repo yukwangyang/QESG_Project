@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QESG - Enabling Sustainable Future</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        :root {
+            --black: #111111;
+            --white: #ffffff;
+            --gray-100: #f3f3f3;
+            --gray-500: #888888;
+            --accent: #2563eb; /* Royal Blue */
+            --font-main: 'Pretendard', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background-color: var(--white); color: var(--black); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; width: 100%; height: auto; }
+
+        /* [Header] Transparent to White on Scroll */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 24px 60px; display: flex; justify-content: space-between; align-items: center;
+            transition: 0.4s ease;
+        }
+        header.scrolled { background: rgba(255, 255, 255, 0.95); padding: 16px 60px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        
+        .logo img { height: 24px; filter: brightness(0); /* Black Logo */ }
+        
+        .nav-menu { display: flex; gap: 40px; }
+        .nav-link { font-size: 15px; font-weight: 500; color: var(--black); position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 1px;
+            background: var(--black); transition: 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .btn-inquiry {
+            padding: 10px 24px; border: 1px solid var(--black); border-radius: 50px;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+        }
+        .btn-inquiry:hover { background: var(--black); color: var(--white); }
+
+        /* [Hero Section] Cinematic & Bold */
+        .hero {
+            position: relative; height: 100vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; padding: 0 60px;
+            background: #f8f8f8; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding-top: 100px; }
+        .hero-label { font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: block; opacity: 0; animation: fadeUp 1s 0.5s forwards; }
+        .hero h1 {
+            font-size: 80px; font-weight: 300; line-height: 1.1; letter-spacing: -2px; margin-bottom: 40px;
+            opacity: 0; animation: fadeUp 1s 0.7s forwards;
+        }
+        .hero h1 b { font-weight: 800; }
+        .btn-arrow-circle {
+            width: 60px; height: 60px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 24px;
+            transition: 0.3s; cursor: pointer; opacity: 0; animation: fadeUp 1s 1s forwards;
+        }
+        .btn-arrow-circle:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+        /* [Manifesto Section] */
+        .manifesto { padding: 160px 60px; border-bottom: 1px solid #eee; }
+        .manifesto-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
+        .sec-title { font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding-top: 10px; border-top: 2px solid var(--black); display: inline-block; width: fit-content; }
+        .manifesto-text p { font-size: 32px; font-weight: 400; line-height: 1.5; color: #333; }
+        .manifesto-text b { font-weight: 700; color: var(--black); }
+
+        /* [Services - The Core] Editorial Grid */
+        .solutions { padding: 0; }
+        .solution-item {
+            display: grid; grid-template-columns: 1fr 1fr;
+            min-height: 600px; border-bottom: 1px solid #eee;
+        }
+        .solution-text {
+            padding: 80px 60px; display: flex; flex-direction: column; justify-content: center;
+            background: var(--white); transition: 0.3s;
+        }
+        .solution-img {
+            position: relative; overflow: hidden;
+        }
+        .solution-img img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease;
+        }
+        .solution-item:hover .solution-img img { transform: scale(1.05); }
+
+        .sol-num { font-size: 14px; font-weight: 700; color: var(--gray-500); margin-bottom: 20px; display: block; }
+        .sol-title { font-size: 48px; font-weight: 700; margin-bottom: 24px; line-height: 1.2; letter-spacing: -1px; }
+        .sol-desc { font-size: 18px; color: #555; line-height: 1.6; margin-bottom: 40px; max-width: 500px; }
+        
+        .btn-text-link {
+            font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;
+            border-bottom: 1px solid var(--black); padding-bottom: 4px; transition: 0.3s;
+        }
+        .btn-text-link:hover { gap: 15px; color: var(--accent); border-color: var(--accent); }
+
+        /* Alternate Layout */
+        .solution-item.reverse .solution-text { order: 2; }
+        .solution-item.reverse .solution-img { order: 1; }
+
+        /* [Stats / Impact] */
+        .impact { padding: 120px 60px; background: #111; color: white; text-align: center; }
+        .impact-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto;
+        }
+        .stat-item h3 { font-size: 64px; font-weight: 800; margin-bottom: 10px; background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-item p { font-size: 16px; color: #888; font-weight: 500; }
+
+        /* [Footer] Simple & Clean */
+        footer { padding: 80px 60px; background: var(--white); }
+        .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; }
+        .footer-logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+        .footer-links { display: flex; gap: 40px; }
+        .footer-links a { font-size: 14px; color: #555; font-weight: 500; }
+        .footer-bottom { border-top: 1px solid #eee; padding-top: 30px; display: flex; justify-content: space-between; font-size: 13px; color: #999; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            header { padding: 20px; }
+            .hero { padding: 0 20px; }
+            .hero h1 { font-size: 48px; }
+            .manifesto { padding: 100px 20px; }
+            .manifesto-grid { grid-template-columns: 1fr; gap: 30px; }
+            .solution-item, .solution-item.reverse { grid-template-columns: 1fr; }
+            .solution-text { order: 2 !important; padding: 60px 20px; }
+            .solution-img { order: 1 !important; height: 300px; }
+            .impact-grid { grid-template-columns: 1fr; gap: 60px; }
+            .footer-top { flex-direction: column; gap: 40px; }
+            .footer-links { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <a href="index.html" class="logo"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></a>
+        <nav class="nav-menu">
+            <a href="ert.html" class="nav-link">ERT Reporting</a>
+            <a href="dms.html" class="nav-link">DMS Data Hub</a>
+            <a href="supply.html" class="nav-link">Supply Chain</a>
+            <a href="carbon.html" class="nav-link">Carbon Mgmt</a>
+        </nav>
+        <a href="#" class="btn-inquiry">Contact Us</a>
+    </header>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="hero-bg" alt="Earth Data">
+        <div class="hero-content">
+            <span class="hero-label">Quantified ESG Solutions</span>
+            <h1>Data-Driven Transparency<br>for a <b>Sustainable Future.</b></h1>
+            <a href="#manifesto" class="btn-arrow-circle" style="margin-top: 40px; display:inline-flex;"><i class="ph ph-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <section id="manifesto" class="manifesto">
+        <div class="manifesto-grid">
+            <div class="sec-title">Our Mission</div>
+            <div class="manifesto-text">
+                <p>
+                    우리는 기업의 비재무적 데이터를 재무적 가치만큼 명확하게 만듭니다.
+                    <b>복잡한 ESG 데이터를 정량화하고, 기술로 연결하여</b>
+                    지속 가능한 경영의 새로운 기준을 제시합니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="solutions">
+        
+        <div class="solution-item">
+            <div class="solution-text">
+                <span class="sol-num">01 — REPORTING</span>
+                <h2 class="sol-title">Efficiency in<br>Disclosure.</h2>
+                <p class="sol-desc">
+                    매년 바뀌는 글로벌 공시 표준(GRI, SASB, ISSB)을 따라잡기 어렵나요? 
+                    ERT는 데이터 수집부터 보고서 생성까지, 공시의 전 과정을 자동화합니다.
+                </p>
+                <a href="ert.html" class="btn-text-link">Explore ERT Reporting <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="solution-img">
+                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200" alt="Reporting">
+            </div>
+        </div>
+
+        <div class="solution-item reverse">
+            <div class="solution-text">
+                <span class="sol-num">02 — DATA HUB</span>
+                <h2 class="sol-title">Integrity in<br>Every Byte.</h2>
+                <p class="sol-desc">
+                    흩어진 엑셀과 이메일은 이제 그만. 
+                    DMS는 전사 데이터를 중앙에서 통합 관리하고, 120가지 검증 로직으로 데이터의 무결성을 보장합니다.
+                </p>
+                <a href="dms.html" class="btn-text-link">Discover DMS Data Hub <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="solution-img">
+                <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=1200" alt="Data Hub">
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <div class="solution-text">
+                <span class="sol-num">03 — SUPPLY CHAIN</span>
+                <h2 class="sol-title">Transparency<br>Across Borders.</h2>
+                <p class="sol-desc">
+                    공급망 실사 의무화 시대. 
+                    수천 개의 협력사 리스크를 한눈에 파악하고, 선제적으로 대응할 수 있는 데이터 파이프라인을 구축하세요.
+                </p>
+                <a href="supply.html" class="btn-text-link">View Supply Chain <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="solution-img">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200" alt="Supply Chain">
+            </div>
+        </div>
+
+        <div class="solution-item reverse">
+            <div class="solution-text">
+                <span class="sol-num">04 — NET ZERO</span>
+                <h2 class="sol-title">Precision in<br>Decarbonization.</h2>
+                <p class="sol-desc">
+                    Scope 3까지 포함한 정밀한 탄소 배출량 산정. 
+                    과학적 시나리오 시뮬레이션을 통해 실현 가능한 넷제로 로드맵을 수립합니다.
+                </p>
+                <a href="carbon.html" class="btn-text-link">Analyze Carbon Mgmt <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="solution-img">
+                <img src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=1200" alt="Carbon Mgmt">
+            </div>
+        </div>
+
+    </section>
+
+    <section class="impact">
+        <div class="impact-grid">
+            <div class="stat-item">
+                <h3>150+</h3>
+                <p>Enterprise Clients</p>
+            </div>
+            <div class="stat-item">
+                <h3>12M</h3>
+                <p>Data Points Processed</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Audit Success Rate</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo">QuantifiedESG</div>
+            <div class="footer-links">
+                <a href="ert.html">ERT Reporting</a>
+                <a href="dms.html">DMS Data Hub</a>
+                <a href="supply.html">Supply Chain</a>
+                <a href="carbon.html">Carbon Mgmt</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 QuantifiedESG Inc. All rights reserved.</span>
+            <span>Privacy Policy &nbsp;&nbsp; Terms of Service</span>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Simple Fade-up Animation on Scroll
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.solution-text, .stat-item').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
