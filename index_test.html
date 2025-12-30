@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mobile Photo Album</title>
+
+  <style>
+    :root{
+      --bg: #f7f8fb;
+      --card: rgba(255,255,255,.75);
+      --stroke: rgba(0,0,0,.08);
+      --text: #1f2937;
+      --muted: #6b7280;
+      --shadow: 0 18px 40px rgba(0,0,0,.08);
+      --r: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 10% 10%, #ffe4ef, transparent 60%),
+        radial-gradient(800px 600px at 90% 20%, #e6f0ff, transparent 60%),
+        radial-gradient(700px 600px at 50% 90%, #e8fff4, transparent 60%),
+        var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x:hidden;
+    }
+
+    .safe{
+      padding: calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 18px);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .title{
+      margin:0;
+      font-size:24px;
+      font-weight:700;
+      letter-spacing:-0.02em;
+    }
+
+    .subtitle{
+      margin:4px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .pill{
+      background: rgba(255,255,255,.65);
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      color:#374151;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ===== Grid ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .tile{
+      position:relative;
+      aspect-ratio:1/1;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      background:#fff;
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      transition: transform .18s ease;
+    }
+
+    .tile:active{ transform: scale(.97); }
+
+    .tile img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .idx-badge{
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.8);
+      border:1px solid var(--stroke);
+      color:#111827;
+    }
+
+    /* ===== Viewer ===== */
+    .viewer{
+      position:fixed;
+      inset:0;
+      display:none;
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(18px);
+      z-index:999;
+    }
+
+    .viewer.open{ display:block; }
+
+    .viewer-top{
+      padding: calc(env(safe-area-inset-top) + 10px) 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .btn{
+      background:#fff;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:13px;
+      color:#111827;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel{
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      height:100%;
+    }
+
+    .slide{
+      flex:0 0 100%;
+      scroll-snap-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:80px 16px 140px;
+      gap:14px;
+    }
+
+    .frame{
+      width:min(92vw,520px);
+      aspect-ratio:3/4;
+      border-radius:26px;
+      overflow:hidden;
+      background:#fff;
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+    }
+
+    .frame img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .caption{
+      width:min(92vw,520px);
+      background: rgba(255,255,255,.85);
+      border-radius:18px;
+      padding:14px 16px;
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+    }
+
+    .caption p{
+      margin:0;
+      font-size:15px;
+    }
+
+    .caption small{
+      display:block;
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="safe">
+    <header>
+      <div>
+        <h1 class="title">Spring Memories</h1>
+        <p class="subtitle">12 moments, softly collected</p>
+      </div>
+      <div class="pill">tap photo</div>
+    </header>
+
+    <section class="grid" id="grid"></section>
+  </div>
+
+  <!-- Viewer -->
+  <div class="viewer" id="viewer">
+    <div class="viewer-top">
+      <button class="btn" onclick="closeViewer()">닫기</button>
+      <span id="counter">1 / 12</span>
+    </div>
+    <div class="carousel" id="carousel"></div>
+  </div>
+
+<script>
+const PHOTOS = Array.from({length:12}, (_,i)=>({
+  src:`images/${String(i+1).padStart(2,'0')}.jpg`,
+  text:`오늘의 장면 ${i+1}`,
+  meta:`memory`
+}));
+
+const grid = document.getElementById("grid");
+const viewer = document.getElementById("viewer");
+const carousel = document.getElementById("carousel");
+const counter = document.getElementById("counter");
+
+let current = 0;
+
+PHOTOS.forEach((p,i)=>{
+  const tile = document.createElement("div");
+  tile.className="tile";
+  tile.innerHTML = `<img src="${p.src}"><div class="idx-badge">${i+1}</div>`;
+  tile.onclick=()=>openViewer(i);
+  grid.appendChild(tile);
+
+  const slide = document.createElement("div");
+  slide.className="slide";
+  slide.innerHTML=`
+    <div class="frame"><img src="${p.src}"></div>
+    <div class="caption"><p>${p.text}</p><small>${p.meta}</small></div>
+  `;
+  carousel.appendChild(slide);
+});
+
+function openViewer(i){
+  viewer.classList.add("open");
+  current=i;
+  update();
+  carousel.scrollLeft = i * window.innerWidth;
+}
+
+function closeViewer(){
+  viewer.classList.remove("open");
+}
+
+carousel.addEventListener("scroll", ()=>{
+  current = Math.round(carousel.scrollLeft / window.innerWidth);
+  update();
+});
+
+function update(){
+  counter.textContent = `${current+1} / ${PHOTOS.length}`;
+}
+</script>
+</body>
+</html>
