@@ -8,12 +8,11 @@
   <style>
     :root{
       --bg: #f7f8fb;
-      --card: rgba(255,255,255,.75);
-      --stroke: rgba(0,0,0,.08);
-      --text: #1f2937;
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(0,0,0,.09);
+      --text: #111827;
       --muted: #6b7280;
       --shadow: 0 18px 40px rgba(0,0,0,.08);
-      --r: 22px;
     }
 
     *{ box-sizing:border-box; }
@@ -49,7 +48,7 @@
     .title{
       margin:0;
       font-size:24px;
-      font-weight:700;
+      font-weight:720;
       letter-spacing:-0.02em;
     }
 
@@ -60,37 +59,43 @@
     }
 
     .pill{
-      background: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.72);
       border:1px solid var(--stroke);
-      border-radius:999px;
+      border-radius: 0;                 /* 라운드 제거 */
       padding:8px 12px;
       font-size:12px;
       color:#374151;
       backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
     }
 
-    /* ===== Grid ===== */
+    /* ===== Grid (thumbnails) ===== */
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:10px;
       margin-top:14px;
     }
+    @media (min-width: 520px){
+      .grid{ grid-template-columns: repeat(4, 1fr); }
+      .title{ font-size:28px; }
+    }
 
     .tile{
       position:relative;
       aspect-ratio:1/1;
-      border-radius:18px;
+      border-radius:0;                  /* 라운드 제거 */
       overflow:hidden;
       border:1px solid var(--stroke);
       background:#fff;
       box-shadow: var(--shadow);
       cursor:pointer;
-      transition: transform .18s ease;
+      transition: transform .16s ease;
+      -webkit-tap-highlight-color: transparent;
     }
+    .tile:active{ transform: scale(.98); }
 
-    .tile:active{ transform: scale(.97); }
-
+    /* 그리드는 통일감 위해 cover */
     .tile img{
       width:100%;
       height:100%;
@@ -98,54 +103,65 @@
       display:block;
     }
 
-    .idx-badge{
-      position:absolute;
-      left:10px;
-      bottom:10px;
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.8);
-      border:1px solid var(--stroke);
-      color:#111827;
-    }
+   
 
     /* ===== Viewer ===== */
     .viewer{
       position:fixed;
       inset:0;
       display:none;
-      background: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.78);
       backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       z-index:999;
     }
-
     .viewer.open{ display:block; }
 
     .viewer-top{
-      padding: calc(env(safe-area-inset-top) + 10px) 14px;
+      position:absolute;
+      top:0; left:0; right:0;
+      padding: calc(env(safe-area-inset-top) + 10px) 14px 10px;
       display:flex;
       justify-content:space-between;
       align-items:center;
+      gap:10px;
+      pointer-events:auto;
     }
 
     .btn{
       background:#fff;
       border:1px solid var(--stroke);
-      border-radius:999px;
-      padding:8px 14px;
+      border-radius:0;                  /* 라운드 제거 */
+      padding:9px 14px;
       font-size:13px;
       color:#111827;
       box-shadow: var(--shadow);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active{ transform: scale(.98); }
+
+    .counter{
+      font-size:13px;
+      color:#374151;
+      background: rgba(255,255,255,.72);
+      border:1px solid var(--stroke);
+      padding:8px 12px;
+      border-radius:0;                  /* 라운드 제거 */
+      box-shadow: var(--shadow);
+      user-select:none;
+      white-space:nowrap;
     }
 
     .carousel{
+      position:absolute;
+      inset:0;
       display:flex;
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
-      height:100%;
+      scrollbar-width:none;
     }
+    .carousel::-webkit-scrollbar{ display:none; }
 
     .slide{
       flex:0 0 100%;
@@ -154,45 +170,90 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      padding:80px 16px 140px;
+      padding: calc(env(safe-area-inset-top) + 64px) 16px calc(env(safe-area-inset-bottom) + 140px);
       gap:14px;
     }
 
+    /* 프레임은 "가로/세로 섞여도" 꽉 차게 담아주는 컨테이너 */
     .frame{
-      width:min(92vw,520px);
-      aspect-ratio:3/4;
-      border-radius:26px;
+      width:min(94vw, 760px);
+      height: min(62vh, 620px);        /* 높이 기반으로 크게 보여줌 */
+      border-radius:0;                  /* 라운드 제거 */
       overflow:hidden;
       background:#fff;
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
+    /* 핵심: 큰 화면은 contain(원본 비율 유지, 안 잘림) */
     .frame img{
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit:contain;               /* ✅ 가로/세로 자동 대응 */
+      background:#fff;                  /* 남는 여백은 흰색 */
+      display:block;
+      -webkit-user-drag:none;
+      user-select:none;
     }
 
     .caption{
-      width:min(92vw,520px);
-      background: rgba(255,255,255,.85);
-      border-radius:18px;
+      width:min(94vw, 760px);
+      background: rgba(255,255,255,.88);
+      border-radius:0;                  /* 라운드 제거 */
       padding:14px 16px;
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
     }
-
     .caption p{
       margin:0;
       font-size:15px;
+      letter-spacing:-0.01em;
     }
-
     .caption small{
       display:block;
       margin-top:6px;
       font-size:12px;
       color:var(--muted);
+    }
+
+    .viewer-bottom{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      padding: 10px 14px calc(env(safe-area-inset-bottom) + 10px);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+
+    .dots{
+      display:flex;
+      gap:6px;
+      max-width: 72vw;
+      overflow:hidden;
+    }
+    .dot{
+      width: 7px;
+      height: 7px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 0;                 /* 라운드 제거 */
+      transition: width .2s ease, background .2s ease;
+      flex: 0 0 auto;
+    }
+    .dot.active{
+      width: 18px;
+      background: rgba(0,0,0,.78);
+    }
+
+    .hint{
+      font-size:12px;
+      color: rgba(0,0,0,.45);
+      user-select:none;
+      white-space:nowrap;
     }
   </style>
 </head>
@@ -211,63 +272,160 @@
   </div>
 
   <!-- Viewer -->
-  <div class="viewer" id="viewer">
+  <div class="viewer" id="viewer" aria-hidden="true">
     <div class="viewer-top">
-      <button class="btn" onclick="closeViewer()">닫기</button>
-      <span id="counter">1 / 12</span>
+      <button class="btn" id="closeBtn">닫기</button>
+      <div class="counter" id="counter">1 / 12</div>
+      <button class="btn" id="gridBtn">그리드</button>
     </div>
+
     <div class="carousel" id="carousel"></div>
+
+    <div class="viewer-bottom">
+      <div class="dots" id="dots"></div>
+      <div class="hint">← → swipe</div>
+    </div>
   </div>
 
 <script>
-const PHOTOS = Array.from({length:12}, (_,i)=>({
-  src:`images/${String(i+1).padStart(2,'0')}.jpg`,
-  text:`오늘의 장면 ${i+1}`,
-  meta:`memory`
-}));
+  // 사진 경로/캡션만 바꾸면 됨
+  const PHOTOS = [
+    { src: "images/01.jpg", text: "오늘의 장면 01", meta: "memory" },
+    { src: "images/02.jpg", text: "오늘의 장면 02", meta: "memory" },
+    { src: "images/03.jpg", text: "오늘의 장면 03", meta: "memory" },
+    { src: "images/04.jpg", text: "오늘의 장면 04", meta: "memory" },
+    { src: "images/05.jpg", text: "오늘의 장면 05", meta: "memory" },
+    { src: "images/06.jpg", text: "오늘의 장면 06", meta: "memory" },
+    { src: "images/07.jpg", text: "오늘의 장면 07", meta: "memory" },
+    { src: "images/08.jpg", text: "오늘의 장면 08", meta: "memory" },
+    { src: "images/09.jpg", text: "오늘의 장면 09", meta: "memory" },
+    { src: "images/10.jpg", text: "오늘의 장면 10", meta: "memory" },
+    { src: "images/11.jpg", text: "오늘의 장면 11", meta: "memory" },
+    { src: "images/12.jpg", text: "오늘의 장면 12", meta: "memory" },
+  ];
 
-const grid = document.getElementById("grid");
-const viewer = document.getElementById("viewer");
-const carousel = document.getElementById("carousel");
-const counter = document.getElementById("counter");
+  const grid = document.getElementById("grid");
+  const viewer = document.getElementById("viewer");
+  const carousel = document.getElementById("carousel");
+  const counter = document.getElementById("counter");
+  const dots = document.getElementById("dots");
+  const closeBtn = document.getElementById("closeBtn");
+  const gridBtn = document.getElementById("gridBtn");
 
-let current = 0;
+  let currentIndex = 0;
 
-PHOTOS.forEach((p,i)=>{
-  const tile = document.createElement("div");
-  tile.className="tile";
-  tile.innerHTML = `<img src="${p.src}"><div class="idx-badge">${i+1}</div>`;
-  tile.onclick=()=>openViewer(i);
-  grid.appendChild(tile);
+  // Grid
+  PHOTOS.forEach((p, i) => {
+    const tile = document.createElement("button");
+    tile.className = "tile";
+    tile.type = "button";
+    tile.innerHTML = `
+      <img src="${p.src}" alt="photo ${i+1}" loading="lazy">
+      
+    `;
+    tile.addEventListener("click", () => openViewer(i));
+    grid.appendChild(tile);
+  });
 
-  const slide = document.createElement("div");
-  slide.className="slide";
-  slide.innerHTML=`
-    <div class="frame"><img src="${p.src}"></div>
-    <div class="caption"><p>${p.text}</p><small>${p.meta}</small></div>
-  `;
-  carousel.appendChild(slide);
-});
+  // Slides + Dots
+  PHOTOS.forEach((p, i) => {
+    const slide = document.createElement("div");
+    slide.className = "slide";
+    slide.dataset.index = i;
+    slide.innerHTML = `
+      <div class="frame"><img src="${p.src}" alt="photo ${i+1}" draggable="false"></div>
+      <div class="caption">
+        <p>${escapeHtml(p.text || "")}</p>
+        <small>${escapeHtml(p.meta || "")}</small>
+      </div>
+    `;
+    carousel.appendChild(slide);
 
-function openViewer(i){
-  viewer.classList.add("open");
-  current=i;
-  update();
-  carousel.scrollLeft = i * window.innerWidth;
-}
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dot.addEventListener("click", () => scrollToIndex(i));
+    dots.appendChild(dot);
+  });
 
-function closeViewer(){
-  viewer.classList.remove("open");
-}
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-carousel.addEventListener("scroll", ()=>{
-  current = Math.round(carousel.scrollLeft / window.innerWidth);
-  update();
-});
+  function openViewer(i){
+    currentIndex = i;
+    viewer.classList.add("open");
+    viewer.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => {
+      scrollToIndex(i, false);
+      updateUI(i);
+    });
+  }
 
-function update(){
-  counter.textContent = `${current+1} / ${PHOTOS.length}`;
-}
+  function closeViewer(){
+    viewer.classList.remove("open");
+    viewer.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+  }
+
+  closeBtn.addEventListener("click", closeViewer);
+  gridBtn.addEventListener("click", () => {
+    closeViewer();
+    setTimeout(() => grid.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+  });
+
+  function scrollToIndex(i, smooth=true){
+    const slide = carousel.querySelector(`.slide[data-index="${i}"]`);
+    if(!slide) return;
+    currentIndex = i;
+    slide.scrollIntoView({behavior: smooth ? "smooth" : "auto", inline:"center", block:"nearest"});
+    updateUI(i);
+  }
+
+  function updateUI(i){
+    counter.textContent = `${i+1} / ${PHOTOS.length}`;
+    [...dots.children].forEach((d, idx) => d.classList.toggle("active", idx===i));
+  }
+
+  // Scroll index detect
+  let ticking = false;
+  carousel.addEventListener("scroll", () => {
+    if(!viewer.classList.contains("open")) return;
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const idx = getNearestIndex();
+      if(idx !== currentIndex){
+        currentIndex = idx;
+        updateUI(idx);
+      }
+      ticking = false;
+    });
+  });
+
+  function getNearestIndex(){
+    const slides = [...carousel.querySelectorAll(".slide")];
+    const center = carousel.scrollLeft + carousel.clientWidth / 2;
+    let best = 0, bestDist = Infinity;
+
+    slides.forEach((s, i) => {
+      const mid = s.offsetLeft + s.clientWidth / 2;
+      const dist = Math.abs(mid - center);
+      if(dist < bestDist){
+        bestDist = dist;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  // init
+  updateUI(0);
 </script>
 </body>
 </html>
