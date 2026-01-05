@@ -123,14 +123,43 @@
         .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
         .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-        .hero-visual { position: relative; perspective: 1500px; }
-        .sc-dashboard { 
-            border-radius: 16px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15); 
-            border: 1px solid rgba(0,0,0,0.05); background: white;
-            transform: rotateY(-5deg) rotateX(2deg); 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .sc-dashboard:hover { transform: rotateY(0) rotateX(0) scale(1.02); border-color: var(--primary); }
+        /* [수정] 부모 컨테이너: 3D 원근감 제거 */
+.hero-visual { 
+    position: relative; 
+    /* perspective 제거함 */
+}
+
+/* [수정] 대시보드 이미지 스타일 */
+.sc-dashboard { 
+    border-radius: 20px; 
+    
+    /* 평상시: 은은한 그림자와 연한 테두리 */
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); 
+    border: 1px solid rgba(0,0,0,0.08); 
+    background: white;
+    
+    /* 회전(rotate) 제거 -> 정면 배치 */
+    transform: translateY(0); 
+    
+    /* 애니메이션 속도 설정 */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* 이미지 크기 최적화 */
+    width: 100%;
+    height: auto;
+}
+
+/* [추가] 마우스 호버(Hover) 효과 */
+.hero-visual:hover .sc-dashboard {
+    /* 1. 위로 살짝 떠오르는 효과 */
+    transform: translateY(-10px); 
+    
+    /* 2. 그림자가 깊어짐 (입체감) */
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); 
+    
+    /* 3. 테두리 색상 강조 (브랜드 컬러) */
+    border-color: var(--primary); 
+}
 
         /* [1-1. Wave Separator] */
         .wave-separator {
@@ -162,6 +191,10 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
         .client-box:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        /* 예: client-box 안의 이미지가 커지는 것을 방지 */
+.client-box:hover img {
+    transform: none !important;
+}
 /* 클라이언트 박스 내 이미지 스타일 (항상 컬러) */
 .client-box img {
     max-height: 28px; /* 로고 높이 제한 */
@@ -237,11 +270,27 @@
         }
         .proc-detail li i { position: absolute; left: 0; top: 4px; color: var(--primary); font-size: 20px; background: #e0f2fe; border-radius: 50%; padding: 2px; }
         
-        .proc-img-placeholder {
-            margin-top: auto; height: 220px; background: #f8fafc; border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600;
-            border: 2px dashed #e2e8f0; font-size: 14px;
-        }
+     /* [수정] 박스: 고정 높이를 없애고 내용물(이미지)에 맞춰 늘어나게 설정 */
+.proc-img-placeholder {
+    width: 100%;
+    height: auto;      /* [핵심] 고정 높이 제거 -> 이미지 높이만큼 늘어남 */
+    min-height: 220px; /* (선택사항) 이미지가 너무 작을 때를 대비한 최소 높이 */
+    
+    display: block;    /* 이미지 박스처럼 동작 */
+    margin-top: auto;  /* 텍스트 내용이 적을 때 하단 배치 유지 */
+}
+
+/* [수정] 이미지: 가로를 꽉 채우고, 세로는 비율대로 늘어나게 설정 */
+.proc-img-placeholder img {
+    width: 100%;       /* 가로 폭 꽉 채우기 */
+    height: auto;      /* [핵심] 가로 너비에 맞춰 세로 비율 자동 조절 */
+    
+    /* 테두리 및 둥근 모서리 */
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    
+    display: block;    /* 이미지 하단에 미세한 공백이 생기는 것 방지 */
+}
 
         /* [5. Output] */
         .output-sec { 
@@ -418,10 +467,10 @@
         
         <div class="header-right">
             <nav class="gnb">
-                <a href="ert.html" class="nav-link">ERT Reporting</a>
-                <a href="dms.html" class="nav-link">DMS Data Hub</a>
-                <a href="supply.html" class="nav-link active">Supply Chain</a>
-                <a href="carbon.html" class="nav-link">Carbon Mgmt</a>
+                <a href="ert.html" class="nav-link">ESG Reporting Tool</a>
+                <a href="dms.html" class="nav-link">Data Management System</a>
+                <a href="supply.html" class="nav-link active">QESG Assessment</a>
+                <a href="carbon.html" class="nav-link">Carbon</a>
                 <a href="blog.html" class="nav-link nav-link-blog">Blog</a>
             </nav>
             <div class="action-group">
@@ -476,7 +525,7 @@
                 <p>제3자 협력사 ESG 조사 · 평가를 통해 지속가능성을 향상하세요</p>
                 <div class="cta-group">
                     <a href="https://assessment.qesg.co.kr/main" target="_blank" class="btn-primary">평가 신청하기</a>
-                    <a href="https://assessment.qesg.co.kr/" target="_blank" class="btn-outline">평가 시스템 바로가기</a>
+                    <!--<a href="https://assessment.qesg.co.kr/" target="_blank" class="btn-outline">평가 시스템 바로가기</a>-->
                     <a href="[QESG] ESG 평가 서비스 소개서(기본_프리미엄포함)_2024_v2.pdf" class="btn-outline" download>
                         <i class="ph ph-download-simple"></i> 서비스 소개서
                     </a>
@@ -620,7 +669,7 @@
                                 <li><i class="ph ph-check-circle"></i> 전문가 검토 및 피드백 진행</li>
                             </ul>
                             <div class="proc-img-placeholder">
-                                [평가 진행 화면 이미지]
+                               <img src="index_files/STEP1.png" alt="평가 플랫폼 이미지">
                             </div>
                         </div>
                     </div>
@@ -633,7 +682,7 @@
                                 <li><i class="ph ph-check-circle"></i> 벤치마크 대비 수준 확인</li>
                             </ul>
                             <div class="proc-img-placeholder">
-                                [결과 보고서 예시 이미지]
+                                 <img src="index_files/STEP2.png" alt="평가 플랫폼 이미지">
                             </div>
                         </div>
                     </div>
@@ -646,7 +695,7 @@
                                 <li><i class="ph ph-check-circle"></i> (6개월~1년 후) 재평가를 통한 성과 개선 파악</li>
                             </ul>
                             <div class="proc-img-placeholder">
-                                [개선 과제 대시보드 이미지]
+                                 <img src="index_files/STEP3.png" alt="평가 플랫폼 이미지">
                             </div>
                         </div>
                     </div>
@@ -659,7 +708,7 @@
                                 <li><i class="ph ph-check-circle"></i> 타사 우수사례집 참고 및 템플릿 활용</li>
                             </ul>
                             <div class="proc-img-placeholder">
-                                [가이드북 및 템플릿 이미지]
+                                 <img src="index_files/STEP4.png" alt="평가 플랫폼 이미지">
                             </div>
                         </div>
                     </div>
@@ -767,21 +816,21 @@
             <div class="quick-links">
                 <a href="ert.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-file-text"></i></div>
-                    <h4>ERT Reporting</h4>
-                    <p>글로벌 표준 공시 보고서를 원클릭으로 생성하세요.</p>
-                    <div class="ql-link">Explore ERT <i class="ph ph-arrow-right"></i></div>
+                    <h4>ESG Reporting Tool</h4>
+                    <p>통합 ESG 정보공시 솔루션</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
                 <a href="dms.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-database"></i></div>
-                    <h4>DMS Data Hub</h4>
-                    <p>전사 데이터를 중앙에서 통합 관리하세요.</p>
-                    <div class="ql-link">Explore DMS <i class="ph ph-arrow-right"></i></div>
+                    <h4>Data Management System</h4>
+                    <p>ESG 데이터 수집 및 관리 플랫폼</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
                 <a href="carbon.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-cloud"></i></div>
-                    <h4>Carbon Mgmt</h4>
-                    <p>Scope 3를 포함한 정밀한 탄소 관리.</p>
-                    <div class="ql-link">Explore Carbon <i class="ph ph-arrow-right"></i></div>
+                    <h4>Carbon</h4>
+                    <p>기업 탄소 배출량 산정 플랫폼</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
             </div>
         </div>
