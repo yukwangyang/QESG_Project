@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QESG - News View</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --novo-navy: #001952;
+            --novo-blue: #f0f7ff;
+            --text-body: #475569;
+            --primary: #2563eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        body { background: var(--bg-body); color: var(--novo-navy); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; }
+
+        /* [Header] (Index와 동일) */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo img { height: 42px; }
+        .header-right { display: flex; align-items: center; gap: 40px; }
+        .gnb { display: flex; gap: 24px; }
+        .nav-link { font-size: 16px; font-weight: 600; color: var(--text-body); }
+        .nav-link:hover { color: var(--novo-navy); }
+        .btn-back { font-size: 14px; font-weight: 600; color: var(--text-body); cursor: pointer; }
+
+        /* [Article Container] */
+        .article-container {
+            max-width: 800px; margin: 0 auto;
+            padding: 140px 20px 100px; /* 헤더 높이 고려 */
+        }
+
+        /* [Article Header] */
+        .article-header { text-align: center; margin-bottom: 60px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px; }
+        .article-category { 
+            display: inline-block; padding: 6px 14px; border-radius: 50px; 
+            background: var(--novo-blue); color: var(--primary); 
+            font-size: 14px; font-weight: 700; margin-bottom: 20px;
+        }
+        .article-title { font-size: 36px; font-weight: 800; line-height: 1.4; margin-bottom: 20px; word-break: keep-all; }
+        .article-meta { font-size: 15px; color: #94a3b8; }
+
+        /* [Article Body] - 본문 내용 스타일 */
+        .article-content { 
+            font-size: 17px; line-height: 1.8; color: #334155; 
+            min-height: 400px;
+        }
+        /* 본문 내부 이미지 스타일링 */
+        .article-content img { border-radius: 12px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .article-content p { margin-bottom: 20px; }
+        .article-content h3 { font-size: 24px; margin-top: 40px; margin-bottom: 15px; color: var(--novo-navy); }
+
+        /* [Navigation] */
+        .article-nav {
+            margin-top: 80px; padding-top: 40px; border-top: 1px solid #e2e8f0;
+            display: flex; justify-content: center;
+        }
+        .btn-list {
+            padding: 12px 40px; border: 1px solid var(--novo-navy); border-radius: 50px;
+            font-weight: 700; color: var(--novo-navy); transition: 0.3s;
+        }
+        .btn-list:hover { background: var(--novo-navy); color: white; }
+
+        /* Footer */
+        footer { padding: 80px 40px; background: #f8f9fa; text-align: center; margin-top: 100px; }
+        .footer-logo img { height: 32px; opacity: 0.9; margin-bottom: 20px; }
+        .copyright { font-size: 14px; color: #94a3b8; }
+
+        @media (max-width: 768px) {
+            .article-title { font-size: 28px; }
+            .article-content { font-size: 16px; }
+            header { padding: 12px 20px; }
+            .gnb { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></a></div>
+        <div class="header-right">
+            <nav class="gnb">
+                <a href="blog.html" class="nav-link">Back to List</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="article-container">
+        <div class="article-header" id="header-area">
+            <span class="article-category">News</span>
+            <h1 class="article-title" id="title">Loading...</h1>
+            <p class="article-meta" id="date">...</p>
+        </div>
+
+        <div class="article-content" id="content-area">
+            <p style="text-align: center; color: #999;">데이터를 불러오는 중입니다.</p>
+        </div>
+
+        <div class="article-nav">
+            <a href="blog.html" class="btn-list">목록으로 돌아가기</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></div>
+        <p class="copyright">Copyright © 2026 QuantifiedESG. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadArticleDetail();
+        });
+
+        async function loadArticleDetail() {
+            // 1. URL에서 글 번호(article_code) 가져오기
+            const params = new URLSearchParams(window.location.search);
+            const articleCode = params.get('code'); // url의 ?code=값
+
+            if (!articleCode) {
+                alert("잘못된 접근입니다.");
+                location.href = 'blog.html';
+                return;
+            }
+
+            // 2. 상세 조회 API 주소 (★중요★)
+            // 보통 목록 API가 'qe_read_article_list'라면 상세 API는 'qe_read_article'일 확률이 높습니다.
+            // 개발자 도구에서 실제 상세페이지 들어갈 때 호출되는 API를 확인해서 아래 주소를 확정해야 합니다.
+            // 여기서는 추정된 주소를 넣었습니다. (안되면 개발자에게 상세 조회 API url 문의 필요)
+            const detailApiUrl = `https://cms.dataflare.net/api/qe_read_article?article_code=${articleCode}`;
+
+            try {
+                const response = await fetch(detailApiUrl);
+                if (!response.ok) throw new Error("Network Error");
+
+                const data = await response.json();
+                
+                // API 구조에 따라 data.result, data.article 등으로 접근해야 할 수도 있습니다.
+                // 콘솔에서 실제 들어오는 데이터 구조를 꼭 확인하세요!
+                console.log("상세 데이터:", data); 
+                
+                const item = data.result || data.data || data; // 구조에 맞춰 수정 가능
+
+                // 3. 화면에 데이터 뿌리기
+                document.getElementById('title').innerText = item.title || item.subject || "제목 없음";
+                
+                let dateStr = item.created_at || item.reg_date || '2025.01.01';
+                document.getElementById('date').innerText = dateStr.substring(0, 10);
+                
+                // 본문 넣기 (API가 HTML 태그를 포함한 본문을 준다고 가정)
+                // 변수명이 'content', 'body', 'description' 중 하나일 것입니다.
+                const contentHtml = item.content || item.body || item.description || "<p>내용이 없습니다.</p>";
+                document.getElementById('content-area').innerHTML = contentHtml;
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('content-area').innerHTML = 
+                    '<p style="text-align:center; padding:50px;">글 내용을 불러오지 못했습니다.<br>API 주소나 파라미터를 확인해주세요.</p>';
+            }
+        }
+    </script>
+
+</body>
+</html>
