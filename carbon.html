@@ -122,13 +122,39 @@
         .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
         .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-        .hero-visual { position: relative; perspective: 1000px; }
-        .platform-login-img {
-            border-radius: 16px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.15); 
-            border: 1px solid rgba(0,0,0,0.05); background: white; width: 100%; height: auto;
-            transform: rotateY(-5deg) rotateX(2deg); transition: 0.5s;
-        }
-        .hero-visual:hover .platform-login-img { transform: rotateY(0) rotateX(0); }
+       /* [수정] 3D 원근감 제거 */
+.hero-visual { 
+    position: relative; 
+    /* perspective: 1000px; <-- 이 속성을 삭제하거나 주석 처리 */
+}
+
+/* [수정] 로그인 이미지 스타일 */
+.platform-login-img {
+    border-radius: 16px; 
+    width: 100%; 
+    height: auto;
+    background: white;
+    
+    /* 1. 평상시: 정면 배치, 은은한 그림자 */
+    transform: translateY(0); 
+    border: 1px solid rgba(0,0,0,0.08); 
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); 
+    
+    /* 애니메이션 부드럽게 */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* [수정] 마우스 호버(Hover) 효과 */
+.hero-visual:hover .platform-login-img {
+    /* 1. 회전 대신 위로 떠오르기 */
+    transform: translateY(-10px); 
+    
+    /* 2. 테두리 초록색 강조 (브랜드 컬러) */
+    border-color: var(--primary); 
+    
+    /* 3. 그림자 깊게 (입체감) */
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); 
+}
 
         /* [2. Process Tab Style Updated - Unified Card] */
         .process-sec { background: #fff; }
@@ -182,15 +208,28 @@
         .role-column.buyer li::before { color: #1e40af; }
         .role-column.supplier li::before { color: #166534; }
 
-        .proc-img-box {
-            width: 100%; height: 350px; 
-            background: #f8fafc; border-radius: 12px; overflow: hidden;
-            border: 1px solid #e2e8f0;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .proc-img-box img {
-            width: 100%; height: 100%; object-fit: contain; object-position: center;
-        }
+       /* [수정] 이미지 박스: 고정 높이를 제거하고 내용물(이미지)에 따라 늘어나게 설정 */
+.proc-img-box {
+    width: 100%;
+    height: auto;       /* [핵심] 고정 높이(350px 등) 제거 -> 이미지 높이만큼 늘어남 */
+    min-height: 200px;  /* 이미지가 없을 때를 대비한 최소 높이 */
+    
+    background: #f8fafc; 
+    border-radius: 12px; 
+    border: 1px solid #e2e8f0;
+    overflow: hidden;   /* 이미지가 둥근 모서리 밖으로 나가지 않게 자름 */
+    
+    display: block;     /* 플렉스 대신 블록으로 설정하여 자연스러운 흐름 유도 */
+}
+
+/* [수정] 이미지: 가로를 꽉 채우고, 세로는 비율대로 늘어나게 설정 */
+.proc-img-box img {
+    width: 100%;        /* 가로 폭 꽉 채우기 */
+    height: auto;       /* [핵심] 가로 너비에 맞춰 세로 비율 자동 조절 */
+    
+    object-fit: contain; /* 이미지가 잘리지 않고 다 보이도록 설정 */
+    display: block;     /* 이미지 하단에 미세한 공백이 생기는 것 방지 */
+}
 
         /* [3. Real-time Monitoring] */
         .monitor-sec { background: var(--surface); }
@@ -229,18 +268,70 @@
         .ri-title { font-size: 17px; font-weight: 700; color: var(--text-main); }
         .ri-desc { font-size: 13px; color: var(--text-sub); line-height: 1.4; margin-left: 36px; }
 
-        .report-preview-area {
-            position: relative; height: 500px; background: #e2e8f0; border-radius: 20px;
-            display: flex; justify-content: center; align-items: center; overflow: hidden;
-        }
-        .a4-sheet {
-            width: 340px; height: 480px; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: absolute;
-            display: flex; align-items: center; justify-content: center; color: #ccc; font-weight: 700; font-size: 14px;
-            opacity: 0; transform: translateY(20px) scale(0.95);
-        }
-        .a4-sheet.active { opacity: 1; transform: translateY(0) scale(1); z-index: 2; }
-        .a4-sheet img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+       /* [수정] 미리보기 영역: 이미지가 들어갈 공간 확보 */
+.report-preview-area {
+    width: 100%;
+    height: 600px; /* 기준이 될 높이 (원하시는 만큼 조절 가능) */
+    
+    background: #e2e8f0; 
+    border-radius: 20px; 
+    
+    /* 내용물을 정중앙에 배치 */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden;
+    position: relative;
+}
+
+/* [수정] A4 시트: 높이를 부모에게 맞춤 (세로 기준) */
+.a4-sheet {
+    /* 1. 세로 길이를 꽉 채움 */
+    height: 90%; 
+    
+    /* 2. 가로 길이는 A4 비율(1:1.414)에 맞춰 자동 조절 */
+    aspect-ratio: 210 / 297; 
+    width: auto; 
+    
+    background: white; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15); 
+    border-radius: 8px; /* 종이 질감 모서리 */
+    
+    /* 애니메이션 및 배치 설정 */
+    position: absolute; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    transform: translateY(20px) scale(0.95);
+    
+    /* 흰색 여백 잘라내기 위해 넘치는 부분 숨김 */
+    overflow: hidden; 
+}
+
+/* 활성화 상태 */
+.a4-sheet.active { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+    z-index: 2; 
+    position: relative; /* active일 때만 공간 차지하도록 변경 */
+}
+
+/* [수정] 이미지: 박스 꽉 채우기 + 여백 잘라내기 */
+.a4-sheet img { 
+    width: 100%; 
+    height: 100%; 
+    
+    /* 1. 빈 공간 없이 꽉 채움 */
+    object-fit: cover; 
+    
+    /* 2. 이미지 자체의 흰 테두리를 없애기 위해 1.05배 확대 */
+    transform: scale(1.05); 
+    
+    /* 3. 이미지 위치: 위쪽 중심 기준 */
+    object-position: top center; 
+}
 
         /* [5. CTA & Footer] */
         .bottom-section { background: var(--surface); padding: 100px 40px 120px; }
@@ -355,10 +446,10 @@
         <div class="logo"><a href="index.html"><img src="https://qesg.co.kr/images/qesg.svg" alt="QESG"></a></div>
         <div class="header-right">
             <nav class="gnb">
-                <a href="ert.html" class="nav-link">ERT Reporting</a>
-                <a href="dms.html" class="nav-link">DMS Data Hub</a>
-                <a href="supply.html" class="nav-link">Supply Chain</a>
-                <a href="carbon.html" class="nav-link active">Carbon Mgmt</a>
+                <a href="ert.html" class="nav-link">ESG Reporting Tool</a>
+                <a href="dms.html" class="nav-link">Data Management System</a>
+                <a href="supply.html" class="nav-link">QESG Assessment</a>
+                <a href="carbon.html" class="nav-link active">Carbon</a>
                 <a href="blog.html" class="nav-link nav-link-blog">Blog</a>
             </nav>
             <div class="action-group">
@@ -408,7 +499,7 @@
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-content">
-                <span class="badge" style="display:inline-block; background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:24px;">Net-Zero Strategy Platform</span>
+                <span class="badge" style="display:inline-block; background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:24px;">GHG Management</span>
                 <h1>Carbon Platform</h1>
                 <p>
                     시스템을 통해 협력사 데이터를 한 곳에서 통합 수집·관리하고,<br>
@@ -417,9 +508,9 @@
                 </p>
                 <div class="cta-group">
                     <a href="https://carbon.qesg.co.kr" target="_blank" class="btn-primary">Carbon 바로가기</a>
-                    <a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-outline" download>
+                    <!--<a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-outline" download>
                         <i class="ph ph-download-simple"></i> 서비스 소개서
-                    </a>
+                    </a>-->
                 </div>
             </div>
             <div class="hero-visual">
@@ -433,7 +524,7 @@
             <div class="sec-title-area">
                 <span class="sec-label">Process</span>
                 <h2>Value for<br>Everyone</h2>
-                <p>탄소 관리는 원청사와 협력사 모두에게<br>비즈니스 기회입니다.</p>
+                <p>시스템 기반 탄소 배출 관리 효율화를 통해<br>기후변화 대응을 위한 비즈니스 기회를 창출할 수 있습니다.</p>
             </div>
 
             <div class="proc-container">
@@ -533,6 +624,7 @@
         </div>
     </section>
 
+    <!--
     <section class="common-sec monitor-sec">
         <div class="sec-split">
             <div class="sec-title-area">
@@ -564,13 +656,13 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <section class="common-sec report-sec">
         <div class="sec-split">
             <div class="sec-title-area">
                 <span class="sec-label">Output</span>
-                <h2>Premium<br>Reports</h2>
+                <h2>Key Deliverables</h2>
                 <p>국제 표준(GHG Protocol)에 기반한<br>신뢰성 있는 산정 결과 보고서입니다.</p>
             </div>
 
@@ -616,7 +708,7 @@
 
     <section class="bottom-section">
         <div class="bottom-inner">
-            <div class="cta-compact">
+            <!--<div class="cta-compact">
                 <div class="cta-text">
                     <h3>탄소 관리를 시작하세요</h3>
                     <p>더 자세한 기능과 도입 효과가 궁금하시다면 서비스 소개서를 확인해보세요.</p>
@@ -624,27 +716,27 @@
                 <a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-download" download>
                     <i class="ph ph-download-simple"></i> 서비스 소개서 다운로드
                 </a>
-            </div>
+            </div>-->
 
             <h2 class="more-services-title">Explore Other Services</h2>
             <div class="quick-links">
                 <a href="ert.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-file-text"></i></div>
-                    <h4>ERT Reporting</h4>
-                    <p>글로벌 표준 공시 보고서를 원클릭으로 생성하세요.</p>
-                    <div class="ql-link">Explore ERT <i class="ph ph-arrow-right"></i></div>
+                    <h4>ESG Reporting Tool</h4>
+                    <p>통합 ESG 정보공시 솔루션</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
                 <a href="dms.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-database"></i></div>
-                    <h4>DMS Data Hub</h4>
-                    <p>전사 데이터를 중앙에서 통합 관리하세요.</p>
-                    <div class="ql-link">Explore DMS <i class="ph ph-arrow-right"></i></div>
+                    <h4>Data Management System</h4>
+                    <p>ESG 데이터 수집 및 관리 플랫폼</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
                 <a href="supply.html" class="ql-card">
                     <div class="ql-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
-                    <h4>Supply Chain</h4>
-                    <p>공급망 ESG 리스크를 한번에 해결하세요.</p>
-                    <div class="ql-link">Explore Supply Chain <i class="ph ph-arrow-right"></i></div>
+                    <h4>QESG Assessment</h4>
+                    <p>지속가능한 공급망/투자를 위한 ESG 평가 서비스</p>
+                    <div class="ql-link">Explore<i class="ph ph-arrow-right"></i></div>
                 </a>
             </div>
         </div>
