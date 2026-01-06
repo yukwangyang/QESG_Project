@@ -191,10 +191,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
         .client-box:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
-        /* 예: client-box 안의 이미지가 커지는 것을 방지 */
-.client-box:hover img {
-    transform: none !important;
-}
+      
 /* 클라이언트 박스 내 이미지 스타일 (항상 컬러) */
 .client-box img {
     max-height: 28px; /* 로고 높이 제한 */
@@ -207,10 +204,10 @@
     transition: 0.3s;
 }
 
-/* 마우스 올렸을 때 효과 (선택사항: 살짝 커지게) */
-.client-box:hover img {
-    transform: scale(1.1); 
-}
+ /* [수정] 마우스 올렸을 때 이미지 확대 효과 제거 */
+        .client-box:hover img {
+            transform: none; /* 기존 scale(1.1)을 none으로 변경 */
+        }
 
         /* [3. Why QESG] */
         .features-sec { background: white; padding-top: 140px; }

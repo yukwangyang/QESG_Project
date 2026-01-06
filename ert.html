@@ -189,22 +189,46 @@
         .sc-list li { font-size: 13px; color: var(--text-main); font-weight: 600; margin-bottom: 6px; padding-left: 12px; position: relative; }
         .sc-list li::before { content: '•'; position: absolute; left: 0; color: var(--primary); }
 
-        /* [5. Interactive Process] */
+       /* [5. Interactive Process] */
         .process-interactive { padding: 140px 40px; background: white; border-top: 1px solid var(--border); }
         .pi-right-col { display: flex; flex-direction: column; width: 100%; }
+        
+        /* ... (pi-tabs 스타일은 그대로 유지) ... */
         .pi-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 30px; margin-bottom: 40px; overflow-x: auto; white-space: nowrap; }
         .pi-tab { padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; color: var(--text-sub); background: #f1f5f9; font-size: 15px; font-weight: 600; }
         .pi-tab:hover { background: #e2e8f0; color: var(--text-main); }
         .pi-tab.active { background: var(--primary); color: white; font-weight: 700; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-        
+
         .pi-display { position: relative; }
-        .pi-content { display: none; grid-template-columns: 0.9fr 1.1fr; gap: 50px; align-items: center; animation: fadeIn 0.5s ease; }
+        
+        /* [수정됨] 이미지와 텍스트 비율 조정 (기존 0.9fr 1.1fr -> 1.3fr 1fr) */
+        .pi-content { 
+            display: none; 
+            /* 이미지가 더 넓은 공간을 차지하도록 비율 변경 */
+            grid-template-columns: 1.3fr 1fr; 
+            gap: 60px; /* 간격도 조금 더 넓혀서 여유 있게 */
+            align-items: center; 
+            animation: fadeIn 0.5s ease; 
+        }
+        
         .pi-content.active { display: grid; }
+        
         .pi-text-area p { font-size: 18px; color: var(--text-sub); line-height: 1.7; margin-bottom: 30px; word-break: keep-all; }
         .pi-list li { display: flex; align-items: center; gap: 10px; font-size: 16px; color: var(--text-main); font-weight: 700; margin-bottom: 10px; }
         .pi-list i { color: var(--primary); font-size: 20px; }
-        .pi-visual { width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); }
+        
+        /* [수정됨] 이미지 비주얼 스타일 강화 */
+        .pi-visual { 
+            width: 100%; 
+            border-radius: 20px; /* 라운드 값 약간 증가 */
+            overflow: hidden; 
+            /* 그림자를 조금 더 키워 입체감 부여 */
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.12); 
+            border: 1px solid rgba(0,0,0,0.08); 
+            background: #ffffff; /* 투명 이미지일 경우를 대비해 흰 배경 추가 */
+        }
         .pi-visual img { width: 100%; height: auto; display: block; }
+        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* [Solutions Cards] */
@@ -432,30 +456,30 @@
         <div class="trusted-label">Trusted by Industry Leaders</div>
         <div class="marquee-wrapper">
             <div class="marquee-track">
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skecoplant.png" alt="SK ecoplant"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/HLD&I.jpg" alt="HL D&I"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/sketernix.jpg" alt="SK eternix"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/mysc.webp" alt="MYSC"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skinc.png" alt="SK Inc"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/locknlock.png" alt="LocknLock"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skchemical.png" alt="SK Chemicals"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skbio.png" alt="SK bioscience"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/hanul.png" alt="Hanul"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/isuchemical.jpg" alt="Isu Chemical"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/sub_symbol031.png" alt="Komtec"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/asan.webp" alt="ASAN"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skecoplant.png" alt="SK ecoplant"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/HLD&I.jpg" alt="HL D&I"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/sketernix.jpg" alt="SK eternix"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/mysc.webp" alt="MYSC"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skinc.png" alt="SK Inc"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/locknlock.png" alt="LocknLock"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skchemical.png" alt="SK Chemicals"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/skbio.png" alt="SK bioscience"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/hanul.png" alt="Hanul"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/isuchemical.jpg" alt="Isu Chemical"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/sub_symbol031.png" alt="Komtec"></a>
-                <a href="javascript:void(0);" class="logo-item"><img src="index_files/asan.webp" alt="ASAN"></a>
+                <a href="https://sustainability.skecoplant.com/" class="logo-item"><img src="index_files/skecoplant.png" alt="SK ecoplant"></a>
+                <a href="https://sustainability.hldni.com/" class="logo-item"><img src="index_files/HLD&I.jpg" alt="HL D&I"></a>
+                <a href="https://esg.sketernix.com/" class="logo-item"><img src="index_files/sketernix.jpg" alt="SK eternix"></a>
+                <a href="https://report.qesg.co.kr/v?r=cjqit250121" class="logo-item"><img src="index_files/mysc.webp" alt="MYSC"></a>
+                <a href="https://esg.sk-inc.com/" class="logo-item"><img src="index_files/skinc.png" alt="SK Inc"></a>
+                <a href="https://esg.locknlock.com/" class="logo-item"><img src="index_files/locknlock.png" alt="LocknLock"></a>
+                <a href="https://esg.skchemicals.com/gri_2024/index.html" class="logo-item"><img src="index_files/skchemical.png" alt="SK Chemicals"></a>
+                <a href="https://report.qesg.co.kr/v/?r=2023skbs" class="logo-item"><img src="index_files/skbio.png" alt="SK bioscience"></a>
+                <a href="https://report.qesg.co.kr/v?r=fy2024hanul" class="logo-item"><img src="index_files/hanul.png" alt="Hanul"></a>
+                <a href="https://report.qesg.co.kr/v?r=isuchem_sus_2024" class="logo-item"><img src="index_files/isuchemical.jpg" alt="Isu Chemical"></a>
+                <a href="https://report.qesg.co.kr/v?r=mzrtp250324" class="logo-item"><img src="index_files/sub_symbol031.png" alt="Komtec"></a>
+                <a href="https://report.qesg.co.kr/v?r=lxhgz240821" class="logo-item"><img src="index_files/asan.webp" alt="ASAN"></a>
+                 <a href="https://sustainability.skecoplant.com/" class="logo-item"><img src="index_files/skecoplant.png" alt="SK ecoplant"></a>
+                <a href="https://sustainability.hldni.com/" class="logo-item"><img src="index_files/HLD&I.jpg" alt="HL D&I"></a>
+                <a href="https://esg.sketernix.com/" class="logo-item"><img src="index_files/sketernix.jpg" alt="SK eternix"></a>
+                <a href="https://report.qesg.co.kr/v?r=cjqit250121" class="logo-item"><img src="index_files/mysc.webp" alt="MYSC"></a>
+                <a href="https://esg.sk-inc.com/" class="logo-item"><img src="index_files/skinc.png" alt="SK Inc"></a>
+                <a href="https://esg.locknlock.com/" class="logo-item"><img src="index_files/locknlock.png" alt="LocknLock"></a>
+                <a href="https://esg.skchemicals.com/gri_2024/index.html" class="logo-item"><img src="index_files/skchemical.png" alt="SK Chemicals"></a>
+                <a href="https://report.qesg.co.kr/v/?r=2023skbs" class="logo-item"><img src="index_files/skbio.png" alt="SK bioscience"></a>
+                <a href="https://report.qesg.co.kr/v?r=fy2024hanul" class="logo-item"><img src="index_files/hanul.png" alt="Hanul"></a>
+                <a href="https://report.qesg.co.kr/v?r=isuchem_sus_2024" class="logo-item"><img src="index_files/isuchemical.jpg" alt="Isu Chemical"></a>
+                <a href="https://report.qesg.co.kr/v?r=mzrtp250324" class="logo-item"><img src="index_files/sub_symbol031.png" alt="Komtec"></a>
+                <a href="https://report.qesg.co.kr/v?r=lxhgz240821" class="logo-item"><img src="index_files/asan.webp" alt="ASAN"></a>
             </div>
         </div>
     </section>
@@ -613,7 +637,7 @@
                             <h4>손쉬운 업데이트</h4>
                             <p>DB에 저장된 데이터는 소실되지 않으며, 차년도 보고서 작성 시 기존 내용을 복제하여 빠르게 업데이트할 수 있습니다.</p>
                             <ul class="sc-list">
-                                <li>기존 보고서 복제/재활용</li>
+                                <li>기존 보고서 복제 및 업데이트</li>
                                 <li>발간 후 수정 가능</li>
                             </ul>
                         </div>
@@ -628,7 +652,7 @@
                     <div class="scroll-wrapper">
                         <div class="scroll-card">
                             <h4>글로벌 표준 적용</h4>
-                            <p>GRI, SASB, TCFD 등 대표적인 국제 표준 프레임워크를 기반으로 보고서를 산출하여 글로벌 상호운영성을 확보합니다.</p>
+                            <p>GRI, SASB, TCFD 등 대표적인 국제 표준 프레임워크를 기반으로 보고서를 산출하여 기준 간 상호운영성을 확보합니다.</p>
                             <ul class="sc-list">
                                 <li>IFRS S1/S2 대응 가능</li>
                                 <li>최신 공시 기준 자동 반영</li>
@@ -751,7 +775,7 @@
     
   <section class="features-bento custom-bg">
     <div class="sec-split usage-plan">
-        <div class="sec-title-area colored-title">
+        <div class="sec-title-area">
             <span class="sec-label">Our Solutions</span>
             <h2>활용 방안</h2>
             <p>웹 리포팅으로 ESG 공시 정보 접근성을 높이고, 대외 정보 요구에 효율적으로 대응하세요.</p>
