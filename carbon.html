@@ -122,39 +122,27 @@
         .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
         .btn-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-       /* [수정] 3D 원근감 제거 */
-.hero-visual { 
-    position: relative; 
-    /* perspective: 1000px; <-- 이 속성을 삭제하거나 주석 처리 */
-}
-
-/* [수정] 로그인 이미지 스타일 */
-.platform-login-img {
-    border-radius: 16px; 
-    width: 100%; 
-    height: auto;
-    background: white;
-    
-    /* 1. 평상시: 정면 배치, 은은한 그림자 */
-    transform: translateY(0); 
-    border: 1px solid rgba(0,0,0,0.08); 
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); 
-    
-    /* 애니메이션 부드럽게 */
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* [수정] 마우스 호버(Hover) 효과 */
-.hero-visual:hover .platform-login-img {
-    /* 1. 회전 대신 위로 떠오르기 */
-    transform: translateY(-10px); 
-    
-    /* 2. 테두리 초록색 강조 (브랜드 컬러) */
-    border-color: var(--primary); 
-    
-    /* 3. 그림자 깊게 (입체감) */
-    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); 
-}
+       /* [수정] 3D 원근감 제거 및 영문 로그인 화면 스타일 */
+        .hero-visual { 
+            position: relative; 
+        }
+        .platform-login-img {
+            border-radius: 16px; 
+            width: 100%; 
+            height: auto;
+            background: white;
+            
+            /* 평상시 스타일 */
+            transform: translateY(0); 
+            border: 1px solid rgba(0,0,0,0.08); 
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); 
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .hero-visual:hover .platform-login-img {
+            transform: translateY(-10px); 
+            border-color: var(--primary); 
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); 
+        }
 
         /* [2. Process Tab Style Updated - Unified Card] */
         .process-sec { background: #fff; }
@@ -208,130 +196,182 @@
         .role-column.buyer li::before { color: #1e40af; }
         .role-column.supplier li::before { color: #166534; }
 
-       /* [수정] 이미지 박스: 고정 높이를 제거하고 내용물(이미지)에 따라 늘어나게 설정 */
-.proc-img-box {
-    width: 100%;
-    height: auto;       /* [핵심] 고정 높이(350px 등) 제거 -> 이미지 높이만큼 늘어남 */
-    min-height: 200px;  /* 이미지가 없을 때를 대비한 최소 높이 */
-    
-    background: #f8fafc; 
-    border-radius: 12px; 
-    border: 1px solid #e2e8f0;
-    overflow: hidden;   /* 이미지가 둥근 모서리 밖으로 나가지 않게 자름 */
-    
-    display: block;     /* 플렉스 대신 블록으로 설정하여 자연스러운 흐름 유도 */
-}
-
-/* [수정] 이미지: 가로를 꽉 채우고, 세로는 비율대로 늘어나게 설정 */
-.proc-img-box img {
-    width: 100%;        /* 가로 폭 꽉 채우기 */
-    height: auto;       /* [핵심] 가로 너비에 맞춰 세로 비율 자동 조절 */
-    
-    object-fit: contain; /* 이미지가 잘리지 않고 다 보이도록 설정 */
-    display: block;     /* 이미지 하단에 미세한 공백이 생기는 것 방지 */
-}
-
-        /* [3. Real-time Monitoring] */
-        .monitor-sec { background: var(--surface); }
-        .monitor-dashboard {
-            background: white; border-radius: 20px; padding: 40px; 
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
-            display: grid; grid-template-columns: 2fr 1fr; gap: 30px;
+        /* [수정] 이미지 박스 스타일 */
+        .proc-img-box {
+            width: 100%; height: auto; min-height: 200px;
+            background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
+            overflow: hidden; display: block;
         }
-        .md-main-chart {
-            background: #f8fafc; border-radius: 12px; height: 300px; position: relative;
-            display: flex; align-items: flex-end; justify-content: space-around; padding: 20px;
+        .proc-img-box img {
+            width: 100%; height: auto; object-fit: contain; display: block;
         }
-        .chart-bar { width: 40px; background: var(--primary); border-radius: 4px 4px 0 0; position: relative; transition: 0.5s; }
-        .chart-bar:hover { opacity: 0.8; transform: scaleY(1.05); transform-origin: bottom; }
-        .chart-bar::after { content: attr(data-val); position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: var(--text-main); }
+
+
+      /* [4. Dashboard Section - 배경색 수정 (아주 연한 미색)] */
+        .report-sec { 
+            /* 기존(#f0fdf4)보다 훨씬 연한, 흰색에 가까운 민트색 */
+            background: #f9fdfb; 
+            padding-bottom: 160px; 
+        }
         
-        .md-side-panel { display: flex; flex-direction: column; gap: 20px; }
-        .md-stat-box { background: #f1f5f9; padding: 20px; border-radius: 12px; }
-        .md-stat-title { font-size: 13px; color: var(--text-sub); margin-bottom: 8px; display: block; }
-        .md-stat-val { font-size: 24px; font-weight: 800; color: var(--text-main); }
-        .md-stat-val span { font-size: 14px; font-weight: 500; color: #64748b; margin-left: 4px; }
+        .report-grid-layout { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 40px; 
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+        
+        .report-list { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 24px; 
+        }
 
-        /* [4. Premium Reports] */
-        .report-sec { background: white; padding-bottom: 160px; }
-        .report-grid-layout { display: grid; grid-template-columns: 350px 1fr; gap: 60px; }
-        .report-list { display: flex; flex-direction: column; gap: 16px; }
         .report-item {
-            padding: 24px; border-radius: 16px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s;
+            padding: 28px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             background: white;
+            display: flex; flex-direction: column; justify-content: flex-start;
+            height: 100%; position: relative; overflow: hidden;
         }
-        .report-item:hover { background: #f8fafc; transform: translateX(5px); }
-        .report-item.active { border-color: var(--primary); background: var(--highlight-bg); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1); }
+
+        .report-item:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-color: #cbd5e1;
+        }
+
+        .report-item.active { 
+            border-color: var(--primary); 
+            background: var(--highlight-bg); 
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15); 
+        }
         
-        .ri-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-        .ri-icon { font-size: 24px; color: var(--primary); }
-        .ri-title { font-size: 17px; font-weight: 700; color: var(--text-main); }
-        .ri-desc { font-size: 13px; color: var(--text-sub); line-height: 1.4; margin-left: 36px; }
+        .report-item.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: var(--primary);
+        }
+        
+        .ri-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .ri-icon { font-size: 28px; color: var(--text-sub); transition: 0.3s; }
+        .report-item.active .ri-icon { color: var(--primary); }
+        .ri-title { font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .ri-desc { font-size: 15px; color: var(--text-sub); line-height: 1.5; word-break: keep-all; }
 
-       /* [수정] 미리보기 영역: 이미지가 들어갈 공간 확보 */
-.report-preview-area {
-    width: 100%;
-    height: 600px; /* 기준이 될 높이 (원하시는 만큼 조절 가능) */
-    
-    background: #e2e8f0; 
-    border-radius: 20px; 
-    
-    /* 내용물을 정중앙에 배치 */
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    overflow: hidden;
-    position: relative;
-}
+        /* [핵심 수정] 대시보드 미리보기 박스 유연화 */
+        .dashboard-preview-area {
+            width: 100%;
+            /* aspect-ratio 제거: 내용물 높이에 맞게 늘어나도록 변경 */
+            min-height: 500px; 
+            height: auto;
+            
+            background: #e2e8f0; 
+            border-radius: 24px; 
+            border: 1px solid var(--border);
+            padding: 30px; /* 내부 여백 확보 */
+            
+            display: flex; justify-content: center; align-items: flex-start; /* 위쪽 정렬 */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
 
-/* [수정] A4 시트: 높이를 부모에게 맞춤 (세로 기준) */
-.a4-sheet {
-    /* 1. 세로 길이를 꽉 채움 */
-    height: 90%; 
-    
-    /* 2. 가로 길이는 A4 비율(1:1.414)에 맞춰 자동 조절 */
-    aspect-ratio: 210 / 297; 
-    width: auto; 
-    
-    background: white; 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15); 
-    border-radius: 8px; /* 종이 질감 모서리 */
-    
-    /* 애니메이션 및 배치 설정 */
-    position: absolute; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    opacity: 0; 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    transform: translateY(20px) scale(0.95);
-    
-    /* 흰색 여백 잘라내기 위해 넘치는 부분 숨김 */
-    overflow: hidden; 
-}
+        /* [핵심 수정] 모니터 스크린 공통 스타일 */
+        .monitor-screen {
+            width: 100%;
+            display: none; /* 기본 숨김 */
+            animation: fadeUp 0.5s ease forwards;
+        }
 
-/* 활성화 상태 */
-.a4-sheet.active { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
-    z-index: 2; 
-    position: relative; /* active일 때만 공간 차지하도록 변경 */
-}
+        /* 활성화 시 보임 (flex로 변경하여 내부 요소 배치 용이하게) */
+        .monitor-screen.active { 
+            display: flex; 
+        }
 
-/* [수정] 이미지: 박스 꽉 채우기 + 여백 잘라내기 */
-.a4-sheet img { 
-    width: 100%; 
-    height: 100%; 
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Type A: 듀얼 패널 (기존 Dash 1) */
+        .monitor-screen.dual-type {
+            flex-direction: row;
+            gap: 24px;
+        }
+
+        /* Type B: 싱글 패널 (신규 Dash 2, 3) */
+        .monitor-screen.single-type {
+            flex-direction: column;
+        }
+
+        /* 공통 패널 스타일 */
+        .dual-panel, .single-panel {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* 듀얼 패널 너비 설정 */
+        .dual-panel { flex: 1; }
+
+      /* 이미지 영역 - [수정] 하이라이트 테두리 및 깊이감 추가 */
+        .dual-img-area, .single-img-area {
+            width: 100%;
+            background: #f8fafc; /* 기존 연한 회색 배경 유지 */
+            
+            /* [핵심 수정] 상단에 브랜드 컬러 하이라이트 테두리 적용 */
+            border-top: 2px solid var(--primary-light); /* 연한 녹색 테두리로 강조 */
+            border-bottom: none;
+
+            /* [추가 선택사항] 안쪽으로 살짝 그림자를 주어 깊이감 형성 */
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.04);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+            position: relative; /* z-index 활용을 위해 추가 */
+        }
+        
+        .dual-img-area img, .single-img-area img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
     
-    /* 1. 빈 공간 없이 꽉 채움 */
-    object-fit: cover; 
-    
-    /* 2. 이미지 자체의 흰 테두리를 없애기 위해 1.05배 확대 */
-    transform: scale(1.05); 
-    
-    /* 3. 이미지 위치: 위쪽 중심 기준 */
-    object-position: top center; 
-}
+
+        /* 텍스트 영역 */
+        .dual-text-area, .single-text-area {
+            padding: 24px;
+            background: white;
+            text-align: left;
+        }
+        .dual-text-area h5, .single-text-area h5 {
+            font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;
+        }
+        .dual-text-area li, .single-text-area li {
+            font-size: 15px; color: var(--text-sub); line-height: 1.6; list-style: none; position: relative; padding-left: 14px; margin-bottom: 4px;
+        }
+        .dual-text-area li::before, .single-text-area li::before {
+            content: ''; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%;
+        }
+
+        /* 반응형 */
+        @media (max-width: 1024px) {
+            .report-list { grid-template-columns: 1fr; }
+            .monitor-screen.dual-type { flex-direction: column; }
+            .dashboard-preview-area { padding: 20px; }
+        }
 
         /* [5. CTA & Footer] */
         .bottom-section { background: var(--surface); padding: 100px 40px 120px; }
@@ -407,7 +447,7 @@
             .role-grid { grid-template-columns: 1fr; }
             .monitor-dashboard { grid-template-columns: 1fr; }
             .report-grid-layout { grid-template-columns: 1fr; gap: 40px; }
-            .report-preview-area { height: 400px; }
+            .dashboard-preview-area { height: auto; aspect-ratio: 16/9; } /* 반응형 수정 */
             .cta-compact { flex-direction: column; text-align: center; gap: 30px; padding: 40px 20px; }
             .quick-links { grid-template-columns: 1fr; }
         }
@@ -502,15 +542,12 @@
                 <span class="badge" style="display:inline-block; background:var(--primary-light); color:var(--primary); padding:6px 12px; border-radius:6px; font-size:13px; font-weight:700; margin-bottom:24px;">GHG Management</span>
                 <h1>Carbon Platform</h1>
                 <p>
-                    시스템을 통해 협력사 데이터를 한 곳에서 통합 수집·관리하고,<br>
-                    배출량 산정부터 피드백 제공, 보고서 다운로드까지 전 과정을<br>
-                    실시간으로 확인·운영할 수 있습니다.
+                    시스템을 통해 협력사의 온실가스 배출량 데이터를 통합적으로 수집·관리하여,<br>
+                    배출량 산정부터 피드백 제공, 보고서 다운로드에 이르기까지 전 과정을<br>
+                    실시간으로 확인하고 효율적으로 운영할 수 있습니다.
                 </p>
                 <div class="cta-group">
                     <a href="https://carbon.qesg.co.kr" target="_blank" class="btn-primary">Carbon 바로가기</a>
-                    <!--<a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-outline" download>
-                        <i class="ph ph-download-simple"></i> 서비스 소개서
-                    </a>-->
                 </div>
             </div>
             <div class="hero-visual">
@@ -524,7 +561,7 @@
             <div class="sec-title-area">
                 <span class="sec-label">Process</span>
                 <h2>Value for<br>Everyone</h2>
-                <p>시스템 기반 탄소 배출 관리 효율화를 통해<br>기후변화 대응을 위한 비즈니스 기회를 창출할 수 있습니다.</p>
+                <p>시스템 기반의 탄소 배출 관리 효율화를 통해<br>기후변화 대응 역량을 강화할 수 있습니다.</p>
             </div>
 
             <div class="proc-container">
@@ -624,82 +661,96 @@
         </div>
     </section>
 
-    <!--
-    <section class="common-sec monitor-sec">
-        <div class="sec-split">
-            <div class="sec-title-area">
-                <span class="sec-label">Monitoring</span>
-                <h2>Real-time<br>Dashboard</h2>
-                <p>협력사별 배출량 산정 결과를<br>실시간 대시보드로 확인하고 관리합니다.</p>
-            </div>
-            
-            <div class="monitor-dashboard">
-                <div class="md-main-chart">
-                    <div class="chart-bar" style="height: 40%;" data-val="Scope 1"></div>
-                    <div class="chart-bar" style="height: 65%;" data-val="Scope 2"></div>
-                    <div class="chart-bar" style="height: 90%;" data-val="Scope 3"></div>
-                    <div class="chart-bar" style="height: 55%;" data-val="Total"></div>
-                </div>
-                <div class="md-side-panel">
-                    <div class="md-stat-box">
-                        <span class="md-stat-title">Total Emissions</span>
-                        <div class="md-stat-val">12,450 <span>tCO2eq</span></div>
-                    </div>
-                    <div class="md-stat-box">
-                        <span class="md-stat-title">Suppliers</span>
-                        <div class="md-stat-val">142 <span>Companies</span></div>
-                    </div>
-                    <div class="md-stat-box">
-                        <span class="md-stat-title">Progress</span>
-                        <div class="md-stat-val" style="color:var(--primary);">87% <span>Completed</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-
     <section class="common-sec report-sec">
         <div class="sec-split">
             <div class="sec-title-area">
-                <span class="sec-label">Output</span>
-                <h2>Key Deliverables</h2>
-                <p>국제 표준(GHG Protocol)에 기반한<br>신뢰성 있는 산정 결과 보고서입니다.</p>
+                <span class="sec-label">Dashboard</span>
+                <h2>Carbon<br>Dashboard</h2>
+                <p>3가지 핵심 대시보드를 통해 프로젝트 현황부터<br>탄소 배출량 모니터링까지 한눈에 확인하세요.</p>
             </div>
 
             <div class="report-grid-layout">
                 <div class="report-list">
-                    <div class="report-item active" onclick="showReport(event, 'rep1')">
+                    <div class="report-item active" onclick="showReport(event, 'dash1')">
                         <div class="ri-head">
-                            <i class="ph ph-file-pdf ri-icon"></i>
-                            <span class="ri-title">산정 결과 요약 보고서</span>
+                            <i class="ph ph-kanban ri-icon"></i>
+                            <span class="ri-title">프로젝트 현황</span>
                         </div>
-                        <p class="ri-desc">전사 및 사업장별 배출량 현황을 요약한 PDF 보고서</p>
+                        <p class="ri-desc">전체 협력사에 대한 탄소 배출량 현황 확인</p>
                     </div>
-                    <div class="report-item" onclick="showReport(event, 'rep2')">
+                    <div class="report-item" onclick="showReport(event, 'dash2')">
                         <div class="ri-head">
-                            <i class="ph ph-microsoft-excel-logo ri-icon"></i>
-                            <span class="ri-title">상세 데이터 엑셀 파일</span>
+                            <i class="ph ph-chart-bar ri-icon"></i>
+                            <span class="ri-title">진행 현황</span>
                         </div>
-                        <p class="ri-desc">원 데이터 및 배출 계수가 포함된 분석용 엑셀 파일</p>
+                        <p class="ri-desc">협력사별 참여 현황 확인</p>
                     </div>
-                    <div class="report-item" onclick="showReport(event, 'rep3')">
+                    <div class="report-item" onclick="showReport(event, 'dash3')">
                         <div class="ri-head">
-                            <i class="ph ph-certificate ri-icon"></i>
-                            <span class="ri-title">제3자 검증 보고서 (선택)</span>
+                            <i class="ph ph-monitor ri-icon"></i>
+                            <span class="ri-title">탄소배출 모니터링</span>
                         </div>
-                        <p class="ri-desc">전문 검증 기관의 제3자 검증 의견서 (옵션 서비스)</p>
+                        <p class="ri-desc">기업, 권역, 제품명 기준 배출량 조회 및 다운로드</p>
                     </div>
                 </div>
 
-                <div class="report-preview-area">
-                    <div id="rep1" class="a4-sheet active">
-                        <img src="index_files/carbon_summary.png" alt="Summary Report">
+                <div class="dashboard-preview-area">
+                    <div id="dash1" class="monitor-screen active dual-type">
+                        <div class="dual-panel">
+                            <div class="dual-text-area">
+                                <h5>Global Emissions</h5>
+                                <ul>
+                                    <li>협력사에서 발생한 전체 배출량 및 Scope1&2 현황 확인 가능</li>
+                                    <li>국가별 배출량 분포를 시각화하여 주요 배출 발생 지역 파악 가능</li>
+                                </ul>
+                            </div>
+                            <div class="dual-img-area">
+                                <img src="index_files/project_status_1.png" alt="글로벌 배출량">
+                            </div>
+                        </div>
+
+                        <div class="dual-panel">
+                            <div class="dual-text-area">
+                                <h5>제품별 배출량 현황</h5>
+                                <ul>
+                                    <li>제품별 배출량을 비교하여 배출 기여도가 높은 제품 식별 가능</li>
+                                    <li>사업장 수와 배출량 정보를 제공하여 제품별 공급망 규모 분석 가능</li>
+                                </ul>
+                            </div>
+                            <div class="dual-img-area">
+                                <img src="index_files/project_status_2.png" alt="제품별 배출량">
+                            </div>
+                        </div>
                     </div>
-                    <div id="rep2" class="a4-sheet">
-                        <img src="index_files/carbon_report_excel.png" alt="Excel Data">
+
+                    <div id="dash2" class="monitor-screen single-type">
+                        <div class="single-panel">
+                            <div class="single-text-area">
+                                <h5>협력사별 데이터 제출 현황</h5>
+                                <ul>
+                                    <li>협력사별 데이터 제출 참여 진척도를 기업 및 사업장 단위로 구분하여 전체 진행률을 모니터링합니다.</li>
+                                </ul>
+                            </div>
+                            <div class="single-img-area">
+                                <img src="index_files/progress_status.png" alt="진행 현황 대시보드">
+                            </div>
+                        </div>
                     </div>
-                    <div id="rep3" class="a4-sheet">
-                        <img src="index_files/carbon_report_verify.png" alt="Verification Report">
+
+                    <div id="dash3" class="monitor-screen single-type">
+                        <div class="single-panel">
+                            <div class="single-text-area">
+                                <h5>협력사별, 사업장별, 제품별 배출량 조회</h5>
+                                <ul>
+                                    <li>매출액, 총배출량, Scope 1 배출량, Scope 2 배출량 기준으로 기업 및 권역별 검색 가능</li>
+                                    <li>기업명, 권역, 제품명(Level1~3) 등 조건에 따라 배출량 상세 조회 가능</li>
+                                    <li>자세히 보기 클릭 시 상세 배출량 산정 결과 페이지로 이동</li>
+                                </ul>
+                            </div>
+                            <div class="single-img-area">
+                                <img src="index_files/carbon_monitoring.png" alt="탄소배출 모니터링 대시보드">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -708,16 +759,6 @@
 
     <section class="bottom-section">
         <div class="bottom-inner">
-            <!--<div class="cta-compact">
-                <div class="cta-text">
-                    <h3>탄소 관리를 시작하세요</h3>
-                    <p>더 자세한 기능과 도입 효과가 궁금하시다면 서비스 소개서를 확인해보세요.</p>
-                </div>
-                <a href="[QESG] Carbon Management 서비스 소개서_2024_v1.pdf" class="btn-download" download>
-                    <i class="ph ph-download-simple"></i> 서비스 소개서 다운로드
-                </a>
-            </div>-->
-
             <h2 class="more-services-title">Explore Other Services</h2>
             <div class="quick-links">
                 <a href="ert.html" class="ql-card">
@@ -814,14 +855,15 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // Report Preview
-        function showReport(evt, repId) {
+        // Dashboard Tabs (Renamed from showReport for clarity)
+        function showReport(evt, dashId) {
             var i, x, links;
-            x = document.getElementsByClassName("a4-sheet");
+            // .monitor-screen 클래스를 찾아서 제어합니다.
+            x = document.getElementsByClassName("monitor-screen");
             for (i = 0; i < x.length; i++) { x[i].classList.remove("active"); }
             links = document.getElementsByClassName("report-item");
             for (i = 0; i < links.length; i++) { links[i].classList.remove("active"); }
-            document.getElementById(repId).classList.add("active");
+            document.getElementById(dashId).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
