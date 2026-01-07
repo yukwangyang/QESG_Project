@@ -191,22 +191,93 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
         .client-box:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
-      
-/* 클라이언트 박스 내 이미지 스타일 (항상 컬러) */
-.client-box img {
-    max-height: 28px; /* 로고 높이 제한 */
-    width: auto;      /* 비율 유지 */
-    max-width: 90%;   /* 박스 너비 넘지 않도록 */
-    
-    /* 흑백 필터 제거, 투명도 100% */
-    filter: none; 
-    opacity: 1;
-    transition: 0.3s;
-}
 
- /* [수정] 마우스 올렸을 때 이미지 확대 효과 제거 */
+       /* [최종 수정된 클라이언트 섹션 스타일] */
+        .clients-wrapper {
+            margin-top: 60px; /* 위쪽 통계 섹션과의 간격 */
+        }
+
+        /* 1. 텍스트 디자인 */
+        .client-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .client-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary); /* 브랜드 컬러로 포인트 */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .client-desc {
+            font-size: 24px; /* 글자 크기 키움 */
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+            word-break: keep-all; /* 단어 단위 줄바꿈 */
+        }
+        .client-desc strong {
+            color: var(--primary); /* 숫자 강조 */
+            font-weight: 800;
+        }
+        
+        /* 줄바꿈 제어 (PC/Mobile) */
+        .mo-br { display: none; }
+        .pc-br { display: block; }
+
+        /* 2. 로고 배치 (Flexbox) */
+        .client-flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .client-box { 
+            background: white; 
+            border-radius: 8px; 
+            height: 64px; 
+            width: calc(25% - 9px); /* PC 4열 */
+            min-width: 140px;
+            
+            display: flex; align-items: center; justify-content: center; 
+            border: 1px solid transparent; 
+            transition: all 0.3s ease; /* 부드러운 전환 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        
+        /* [핵심 수정] 호버 시 움직임 제거(transform: none), 테두리만 변경 */
+        .client-box:hover { 
+            border-color: var(--primary); 
+            transform: none; /* 움직임 제거 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03); /* 그림자 유지 */
+        }
+        
+        .client-box img { 
+            max-height: 32px; 
+            width: auto; 
+            max-width: 85%; 
+            filter: none; 
+            opacity: 1; 
+            transition: 0.3s;
+        }
+        
+        /* 호버 시 이미지 확대 제거 (안전장치) */
         .client-box:hover img {
-            transform: none; /* 기존 scale(1.1)을 none으로 변경 */
+            transform: none;
+        }
+
+        /* 반응형 */
+        @media (max-width: 1200px) {
+            .client-box { width: calc(33.33% - 8px); } /* 태블릿 3열 */
+        }
+        @media (max-width: 768px) {
+            .client-desc { font-size: 20px; } /* 모바일 폰트 사이즈 조정 */
+            .pc-br { display: none; }
+            .mo-br { display: block; }
+            .client-box { width: calc(50% - 6px); } /* 모바일 2열 */
         }
 
         /* [3. Why QESG] */
@@ -556,35 +627,30 @@
                     <span class="stat-ref">* 2024년 기준</span>
                 </div>
             </div>
-           <div class="clients-wrapper">
-    <span class="client-area-title">Key Clients</span>
-    <div class="client-grid">
-        <div class="client-box"><img src="index_files/shinhan.svg" alt="신한은행"></div>
-        <div class="client-box"><img src="index_files/hyundaimobis.svg" alt="현대모비스"></div>
-        <div class="client-box"><img src="index_files/kumho.png" alt="금호타이어"></div>
-        <div class="client-box"><img src="index_files/hyundai_eng.png" alt="현대ENG"></div>
-        
-        <div class="client-box"><img src="index_files/locknlock.png" alt="락앤락"></div>
-        <div class="client-box"><img src="index_files/hyundai.png" alt="현대기아차"></div>
-        <div class="client-box"><img src="index_files/dongsung.png" alt="동성케미컬"></div>
-        <div class="client-box"><img src="index_files/bgf.svg" alt="BGF리테일"></div>
-        
-        <div class="client-box"><img src="index_files/coway.png" alt="코웨이"></div>
-        <div class="client-box"><img src="index_files/lx_semicon.png" alt="LX세미콘"></div>
-        <div class="client-box"><img src="index_files/dgb.png" alt="DGB금융"></div>
-        <div class="client-box"><img src="index_files/kodit.png" alt="신용보증기금"></div>
-        
-        <div class="client-box"><img src="index_files/kiat.jpg" alt="KIAT"></div>
-        <div class="client-box"><img src="index_files/mando.png" alt="만도"></div>
-        <div class="client-box"><img src="index_files/hyundai_steel.png" alt="현대제철"></div>
-        <div class="client-box"><img src="index_files/lotte_chilsung.png" alt="롯데칠성"></div>
-        
-        <div class="client-box"><img src="index_files/pulmuone.png" alt="풀무원"></div>
-        <div class="client-box"><img src="index_files/kia.png" alt="기아"></div>
-        <div class="client-box"><img src="index_files/hyundai_enc.svg" alt="현대건설"></div>
-        <div class="client-box"><img src="index_files/gs_caltex.png" alt="GS칼텍스"></div>
-    </div>
-</div>
+    <div class="clients-wrapper">
+                <div class="client-header">
+                    <span class="client-label">Key Clients</span>
+                    <p class="client-desc">
+                        기업 ESG 평가 분야에서 누적 약 <strong>8,500개사</strong>에 대해<br class="pc-br">
+                         진단 및 컨설팅을 진행한 실적을 보유하고 있습니다.
+                    </p>
+                </div>
+                
+                <div class="client-flex-container">
+                    <div class="client-box"><img src="index_files/hyundai.png" alt="현대기아차"></div>
+                    <div class="client-box"><img src="index_files/kia.png" alt="기아"></div>
+                    <div class="client-box"><img src="index_files/KUMHO TIRE_CI_V.jpg" alt="금호타이어"></div>
+                    <div class="client-box"><img src="index_files/hyundaimobis.svg" alt="현대모비스"></div>
+                    <div class="client-box"><img src="index_files/hyundai_eng.png" alt="현대엔지니어링"></div>
+                    <div class="client-box"><img src="index_files/dongsung.png" alt="동성케미컬"></div>
+                    <div class="client-box"><img src="index_files/hyundai_steel.png" alt="현대제철"></div>
+                    <div class="client-box"><img src="index_files/shinhan.svg" alt="신한은행"></div>
+                    <div class="client-box"><img src="index_files/KOLON.svg" alt="코오롱인더스트리"></div>
+                    <div class="client-box"><img src="index_files/kiat.jpg" alt="KIAT"></div>
+                    <div class="client-box"><img src="index_files/hyundai_enc.svg" alt="현대건설"></div>
+                    <div class="client-box"><img src="index_files/gs_caltex.png" alt="GS칼텍스"></div>
+                </div>
+            </div>
         </div>
     </section>
 
