@@ -6,309 +6,322 @@
     <title>SK eternix Sustainability Report 2024</title>
     
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         :root {
-            --neon-green: #00E367;
-            --deep-navy: #001965;
-            --text-main: #111;
-            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
-            --grid-line: rgba(0, 25, 101, 0.05);
+            /* SK eternix Brand Colors */
+            --sk-green: #00E367;
+            --sk-navy: #001965;
+            --text-main: #111111;
+            --text-sub: #555555;
+            --bg-gray: #F5F7FA;
+            --bg-light: #F4F6F9;
+            --border-color: rgba(0, 0, 0, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
         body { 
-            background: #F4F6F9; 
+            background: #FFFFFF; 
             color: var(--text-main); 
             font-family: 'Pretendard', sans-serif; 
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* [Background Architecture] */
-        .bg-architecture {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            /* 1. Base Grid */
-            background-image: 
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-        
-        /* Floating Geometric Shapes */
-        .geo-shape {
-            position: absolute; border: 1px solid rgba(0, 25, 101, 0.1);
-            z-index: -1; animation: float 20s infinite linear;
-        }
-        .geo-circle { border-radius: 50%; width: 400px; height: 400px; top: -100px; right: -100px; border-width: 2px; }
-        .geo-square { width: 200px; height: 200px; bottom: 10%; left: 5%; transform: rotate(45deg); }
-        .geo-cross {
-            position: absolute; width: 20px; height: 20px;
-            background: 
-                linear-gradient(to right, transparent 9px, #ccc 9px, #ccc 11px, transparent 11px),
-                linear-gradient(to bottom, transparent 9px, #ccc 9px, #ccc 11px, transparent 11px);
-        }
+        /* [Typography] */
+        h1, h2, h3 { letter-spacing: -0.02em; font-weight: 700; }
+        .eng-font { font-family: 'Space Grotesk', sans-serif; }
+        .num { font-family: 'Space Grotesk', monospace; letter-spacing: -1px; }
 
-        @keyframes float { 0% { transform: rotate(0deg) translate(0,0); } 100% { transform: rotate(360deg) translate(20px, 20px); } }
-
-        /* [Cursor] */
-        .cursor-dot {
-            width: 10px; height: 10px; background: var(--deep-navy); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-        }
-        .cursor-ring {
-            width: 40px; height: 40px; border: 1px solid var(--deep-navy); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s;
-        }
-        body:hover .cursor-ring { width: 60px; height: 60px; border-color: var(--neon-green); }
-
-        /* Typography */
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
-        .num { font-family: 'Space Grotesk', monospace; }
-
-        /* [Layout Components] */
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; position: relative; }
-        section { padding: 140px 0; }
-
-        /* Glass Panel Styling */
-        .glass {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: var(--glass-border);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-        }
+        /* [Global Layout] */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+        section { padding: 120px 0; border-bottom: 1px solid var(--border-color); }
 
         /* [Header] */
         header {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 1300px; padding: 15px 30px;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; border-radius: 12px;
-            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0,0,0,0.05);
-        }
-        .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
-        .nav-dots { display: flex; gap: 8px; }
-        .dot { width: 6px; height: 6px; background: #ddd; border-radius: 50%; }
-        .dot.active { background: var(--neon-green); }
-
-        /* [1. Hero - Blueprint Style] */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
-        
-        .hero-circle-bg {
-            position: absolute; width: 600px; height: 600px; border: 1px dashed #ccc;
-            border-radius: 50%; animation: spin 30s infinite linear;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .hero-title {
-            font-size: clamp(60px, 9vw, 140px); line-height: 0.9; text-align: center;
-            position: relative; z-index: 2;
-        }
-        .hero-title span { display: block; position: relative; }
-        .hero-title span::after {
-            content: attr(data-text); position: absolute; left: 4px; top: 4px;
-            color: transparent; -webkit-text-stroke: 1px var(--neon-green); opacity: 0.5; z-index: -1;
-        }
-        
-        .hero-ui {
-            position: absolute; font-size: 12px; font-family: monospace; color: #888;
-            padding: 5px 10px; border: 1px solid #ddd; background: white;
-        }
-        .ui-tl { top: 20%; left: 10%; }
-        .ui-br { bottom: 20%; right: 10%; }
-
-        /* [2. Topics - Connected Nodes] */
-        .topics-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-            border-top: 1px solid #ddd; padding-top: 40px;
-        }
-        .topic-node {
-            height: 350px; background: white; border: 1px solid #eee;
-            padding: 30px; position: relative; transition: 0.4s;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .topic-node:hover {
-            background: var(--deep-navy); color: white; transform: translateY(-10px);
-            border-color: var(--deep-navy);
-        }
-        
-        /* Geometric Deco inside Card */
-        .node-line {
-            width: 1px; height: 40px; background: var(--neon-green); margin-bottom: 20px;
-        }
-        .node-circle {
-            width: 12px; height: 12px; border: 2px solid var(--neon-green); border-radius: 50%;
-            position: absolute; top: 30px; right: 30px;
-        }
-        
-        .t-head { font-size: 24px; font-weight: 700; line-height: 1.1; }
-        .t-sub { font-size: 14px; opacity: 0.6; margin-top: 10px; }
-
-        /* [3. Performance - Technical Dashboard] */
-        .bento-wrap {
-            display: grid; 
-            grid-template-columns: 1.5fr 1fr 1fr; 
-            grid-template-rows: 320px 320px; 
-            gap: 20px;
-        }
-        
-        .b-box {
-            position: relative; padding: 40px; border: 1px solid rgba(0,0,0,0.05);
-            background: white; overflow: hidden; transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .b-box:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.05); border-color: var(--neon-green); }
-
-        /* Decorative Grid inside Box */
-        .b-grid-bg {
-            position: absolute; right: 0; bottom: 0; width: 100px; height: 100px;
-            background-image: radial-gradient(#ddd 1px, transparent 1px);
-            background-size: 10px 10px; opacity: 0.5;
-        }
-
-        .b-iso { grid-row: span 2; background: #F8F8F8; }
-        .b-energy { background: var(--deep-navy); color: white; }
-        .b-safety { grid-column: span 2; background: linear-gradient(135deg, white, #E0FFE9); }
-
-        .b-val { font-size: 72px; font-weight: 700; line-height: 0.9; letter-spacing: -2px; }
-        .b-lbl { font-size: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; display: block; }
-
-        /* [4. Business - Sliding Panels] */
-        .biz-container { display: flex; gap: 2px; height: 600px; background: #ddd; }
-        .biz-panel {
-            flex: 1; position: relative; background: #fff; overflow: hidden;
-            transition: flex 0.6s cubic-bezier(0.2, 0, 0.2, 1); cursor: pointer;
-        }
-        .biz-panel:hover { flex: 3; }
-        
-        .biz-img {
-            position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
-            filter: grayscale(100%); transition: 0.6s; opacity: 0.8;
-        }
-        .biz-panel:hover .biz-img { filter: grayscale(0%); opacity: 1; }
-        
-        .biz-txt {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;
-            transform: translateY(100px); transition: 0.4s;
-        }
-        .biz-panel:hover .biz-txt { transform: translateY(0); }
-        .biz-idx { 
-            position: absolute; top: 30px; left: 30px; font-family: monospace; 
-            font-size: 18px; color: var(--text-main); background: white; padding: 5px 10px; z-index: 2;
-        }
-
-        /* [5. CEO - Architect Card] */
-        .ceo-section { padding: 160px 0; }
-        .ceo-card {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-            background: white; border: 1px solid #eee;
-        }
-        .ceo-photo-area {
-            height: 600px; position: relative;
-            background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80') center/cover;
-            filter: grayscale(100%);
-        }
-        .ceo-overlay {
-            position: absolute; inset: 0; background: rgba(0, 25, 101, 0.8); opacity: 0; transition: 0.5s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
             display: flex; align-items: center; justify-content: center;
         }
-        .ceo-photo-area:hover .ceo-overlay { opacity: 1; }
-        .real-photo { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 5px solid var(--neon-green); }
+        .header-inner {
+            width: 100%; max-width: 1280px; padding: 0 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 800; font-size: 22px; color: var(--sk-navy); letter-spacing: -0.5px; }
+        .nav-menu { display: flex; gap: 40px; font-size: 15px; font-weight: 500; color: var(--text-main); }
+        .nav-menu span { cursor: pointer; transition: color 0.3s; }
+        .nav-menu span:hover { color: var(--sk-navy); }
 
-        .ceo-msg { padding: 80px; display: flex; flex-direction: column; justify-content: center; }
-        .quote-mark { font-size: 80px; color: var(--neon-green); line-height: 0; margin-bottom: 40px; }
-        .quote-text { font-size: 36px; line-height: 1.3; font-weight: 700; margin-bottom: 30px; }
+        /* [1. Hero] */
+        .hero {
+            height: 90vh; display: flex; align-items: center; 
+            background: linear-gradient(180deg, #F9FAFC 0%, #FFFFFF 100%);
+            position: relative; border-bottom: none;
+        }
+        .hero-content { position: relative; z-index: 2; width: 100%; }
+        .hero-bg-grid {
+            position: absolute; top: 0; right: 0; width: 40%; height: 100%;
+            background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 80px 80px; opacity: 0.5; z-index: 1;
+        }
+        .label-tag {
+            display: inline-block; padding: 6px 12px; 
+            background: rgba(0, 227, 103, 0.1); color: var(--sk-navy);
+            font-size: 14px; font-weight: 600; border-radius: 4px; margin-bottom: 24px;
+        }
+        .hero-title { font-size: 80px; line-height: 1.1; color: var(--sk-navy); margin-bottom: 30px; }
+        .hero-desc { font-size: 20px; color: var(--text-sub); max-width: 600px; }
+
+        /* [2. Core Strategy - Flip Cards] */
+        .section-header { margin-bottom: 60px; }
+        .section-title { font-size: 42px; color: var(--sk-navy); margin-bottom: 10px; }
+        
+        .strategy-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; perspective: 1000px;
+        }
+        .st-card { background: transparent; height: 380px; cursor: pointer; }
+        .st-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .st-card:hover .st-inner { transform: rotateY(180deg); }
+        .st-front, .st-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 16px; padding: 40px 30px; display: flex; flex-direction: column;
+            justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        .st-front { background: #fff; align-items: flex-start; z-index: 2; }
+        .st-front::after {
+            content: 'HOVER ME'; position: absolute; bottom: 30px; right: 30px;
+            font-size: 12px; font-weight: 700; color: #ddd; letter-spacing: 1px;
+        }
+        .st-num { font-size: 60px; color: #f0f0f0; font-weight: 800; line-height: 1; position: absolute; top: 20px; right: 20px; }
+        .st-icon-box { 
+            width: 80px; height: 80px; background: #F5F7FA; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: 0.3s;
+        }
+        .st-card:hover .st-icon-box { transform: scale(1.1); background: var(--sk-green); color: white!important; }
+        .st-title { font-size: 28px; font-weight: 700; color: var(--sk-navy); text-align: left; }
+        .st-preview { font-size: 16px; color: var(--text-sub); text-align: left; opacity: 0.7; }
+        .st-back {
+            background: var(--sk-navy); color: white; transform: rotateY(180deg);
+            align-items: center; justify-content: center; border: none;
+        }
+        .st-back-desc { font-size: 18px; line-height: 1.6; word-break: keep-all; font-weight: 500; }
+        .st-back-deco { width: 40px; height: 4px; background: var(--sk-green); margin-bottom: 20px; border-radius: 2px; }
+
+        /* [3. Key Figures - NEW BENTO GRID] */
+        .kf-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4등분 */
+            grid-template-rows: 320px 320px;       /* 높이 고정 2줄 */
+            gap: 0; /* 빈틈 없이 */
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .kf-item {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: background 0.3s;
+            position: relative;
+            opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; /* Animation Init */
+        }
+        .kf-item.visible { opacity: 1; transform: translateY(0); }
+
+        .kf-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 56px; font-weight: 700; line-height: 1;
+            margin-bottom: 16px; letter-spacing: -2px;
+        }
+        .kf-desc { font-size: 18px; font-weight: 600; line-height: 1.4; word-break: keep-all; }
+        .kf-sub { font-size: 14px; margin-top: 8px; opacity: 0.7; font-weight: 400; }
+
+        /* Grid Placement & Colors */
+        .item-1 { background-color: #EBF5FF; color: var(--sk-navy); }
+        .item-big {
+            grid-column: 2 / 4; 
+            grid-row: 1 / 3;    
+            background-color: var(--sk-navy); color: #fff;
+            align-items: center; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .item-big::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,227,103,0.1) 0%, transparent 60%);
+            animation: pulse 10s infinite;
+        }
+        .item-big .kf-num { font-size: 96px; color: var(--sk-green); }
+        .item-big .kf-desc { font-size: 24px; font-weight: 500; }
+        .item-3 { background-color: var(--bg-light); color: var(--sk-navy); border-right: none; }
+        .item-4 { background-color: #FFF0F0; color: var(--sk-navy); border-bottom: none; }
+        .item-5 { background-color: #E6FFF2; color: var(--sk-navy); border-right: none; border-bottom: none; }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.5; }
+        }
+
+        .kf-cta-wrap { margin-top: 50px; text-align: center; }
+        .kf-cta {
+            background: var(--sk-navy); color: #fff; padding: 16px 40px;
+            border-radius: 99px; text-decoration: none; font-weight: 600;
+            font-size: 16px; transition: 0.3s; display: inline-block;
+        }
+        .kf-cta:hover { background: var(--sk-green); color: var(--sk-navy); }
+
+        /* [4. Business] */
+        .biz-wrapper { display: flex; height: 500px; border: 1px solid var(--border-color); }
+        .biz-item {
+            flex: 1; position: relative; overflow: hidden; border-right: 1px solid var(--border-color);
+            transition: flex 0.5s ease; cursor: pointer;
+        }
+        .biz-item:last-child { border-right: none; }
+        .biz-item:hover { flex: 2.5; }
+        .biz-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); transition: 0.5s; }
+        .biz-item:hover .biz-bg { filter: brightness(0.8); }
+        .biz-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; color: white; }
+        .biz-title { font-size: 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .biz-desc { height: 0; opacity: 0; overflow: hidden; transition: 0.5s; font-size: 16px; color: rgba(255,255,255,0.8); }
+        .biz-item:hover .biz-desc { height: auto; opacity: 1; margin-top: 10px; }
+
+        /* [5. CEO] */
+        .ceo-section { background: var(--bg-gray); border-bottom: none; }
+        .ceo-inner { display: flex; gap: 60px; align-items: center; }
+        .ceo-img-box { flex: 0 0 400px; height: 500px; background: #ddd; position: relative; }
+        .ceo-img { width: 100%; height: 100%; object-fit: cover; }
+        .ceo-text { flex: 1; }
+        .quote-icon { font-size: 60px; color: var(--sk-navy); margin-bottom: 20px; opacity: 0.2; }
+        .quote-main { font-size: 32px; font-weight: 700; line-height: 1.4; color: var(--sk-navy); margin-bottom: 30px; word-break: keep-all; }
+        .ceo-sign { font-size: 18px; font-weight: 600; color: var(--text-main); }
+        .ceo-role { font-size: 14px; color: var(--text-sub); margin-top: 4px; }
+
+        /* [Footer] */
+        footer { background: var(--sk-navy); color: rgba(255,255,255,0.6); padding: 80px 0; font-size: 14px; }
+        .footer-logo { color: white; font-size: 24px; font-weight: 700; margin-bottom: 20px; display: block; }
 
         @media (max-width: 1024px) {
-            .topics-grid, .bento-wrap { grid-template-columns: 1fr; }
-            .b-iso, .b-safety { grid-row: auto; grid-column: auto; height: 300px; }
-            .biz-container { flex-direction: column; }
-            .ceo-card { grid-template-columns: 1fr; }
-            .ceo-photo-area { height: 400px; }
+            .hero-title { font-size: 50px; }
+            .strategy-grid { grid-template-columns: 1fr 1fr; }
+            .kf-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+            .item-big { grid-column: 1 / 3; grid-row: auto; height: 400px; }
+            .kf-item { height: 280px; }
+            .biz-wrapper { flex-direction: column; height: auto; }
+            .biz-item { height: 200px; border-right: none; border-bottom: 1px solid white; }
+            .biz-item:hover { flex: 1; height: 300px; }
+            .ceo-inner { flex-direction: column; }
+            .ceo-img-box { width: 100%; height: 400px; }
+        }
+        @media (max-width: 768px) {
+            .kf-grid { grid-template-columns: 1fr; }
+            .item-big { grid-column: 1 / 2; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-architecture">
-        <div class="geo-shape geo-circle"></div>
-        <div class="geo-shape geo-square"></div>
-        <div class="geo-cross" style="top: 20%; left: 20%;"></div>
-        <div class="geo-cross" style="top: 80%; right: 15%;"></div>
-        <div class="geo-cross" style="bottom: 30%; left: 10%;"></div>
-    </div>
-
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
-
     <header>
-        <div class="logo">SK eternix</div>
-        <div class="nav-dots">
-            <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        <div class="header-inner">
+            <div class="logo">SK eternix</div>
+            <div class="nav-menu">
+                <span>COMPANY</span>
+                <span>BUSINESS</span>
+                <span>SUSTAINABILITY</span>
+                <span>IR</span>
+            </div>
         </div>
-        <div style="font-size:14px; font-weight:600;">MENU</div>
     </header>
 
     <section class="hero">
-        <div class="hero-circle-bg"></div>
-        <div class="hero-ui ui-tl">COORDINATES: 37.5665° N</div>
-        <div class="hero-ui ui-br">SCROLL TO EXPLORE</div>
-        
-        <div class="container hero-title">
-            <span data-text="Designing">Designing</span>
-            <span data-text="Sustainable">Sustainable</span>
-            <span data-text="Velocity">Velocity.</span>
+        <div class="hero-bg-grid"></div>
+        <div class="container hero-content">
+            <span class="label-tag eng-font">2024 SUSTAINABILITY REPORT</span>
+            <h1 class="hero-title eng-font">
+                Designing<br>
+                Sustainable Velocity.
+            </h1>
+            <p class="hero-desc">
+                SK eternix는 신재생에너지 전문 기업으로서,<br>
+                환경과 사회를 위한 지속가능한 속도를 만들어갑니다.
+            </p>
         </div>
     </section>
 
     <section>
         <div class="container">
-            <div style="margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end;">
-                <h2 style="font-size: 40px;">Core Strategy</h2>
-                <div style="width: 100px; height: 2px; background: var(--text-main);"></div>
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title eng-font">Core Strategy</h2>
+                    <p style="margin-top:10px; color:var(--text-sub);">SK eternix의 지속가능한 미래를 위한 4가지 핵심 전략</p>
+                </div>
             </div>
             
-            <div class="topics-grid">
-                <div class="topic-node">
-                    <div class="node-circle"></div>
-                    <div class="node-line"></div>
-                    <div>
-                        <div class="t-head">Net Zero</div>
-                        <div class="t-sub">Reducing Carbon Footprint</div>
+            <div class="strategy-grid">
+                <div class="st-card">
+                    <div class="st-inner">
+                        <div class="st-front">
+                            <div class="st-num eng-font">01</div>
+                            <div class="st-icon-box"><i class="ph ph-leaf" style="font-size:36px; color:var(--sk-green);"></i></div>
+                            <div><h3 class="st-title eng-font">Net Zero</h3><p class="st-preview">탄소 중립 달성</p></div>
+                        </div>
+                        <div class="st-back">
+                            <div class="st-back-deco"></div>
+                            <p class="st-back-desc">2040년까지<br>탄소 배출 Net Zero 달성을 위한<br>체계적인 로드맵을 이행합니다.</p>
+                        </div>
                     </div>
-                    <div class="num" style="font-size:40px; color:#ddd;">01</div>
                 </div>
-                <div class="topic-node">
-                    <div class="node-circle"></div>
-                    <div class="node-line"></div>
-                    <div>
-                        <div class="t-head">Safety First</div>
-                        <div class="t-sub">Zero Accident Workplace</div>
+                <div class="st-card">
+                    <div class="st-inner">
+                        <div class="st-front">
+                            <div class="st-num eng-font">02</div>
+                            <div class="st-icon-box"><i class="ph ph-shield-check" style="font-size:36px; color:var(--sk-navy);"></i></div>
+                            <div><h3 class="st-title eng-font">Safety First</h3><p class="st-preview">안전보건 경영</p></div>
+                        </div>
+                        <div class="st-back">
+                            <div class="st-back-deco"></div>
+                            <p class="st-back-desc">중대재해 Zero를 목표로<br>사업장 내 안전 문화를<br>최우선 가치로 삼습니다.</p>
+                        </div>
                     </div>
-                    <div class="num" style="font-size:40px; color:#ddd;">02</div>
                 </div>
-                <div class="topic-node">
-                    <div class="node-circle"></div>
-                    <div class="node-line"></div>
-                    <div>
-                        <div class="t-head">Shared Growth</div>
-                        <div class="t-sub">Eco-System Partnership</div>
+                <div class="st-card">
+                    <div class="st-inner">
+                        <div class="st-front">
+                            <div class="st-num eng-font">03</div>
+                            <div class="st-icon-box"><i class="ph ph-handshake" style="font-size:36px; color:var(--sk-navy);"></i></div>
+                            <div><h3 class="st-title eng-font">Partnership</h3><p class="st-preview">동반 성장</p></div>
+                        </div>
+                        <div class="st-back">
+                            <div class="st-back-deco"></div>
+                            <p class="st-back-desc">협력사와의 상생을 통해<br>건강하고 지속가능한<br>친환경 생태계를 조성합니다.</p>
+                        </div>
                     </div>
-                    <div class="num" style="font-size:40px; color:#ddd;">03</div>
                 </div>
-                <div class="topic-node">
-                    <div class="node-circle"></div>
-                    <div class="node-line"></div>
-                    <div>
-                        <div class="t-head">Governance</div>
-                        <div class="t-sub">Transparent & Ethical</div>
+                <div class="st-card">
+                    <div class="st-inner">
+                        <div class="st-front">
+                            <div class="st-num eng-font">04</div>
+                            <div class="st-icon-box"><i class="ph ph-scales" style="font-size:36px; color:var(--sk-navy);"></i></div>
+                            <div><h3 class="st-title eng-font">Governance</h3><p class="st-preview">투명 경영</p></div>
+                        </div>
+                        <div class="st-back">
+                            <div class="st-back-deco"></div>
+                            <p class="st-back-desc">이사회 중심의<br>투명하고 윤리적인 의사결정<br>체계를 확립합니다.</p>
+                        </div>
                     </div>
-                    <div class="num" style="font-size:40px; color:#ddd;">04</div>
                 </div>
             </div>
         </div>
@@ -316,70 +329,71 @@
 
     <section>
         <div class="container">
-            <h2 style="font-size: 40px; margin-bottom: 40px;">Data Highlights</h2>
-            <div class="bento-wrap">
-                <div class="b-box b-iso">
-                    <div class="b-grid-bg"></div>
-                    <span class="b-lbl">Certification</span>
-                    <div style="margin-top:auto;">
-                        <div class="b-val num">14001</div>
-                        <p style="margin-top:10px; color:#666;">International Environmental Standard</p>
-                    </div>
-                    <i class="ph ph-certificate" style="font-size: 150px; position:absolute; right:-20px; top:50%; opacity:0.05;"></i>
+            <div class="section-header">
+                <h2 class="section-title eng-font">Key Figures</h2>
+            </div>
+
+            <div class="kf-grid">
+                <div class="kf-item item-1 reveal">
+                    <div class="kf-num">14001</div>
+                    <div class="kf-desc">ISO 환경경영시스템<br>인증 획득</div>
+                    <div class="kf-sub">Global Standard</div>
                 </div>
 
-                <div class="b-box b-energy">
-                    <span class="b-lbl" style="color:var(--neon-green);">Generation</span>
-                    <div class="b-val num">207k</div>
-                    <span style="font-size:14px; opacity:0.7;">MWh Clean Energy</span>
-                </div>
-
-                <div class="b-box">
-                    <div class="b-grid-bg"></div>
-                    <span class="b-lbl">Ethics</span>
-                    <div class="b-val num">100%</div>
-                </div>
-
-                <div class="b-box b-safety">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                        <div>
-                            <span class="b-lbl" style="color:var(--deep-navy);">Safety Score</span>
-                            <div class="b-val num" style="color:var(--deep-navy);">ZERO</div>
-                        </div>
-                        <div style="text-align:right;">
-                            <span class="b-lbl" style="color:var(--deep-navy);">Social Fund</span>
-                            <div class="b-val num" style="font-size:50px; color:var(--deep-navy);">500<span style="font-size:20px">억</span></div>
-                        </div>
+                <div class="kf-item item-big reveal">
+                    <div style="position: relative; z-index: 1;">
+                        <div class="kf-num">207k</div>
+                        <div class="kf-desc">연간 친환경 에너지 발전량<br>(MWh)</div>
+                        <div class="kf-sub" style="color:rgba(255,255,255,0.6); margin-top:16px;">Clean Energy Generation</div>
                     </div>
                 </div>
+
+                <div class="kf-item item-3 reveal">
+                    <div class="kf-num">100%</div>
+                    <div class="kf-desc">윤리경영 교육<br>이수율 달성</div>
+                    <div class="kf-sub">Ethics Compliance</div>
+                </div>
+
+                <div class="kf-item item-4 reveal">
+                    <div class="kf-num">ZERO</div>
+                    <div class="kf-desc">중대재해 발생 건수<br>0건 유지</div>
+                    <div class="kf-sub">Safety First</div>
+                </div>
+
+                <div class="kf-item item-5 reveal">
+                    <div class="kf-num">2040</div>
+                    <div class="kf-desc">넷제로(Net Zero)<br>달성 목표 연도</div>
+                    <div class="kf-sub">Target Year</div>
+                </div>
+            </div>
+
+            <div class="kf-cta-wrap">
+                <a href="#" class="kf-cta">Explore Our Impact</a>
             </div>
         </div>
     </section>
 
     <section style="padding: 0;">
-        <div class="biz-container">
-            <div class="biz-panel">
-                <div class="biz-idx">01</div>
-                <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80" class="biz-img" alt="Wind">
-                <div class="biz-txt">
-                    <h2>Wind Power</h2>
-                    <p>Harnessing the wind for a sustainable tomorrow.</p>
+        <div class="biz-wrapper">
+            <div class="biz-item">
+                <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80" class="biz-bg" alt="Wind">
+                <div class="biz-content">
+                    <h3 class="biz-title eng-font"><i class="ph ph-wind"></i> Wind Power</h3>
+                    <div class="biz-desc">육상 및 해상 풍력 발전 사업의 개발부터 운영까지 전 과정을 아우릅니다.</div>
                 </div>
             </div>
-            <div class="biz-panel">
-                <div class="biz-idx">02</div>
-                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80" class="biz-img" alt="Solar">
-                <div class="biz-txt">
-                    <h2>Solar & ESS</h2>
-                    <p>Capturing light, storing future energy.</p>
+            <div class="biz-item">
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80" class="biz-bg" alt="Solar">
+                <div class="biz-content">
+                    <h3 class="biz-title eng-font"><i class="ph ph-sun"></i> Solar & ESS</h3>
+                    <div class="biz-desc">태양광 발전과 에너지 저장 장치를 연계하여 효율적인 에너지를 공급합니다.</div>
                 </div>
             </div>
-            <div class="biz-panel">
-                <div class="biz-idx">03</div>
-                <img src="https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80" class="biz-img" alt="Fuel">
-                <div class="biz-txt">
-                    <h2>Fuel Cell</h2>
-                    <p>Urban energy solutions for modern cities.</p>
+            <div class="biz-item">
+                <img src="https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80" class="biz-bg" alt="Fuel">
+                <div class="biz-content">
+                    <h3 class="biz-title eng-font"><i class="ph ph-lightning"></i> Fuel Cell</h3>
+                    <div class="biz-desc">도심형 친환경 분산 전원인 연료전지 사업을 선도합니다.</div>
                 </div>
             </div>
         </div>
@@ -387,58 +401,67 @@
 
     <section class="ceo-section">
         <div class="container">
-            <div class="ceo-card">
-                <div class="ceo-msg">
-                    <div class="quote-mark">“</div>
-                    <div class="quote-text">
-                        We build not just energy plants,<br>
-                        but the foundation of a resilient future.
-                    </div>
-                    <p style="color:#666; font-size:18px;">
-                        우리는 단순한 에너지가 아닌, 회복력 있는 미래의 기반을 설계합니다.
-                    </p>
-                    <div style="margin-top: 40px; font-weight: 700;">
-                        Kim Hae-jung | CEO
-                    </div>
+            <div class="ceo-inner">
+                <div class="ceo-img-box">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1000&auto=format&fit=crop" class="ceo-img" alt="CEO">
                 </div>
-                <div class="ceo-photo-area">
-                    <div class="ceo-overlay">
-                        <img src="CEO_image.webp" class="real-photo" alt="CEO Face">
-                    </div>
+                <div class="ceo-text">
+                    <i class="ph ph-quotes quote-icon"></i>
+                    <p class="quote-main">
+                        "우리는 단순한 에너지가 아닌,<br>
+                        회복력 있는 미래의 기반을 설계합니다."
+                    </p>
+                    <p style="color:var(--text-sub); margin-bottom: 40px; line-height: 1.8;">
+                        SK eternix는 기후 위기 극복을 위한 에너지 전환을 가속화하고,<br>
+                        이해관계자와의 신뢰를 바탕으로 지속가능한 성장을 이루어 나가겠습니다.
+                    </p>
+                    <div class="ceo-sign">김해중</div>
+                    <div class="ceo-role">SK eternix 대표이사</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer style="background: var(--deep-navy); color: white; padding: 100px 0;">
-        <div class="container" style="display:flex; justify-content:space-between; align-items:flex-end;">
-            <div>
-                <h2 style="margin-bottom: 20px;">SK eternix</h2>
-                <p style="opacity: 0.5;">Architecting Green Energy.</p>
-            </div>
-            <div style="text-align:right; opacity:0.5; font-size:13px;">
-                © 2024 All Rights Reserved.
+    <footer>
+        <div class="container">
+            <span class="footer-logo">SK eternix</span>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <p>서울특별시 종로구 종로 1길 50 (중학동, 더케이트윈타워)</p>
+                    <p style="margin-top: 10px;">Copyright © 2024 SK eternix. All Rights Reserved.</p>
+                </div>
+                <div style="display: flex; gap: 30px;">
+                    <span>개인정보처리방침</span>
+                    <span>이메일무단수집거부</span>
+                    <span>윤리경영 제보</span>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Custom Cursor Logic
-        const dot = document.querySelector(".cursor-dot");
-        const ring = document.querySelector(".cursor-ring");
+        // Scroll Reveal Animation Script
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
 
-        window.addEventListener("mousemove", (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
 
-            dot.style.left = `${posX}px`;
-            dot.style.top = `${posY}px`;
+                reveals.forEach((reveal, index) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        setTimeout(() => {
+                            reveal.classList.add('visible');
+                        }, index * 100); 
+                    }
+                });
+            };
 
-            ring.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger once on load
         });
     </script>
+
 </body>
 </html>
