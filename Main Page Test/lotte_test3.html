@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOTTE P&D 2026 Report</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            --lotte-red: #DA291C;
+            --black: #111;
+            --gray: #F4F4F4;
+            --padding: 5vw;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Manrope', 'Pretendard', sans-serif; 
+            background: #fff; color: var(--black); 
+            overflow-x: hidden;
+        }
+
+        /* [Typography] */
+        h1, h2, h3 { line-height: 1; letter-spacing: -0.03em; }
+        .display-font { font-weight: 800; font-size: clamp(60px, 10vw, 180px); }
+        .label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 20px; display: block; }
+
+        /* [Animations] */
+        .reveal-text {
+            opacity: 0; transform: translateY(50px); 
+            transition: 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-text.active { opacity: 1; transform: translateY(0); }
+
+        /* [Header] */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 30px 50px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 999;
+            mix-blend-mode: difference; color: white;
+        }
+        .logo { font-weight: 800; font-size: 20px; }
+        .menu-trig { font-size: 14px; font-weight: 600; cursor: pointer; }
+
+        /* [1. Hero - Video Mask] */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; background: #000;
+        }
+        .hero-video-bg {
+            position: absolute; inset: 0; opacity: 0.6;
+        }
+        .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .hero-content { 
+            position: relative; z-index: 2; color: white; text-align: center; 
+            mix-blend-mode: difference;
+        }
+        .hero-title span { display: block; }
+
+        /* [2. Intro - Scrolling Text] */
+        .intro { padding: 200px var(--padding); background: white; }
+        .intro-lead { font-size: clamp(30px, 4vw, 60px); font-weight: 600; line-height: 1.3; color: #111; }
+        .intro-lead span { color: var(--lotte-red); }
+
+        /* [3. Material Topics - Hover Reveal List] */
+        .topics { padding: 100px var(--padding); border-top: 1px solid #eee; }
+        .topic-list { margin-top: 60px; }
+        
+        .topic-item {
+            padding: 60px 0; border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: baseline;
+            cursor: pointer; position: relative; transition: 0.3s;
+        }
+        .topic-item:hover { padding-left: 30px; border-bottom-color: var(--black); }
+        .topic-idx { font-size: 16px; margin-right: 40px; font-weight: 600; }
+        .topic-name { font-size: 60px; font-weight: 800; }
+        .topic-desc { font-size: 18px; color: #666; width: 300px; }
+        
+        /* Floating Image on Hover */
+        .hover-img {
+            position: fixed; width: 400px; height: 500px; object-fit: cover;
+            top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            pointer-events: none; transition: transform 0.4s ease; z-index: 10;
+            border-radius: 10px; filter: brightness(0.8);
+        }
+        .topic-item:hover + .hover-img, .topic-item:hover ~ .hover-img.active { transform: translate(-50%, -50%) scale(1); }
+
+        /* [4. Performance - Big Data] */
+        .performance { padding: 150px var(--padding); background: #F9F9F9; }
+        .perf-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 100px;
+            margin-top: 80px;
+        }
+        .perf-item h3 { font-size: 100px; font-weight: 800; color: var(--black); margin-bottom: 20px; line-height: 0.9; }
+        .perf-item h3 span { font-size: 30px; vertical-align: top; color: var(--lotte-red); }
+        .perf-item p { font-size: 18px; color: #555; line-height: 1.6; border-top: 2px solid #ddd; padding-top: 20px; }
+
+        /* [5. Business - Sticky Scroll] */
+        .business { display: flex; }
+        .biz-left {
+            width: 50%; height: 100vh; position: sticky; top: 0;
+            background: black; color: white; display: flex; flex-direction: column; 
+            justify-content: center; padding: 80px;
+        }
+        .biz-right { width: 50%; background: white; }
+        
+        .biz-img-box {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .biz-img-box img { width: 100%; height: 60%; object-fit: cover; margin-bottom: 30px; }
+        .biz-img-box h3 { font-size: 40px; margin-bottom: 20px; }
+        
+        /* [6. Social Impact - Full Image] */
+        .impact {
+            height: 100vh; position: relative; display: flex; align-items: center; justify-content: center;
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80') center/cover fixed;
+        }
+        .impact-overlay {
+            background: white; padding: 80px; max-width: 600px; text-align: center;
+        }
+
+        /* [Footer] */
+        footer { padding: 100px var(--padding); background: #111; color: white; }
+        .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .f-big { font-size: 40px; font-weight: 800; margin-bottom: 40px; }
+        .f-link { color: #888; text-decoration: none; margin-right: 30px; font-size: 14px; }
+        .f-link:hover { color: white; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .topic-item { flex-direction: column; gap: 10px; }
+            .topic-name { font-size: 40px; }
+            .perf-grid { grid-template-columns: 1fr; gap: 60px; }
+            .business { flex-direction: column; }
+            .biz-left { width: 100%; height: auto; position: relative; padding: 60px 20px; }
+            .biz-right { width: 100%; }
+            .hover-img { display: none; } /* Mobile hide */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">LOTTE P&D</div>
+        <div class="menu-trig">MENU</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-video-bg">
+            <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80">
+                <source src="https://cdn.pixabay.com/video/2024/05/04/210595_large.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-content">
+            <div class="label">2026 SUSTAINABILITY REPORT</div>
+            <h1 class="display-font reveal-text active">
+                <span>BEYOND</span>
+                <span>LANDMARK</span>
+            </h1>
+        </div>
+    </section>
+
+    <section class="intro">
+        <p class="intro-lead reveal-text">
+            롯데물산은 도시의 스카이라인을 넘어,<br>
+            <span>지속가능한 삶의 기준</span>을 높입니다.<br><br>
+            우리는 2040 탄소중립을 향해<br>
+            가장 높은 곳에서 변화를 시작합니다.
+        </p>
+    </section>
+
+    <section class="topics">
+        <span class="label">Core Agenda</span>
+        <h2 style="font-size: 60px; margin-bottom: 40px;">2026 Focus Areas</h2>
+        
+        <div class="topic-list">
+            <div class="topic-item" onmouseenter="showImg(0)" onmouseleave="hideImg()">
+                <div style="display:flex; align-items:baseline;">
+                    <span class="topic-idx">01</span>
+                    <span class="topic-name">Net Zero</span>
+                </div>
+                <div class="topic-desc">온실가스 감축 및 에너지 전환</div>
+            </div>
+            <div class="topic-item" onmouseenter="showImg(1)" onmouseleave="hideImg()">
+                <div style="display:flex; align-items:baseline;">
+                    <span class="topic-idx">02</span>
+                    <span class="topic-name">Safety First</span>
+                </div>
+                <div class="topic-desc">중대재해 Zero 안전 경영 실현</div>
+            </div>
+            <div class="topic-item" onmouseenter="showImg(2)" onmouseleave="hideImg()">
+                <div style="display:flex; align-items:baseline;">
+                    <span class="topic-idx">03</span>
+                    <span class="topic-name">Shared Growth</span>
+                </div>
+                <div class="topic-desc">협력사 동반성장 생태계 구축</div>
+            </div>
+            <div class="topic-item" onmouseenter="showImg(3)" onmouseleave="hideImg()">
+                <div style="display:flex; align-items:baseline;">
+                    <span class="topic-idx">04</span>
+                    <span class="topic-name">Governance</span>
+                </div>
+                <div class="topic-desc">투명한 이사회 운영 및 윤리경영</div>
+            </div>
+        </div>
+
+        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80" class="hover-img" id="img-0">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80" class="hover-img" id="img-1">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80" class="hover-img" id="img-2">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80" class="hover-img" id="img-3">
+    </section>
+
+    <section class="performance">
+        <span class="label">Key Highlights</span>
+        <div class="perf-grid">
+            <div class="perf-item reveal-text">
+                <h3>32<span>%</span></h3>
+                <p><strong>GHG Reduction</strong><br>수열 에너지를 활용하여 전년 대비 획기적인 탄소 배출 저감을 달성했습니다.</p>
+            </div>
+            <div class="perf-item reveal-text" style="transition-delay: 0.1s;">
+                <h3>0</h3>
+                <p><strong>Safety Incidents</strong><br>5년 연속 중대재해 발생 건수 0건을 기록하며 안전을 증명했습니다.</p>
+            </div>
+            <div class="perf-item reveal-text" style="transition-delay: 0.2s;">
+                <h3>200<span>억</span></h3>
+                <p><strong>Growth Fund</strong><br>파트너사와의 상생을 위해 200억원 규모의 동반성장 펀드를 조성했습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="business">
+        <div class="biz-left">
+            <span class="label" style="color:#888;">Our Portfolio</span>
+            <h2 style="font-size: 60px; line-height: 1.1;">
+                Designing<br>
+                Sustainable<br>
+                Velocity.
+            </h2>
+        </div>
+        <div class="biz-right">
+            <div class="biz-img-box">
+                <img src="https://images.unsplash.com/photo-1549429737-02052d921200?q=80&w=2000&auto=format&fit=crop" alt="Tower">
+                <span class="label">01 Property</span>
+                <h3>Lotte World Tower</h3>
+                <p>세계적인 친환경 랜드마크 운영 노하우</p>
+            </div>
+            <div class="biz-img-box">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80" alt="Office">
+                <span class="label">02 Management</span>
+                <h3>Asset Management</h3>
+                <p>프리미엄 자산 가치 제고 및 임대 관리</p>
+            </div>
+            <div class="biz-img-box">
+                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80" alt="Eco">
+                <span class="label">03 Solution</span>
+                <h3>Eco Tech</h3>
+                <p>건물 에너지 효율화 솔루션 (BEMS)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact">
+        <div class="impact-overlay reveal-text">
+            <h2 style="font-size: 80px; font-weight: 800; color: var(--lotte-red); line-height: 1;">245B</h2>
+            <p style="font-size: 24px; font-weight: 700; margin-top: 20px;">Social Value Created</p>
+            <p style="margin-top: 20px; color: #666;">
+                2026년, 롯데물산이 창출한 사회적 가치의 총액입니다.<br>
+                우리는 숫자를 넘어 진정한 변화를 만듭니다.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="f-grid">
+            <div>
+                <div class="f-big">LOTTE P&D</div>
+                <p style="opacity: 0.5;">Seoul, Korea</p>
+            </div>
+            <div style="align-self: end;">
+                <a href="#" class="f-link">Privacy Policy</a>
+                <a href="#" class="f-link">Contact Us</a>
+                <a href="#" class="f-link">Download Report</a>
+                <p style="margin-top: 40px; font-size: 13px; opacity: 0.3;">
+                    © 2026 LOTTE Property & Development.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
+
+        // Hover Image Logic
+        function showImg(id) {
+            const img = document.getElementById(`img-${id}`);
+            img.style.transform = "translate(-50%, -50%) scale(1)";
+            img.style.opacity = "1";
+        }
+        function hideImg() {
+            document.querySelectorAll('.hover-img').forEach(img => {
+                img.style.transform = "translate(-50%, -50%) scale(0.8)";
+                img.style.opacity = "0";
+            });
+        }
+    </script>
+</body>
+</html>
