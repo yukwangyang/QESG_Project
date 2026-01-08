@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK eternix Sustainability Report 2024</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            /* [Color System - Novo Style + SK Identity] */
+            --navy-dark: #001965;       /* Main Brand Color */
+            --navy-light: #1A3075;      /* Lighter Navy */
+            --sk-green: #00E367;        /* Highlight */
+            --bg-light: #F4F6F8;        /* Light Gray BG */
+            --bg-beige: #F0E6DD;        /* Warm Accent BG */
+            
+            --text-main: #111111;
+            --text-sub: #555555;
+            --white: #FFFFFF;
+            
+            /* [Layout] */
+            --max-width: 1400px;
+            --padding-x: 5%;
+            --border-radius: 4px;       /* Corporate Sharpness */
+        }
+
+        /* [Reset & Base] */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--white); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { display: block; width: 100%; height: auto; object-fit: cover; }
+        
+        /* [Typography] */
+        h1, h2, h3, h4, h5 { font-weight: 700; letter-spacing: -0.02em; }
+        .display-text { font-size: clamp(48px, 5vw, 80px); line-height: 1.1; }
+        .section-title { font-size: 40px; margin-bottom: 60px; color: var(--navy-dark); }
+        
+        /* [Common Layouts] */
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--padding-x); }
+        .section { padding: 120px 0; }
+        
+        /* [Header] */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 20px var(--padding-x);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+        }
+        header:hover, header.scrolled { background: rgba(255,255,255,0.95); border-bottom: 1px solid #eee; }
+        header:hover .logo, header.scrolled .logo, header:hover .nav-link, header.scrolled .nav-link { color: var(--navy-dark); }
+        
+        .logo { font-size: 20px; font-weight: 800; color: var(--white); }
+        .nav-menu { display: flex; gap: 40px; }
+        .nav-link { color: rgba(255,255,255,0.9); font-weight: 600; font-size: 15px; }
+
+        /* [1. Hero Section] */
+        .hero {
+            position: relative; height: 100vh; min-height: 800px;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            color: var(--white); overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: -2;
+            /* SK Energy Concept Image */
+            background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2600&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        /* Blue overlay opacity adjustment (0.3 for clearer view) */
+        .hero-overlay {
+            position: absolute; inset: 0; z-index: -1;
+            background: linear-gradient(to right, rgba(0,25,101,0.6), rgba(0,25,101,0.2));
+        }
+
+        .hero-content { margin-bottom: 80px; position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-block; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 50px; margin-bottom: 24px; font-size: 14px; backdrop-filter: blur(5px);
+        }
+        .hero-actions {
+            margin-top: 40px; display: flex; gap: 15px; flex-wrap: wrap;
+        }
+        .btn-hero {
+            padding: 15px 30px; border-radius: 50px; font-weight: 600; font-size: 16px;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s; cursor: pointer;
+        }
+        .btn-hero.primary { background: var(--sk-green); color: var(--navy-dark); border: none; }
+        .btn-hero.primary:hover { background: #fff; }
+        .btn-hero.secondary { background: transparent; border: 1px solid var(--white); color: var(--white); }
+        .btn-hero.secondary:hover { background: rgba(255,255,255,0.1); }
+
+        /* [2. Key Figures - Bento Grid Fixed] */
+        .section-figures { padding-top: 100px; padding-bottom: 100px; }
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 280px; /* Fixed row height for alignment */
+            gap: 20px;
+        }
+
+        .bento-card {
+            padding: 30px; border-radius: 8px; position: relative;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.3s;
+        }
+        .bento-card:hover { transform: translateY(-5px); }
+        
+        /* Grid Spans */
+        .col-2 { grid-column: span 2; }
+        .row-2 { grid-row: span 2; }
+
+        /* Colors */
+        .card-pink { background-color: #F3C3C8; color: var(--navy-dark); }
+        .card-blue { background-color: var(--navy-light); color: var(--white); }
+        .card-navy { background-color: var(--navy-dark); color: var(--white); }
+        .card-green { background-color: var(--sk-green); color: var(--navy-dark); }
+        .card-beige { background-color: var(--bg-beige); color: var(--navy-dark); }
+
+        .fig-val { font-size: 52px; font-weight: 800; line-height: 1; }
+        .fig-label { font-size: 16px; font-weight: 600; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .fig-desc { font-size: 14px; opacity: 0.8; margin-top: 10px; max-width: 80%; }
+        .fig-icon { font-size: 40px; position: absolute; top: 30px; right: 30px; opacity: 0.5; }
+
+        /* [3. CEO Message] */
+        .section-ceo { background-color: #F8FAFC; padding: 140px 0; }
+        .ceo-container {
+            display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center;
+        }
+        .ceo-visual { position: relative; }
+        /* Image Style Update */
+        .ceo-img { 
+            width: 100%; border-radius: 4px; 
+            box-shadow: 20px 20px 0px rgba(0, 25, 101, 0.1); 
+        }
+        
+        .ceo-content h2 { font-size: 36px; color: var(--navy-dark); margin-bottom: 30px; line-height: 1.4; }
+        .ceo-content p { font-size: 18px; color: var(--text-sub); margin-bottom: 20px; text-align: justify; }
+        .quote-icon { font-size: 60px; color: var(--sk-green); margin-bottom: 20px; display: block; }
+        .ceo-sign { margin-top: 40px; display: flex; align-items: center; gap: 20px; }
+        .sign-name { font-weight: 800; font-size: 20px; color: var(--navy-dark); }
+        
+        /* [4. Business Overview - Dark Section for Contrast] */
+        .section-biz { background-color: var(--navy-dark); color: var(--white); padding: 140px 0; }
+        .biz-header { text-align: center; margin-bottom: 80px; }
+        .biz-header h2 { font-size: 40px; margin-bottom: 15px; }
+        .biz-header p { opacity: 0.7; font-size: 18px; }
+
+        .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .biz-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px; transition: 0.3s; cursor: pointer;
+        }
+        .biz-card:hover { background: var(--sk-green); color: var(--navy-dark); }
+        .biz-card:hover .biz-icon { color: var(--navy-dark); }
+        
+        .biz-icon { font-size: 48px; color: var(--sk-green); margin-bottom: 30px; transition: 0.3s; }
+        .biz-title { font-size: 24px; margin-bottom: 15px; }
+        .biz-text { font-size: 16px; opacity: 0.8; line-height: 1.6; }
+
+        /* [5. Material Topics - Scroll/Slider Style] */
+        .section-topics { padding: 120px 0; background: var(--white); }
+        .topic-wrapper {
+            display: flex; gap: 20px; overflow-x: auto; padding-bottom: 40px;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+        }
+        .topic-wrapper::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome */
+        
+        .topic-card {
+            min-width: 300px; height: 400px; position: relative;
+            border-radius: 8px; overflow: hidden; flex-shrink: 0;
+            group; cursor: pointer;
+        }
+        .topic-card img { width: 100%; height: 100%; transition: transform 0.5s; }
+        .topic-card:hover img { transform: scale(1.1); }
+        .topic-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+            color: var(--white);
+        }
+        .topic-tag { 
+            font-size: 12px; font-weight: 700; color: var(--sk-green); 
+            text-transform: uppercase; margin-bottom: 8px; 
+        }
+        .topic-name { font-size: 22px; line-height: 1.3; }
+
+        /* [6. Performance Data Dashboard] */
+        .section-data { background-color: var(--bg-light); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        
+        .chart-box h3 { font-size: 24px; margin-bottom: 30px; color: var(--navy-dark); }
+        
+        /* Simple CSS Bar Chart */
+        .bar-chart-item { margin-bottom: 20px; }
+        .bar-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        .bar-bg { width: 100%; height: 10px; background: #ddd; border-radius: 5px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--navy-dark); border-radius: 5px; width: 0; transition: width 1.5s ease-out; }
+        .bar-fill.green { background: var(--sk-green); }
+
+        /* Simple CSS Stat Cards */
+        .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .s-card { background: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .s-num { font-size: 36px; font-weight: 800; color: var(--navy-dark); margin-bottom: 5px; }
+        .s-label { font-size: 14px; color: var(--text-sub); }
+
+        /* [Footer] */
+        footer { background: var(--navy-dark); color: rgba(255,255,255,0.6); padding: 80px 0 40px; }
+        .footer-top { display: flex; justify-content: space-between; margin-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 60px; }
+        .footer-logo { font-size: 24px; font-weight: 800; color: var(--white); margin-bottom: 20px; display: block;}
+        .footer-links { display: flex; gap: 60px; }
+        .footer-links h4 { color: var(--white); font-size: 14px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .footer-links li { margin-bottom: 10px; font-size: 14px; }
+        .footer-links a:hover { color: var(--sk-green); text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-wrapper { grid-template-columns: 1fr 1fr; }
+            .col-2 { grid-column: span 1; } 
+            .row-2 { grid-row: span 1; }
+            .ceo-container { grid-template-columns: 1fr; }
+            .biz-grid { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">SK eternix</div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-link">Introduction</a>
+            <a href="#" class="nav-link">Environmental</a>
+            <a href="#" class="nav-link">Social</a>
+            <a href="#" class="nav-link">Governance</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <span class="hero-badge">2024 Sustainability Report</span>
+            <h1 class="display-text">Good Energy<br>for a Better Future</h1>
+            <div class="hero-actions">
+                <button class="btn-hero primary">
+                    <i class="ph ph-download-simple"></i> Download Report
+                </button>
+                <button class="btn-hero secondary">
+                    <i class="ph ph-chart-bar"></i> ESG Factbook
+                </button>
+                <button class="btn-hero secondary">
+                    <i class="ph ph-list"></i> Index
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-figures">
+        <div class="container">
+            <h2 class="section-title">2024 Key Highlights</h2>
+            <div class="grid-wrapper">
+                <div class="bento-card card-pink">
+                    <i class="ph ph-certificate fig-icon"></i>
+                    <div>
+                        <div class="fig-val">14001</div>
+                        <div class="fig-label">ISO 인증</div>
+                    </div>
+                    <div class="fig-desc">국제 환경경영시스템 표준 취득 완료</div>
+                </div>
+
+                <div class="bento-card card-navy col-2">
+                    <i class="ph ph-lightning fig-icon" style="color: var(--sk-green);"></i>
+                    <div>
+                        <div class="fig-val" style="color: var(--sk-green);">207,203</div>
+                        <div class="fig-label">신재생에너지 발전량 (MWh)</div>
+                    </div>
+                    <div class="fig-desc">전년 대비 15% 성장, 탄소 중립 가속화</div>
+                </div>
+
+                <div class="bento-card card-beige">
+                    <i class="ph ph-scales fig-icon"></i>
+                    <div>
+                        <div class="fig-val">100%</div>
+                        <div class="fig-label">윤리경영 실천율</div>
+                    </div>
+                </div>
+
+                <div class="bento-card card-green">
+                    <i class="ph ph-shield-check fig-icon" style="color: var(--navy-dark); opacity:0.3;"></i>
+                    <div style="margin-top: auto;">
+                        <div class="fig-val" style="font-size: 80px;">ZERO</div>
+                        <div class="fig-label" style="font-size: 20px;">중대재해 발생 건수</div>
+                        <div class="fig-desc" style="color: var(--navy-dark); font-weight: 500; margin-top: 20px;">
+                            안전을 타협할 수 없는 최우선 가치로 삼고, 현장 중심의 안전 관리 체계를 강화합니다.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card card-blue">
+                    <div>
+                        <div class="fig-val">60+</div>
+                        <div class="fig-label">누적 파트너사</div>
+                    </div>
+                </div>
+
+                <div class="bento-card card-pink col-2">
+                    <i class="ph ph-heart fig-icon"></i>
+                    <div>
+                        <div class="fig-val">500억</div>
+                        <div class="fig-label">사회공헌 투자 금액</div>
+                    </div>
+                    <div class="fig-desc">지역사회 상생을 위한 지속적인 나눔 실천</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-ceo">
+        <div class="container ceo-container">
+            <div class="ceo-visual">
+                <img src="CEO_image.webp" alt="김해중 대표이사" class="ceo-img">
+            </div>
+            <div class="ceo-content">
+                <i class="ph ph-quotes quote-icon"></i>
+                <h2>
+                    "지속가능한 성장은<br>우리의 약속이자 의무입니다."
+                </h2>
+                <p>
+                    SK이터닉스는 'Good Energy for a Better Future'라는 미션 아래, 신재생 에너지 사업을 선도하며 기후 위기 극복에 앞장서고 있습니다.
+                </p>
+                <p>
+                    우리는 단순히 에너지를 생산하는 기업을 넘어, 환경과 사회에 대한 책임을 다하고 투명한 거버넌스를 통해 이해관계자 여러분께 신뢰받는 기업이 되겠습니다. 
+                    ESG 경영은 선택이 아닌 필수 생존 전략입니다. SK이터닉스의 여정에 변함없는 성원 부탁드립니다.
+                </p>
+                <div class="ceo-sign">
+                    <div>
+                        <div class="sign-name">김해중 (Kim Hae-jung)</div>
+                        <div style="font-size: 14px; opacity: 0.6;">SK eternix CEO</div>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Signature_sample.svg" style="width: 100px; opacity: 0.5;" alt="Signature">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-biz">
+        <div class="container">
+            <div class="biz-header">
+                <h2>Our Business</h2>
+                <p>친환경 에너지 솔루션으로 더 나은 내일을 만듭니다.</p>
+            </div>
+            <div class="biz-grid">
+                <div class="biz-card">
+                    <i class="ph ph-wind biz-icon"></i>
+                    <h3 class="biz-title">Wind Power</h3>
+                    <p class="biz-text">육상 및 해상 풍력 발전의 개발부터 운영까지, 국내 최고의 풍력 발전 노하우를 보유하고 있습니다.</p>
+                </div>
+                <div class="biz-card">
+                    <i class="ph ph-sun biz-icon"></i>
+                    <h3 class="biz-title">Solar & ESS</h3>
+                    <p class="biz-text">태양광 발전과 에너지 저장 장치(ESS)를 결합하여 에너지 효율을 극대화한 솔루션을 제공합니다.</p>
+                </div>
+                <div class="biz-card">
+                    <i class="ph ph-drop biz-icon"></i>
+                    <h3 class="biz-title">Fuel Cell</h3>
+                    <p class="biz-text">고효율 연료전지 발전소를 통해 도심 분산형 전원 보급에 기여하며 수소 경제를 선도합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-topics">
+        <div class="container">
+            <h2 class="section-title">2024 Material Topics</h2>
+            <div class="topic-wrapper">
+                <div class="topic-card">
+                    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2000&auto=format&fit=crop" alt="Climate">
+                    <div class="topic-overlay">
+                        <span class="topic-tag">Environmental</span>
+                        <h3 class="topic-name">기후변화 대응 및<br>탄소중립</h3>
+                    </div>
+                </div>
+                <div class="topic-card">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop" alt="Workplace">
+                    <div class="topic-overlay">
+                        <span class="topic-tag">Social</span>
+                        <h3 class="topic-name">안전보건 경영 및<br>사업장 안전</h3>
+                    </div>
+                </div>
+                <div class="topic-card">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop" alt="Governance">
+                    <div class="topic-overlay">
+                        <span class="topic-tag">Governance</span>
+                        <h3 class="topic-name">윤리경영 및<br>컴플라이언스</h3>
+                    </div>
+                </div>
+                 <div class="topic-card">
+                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2000&auto=format&fit=crop" alt="Community">
+                    <div class="topic-overlay">
+                        <span class="topic-tag">Social</span>
+                        <h3 class="topic-name">지역사회 상생 및<br>동반성장</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-data">
+        <div class="container">
+            <h2 class="section-title">Performance Highlights</h2>
+            <div class="dashboard-grid">
+                
+                <div class="chart-box">
+                    <h3>GHG Emissions Trend</h3>
+                    <div class="bar-chart-item">
+                        <div class="bar-label"><span>2022</span><span>1,450 tCO2eq</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="bar-chart-item">
+                        <div class="bar-label"><span>2023</span><span>1,240 tCO2eq</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="bar-chart-item">
+                        <div class="bar-label"><span style="color:var(--sk-green);">2024</span><span style="color:var(--navy-dark);">1,050 tCO2eq</span></div>
+                        <div class="bar-bg"><div class="bar-fill green" style="width: 72%;"></div></div>
+                    </div>
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">* 지속적인 감축 활동을 통해 전년 대비 15% 배출량 감소</p>
+                </div>
+
+                <div class="stat-cards">
+                    <div class="s-card">
+                        <div class="s-num">42%</div>
+                        <div class="s-label">Female Managers</div>
+                    </div>
+                    <div class="s-card">
+                        <div class="s-num">100%</div>
+                        <div class="s-label">Renewable Usage</div>
+                    </div>
+                    <div class="s-card">
+                        <div class="s-num">56h</div>
+                        <div class="s-label">Training / Person</div>
+                    </div>
+                    <div class="s-card">
+                        <div class="s-num">A</div>
+                        <div class="s-label">MSCI ESG Rating</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">SK eternix</div>
+                    <p>Creating a sustainable energy world for humanity.</p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="#">Company Info</a></li>
+                            <li><a href="#">History</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Sustainability</h4>
+                        <ul>
+                            <li><a href="#">Strategy</a></li>
+                            <li><a href="#">Reports</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 13px; opacity: 0.5;">
+                Copyright © 2024 SK eternix. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.bar-fill');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        // Re-trigger width animation
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            bars.forEach(bar => observer.observe(bar));
+            
+            // Header Scroll Effect
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if(window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+        });
+    </script>
+
+</body>
+</html>
